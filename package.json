@@ -1,0 +1,70 @@
+{
+  "name": "edgerunner-ai-agent-creator",
+  "version": "1.0.0",
+  "description": "EdgeRunner AI Agent Creator - Build expert RAG agents from your data",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:react\" \"npm run dev:electron\"",
+    "dev:react": "vite --port 3000",
+    "dev:electron": "wait-on http://localhost:3000 && electron .",
+    "build": "vite build && electron-builder",
+    "build:mac": "vite build && electron-builder --mac",
+    "build:win": "vite build && electron-builder --win",
+    "start": "electron ."
+  },
+  "build": {
+    "appId": "com.edgerunner.ai-agent-creator",
+    "productName": "EdgeRunner AI Agent Creator",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "assets/**/*"
+    ],
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icons/icon.icns",
+      "category": "public.app-category.productivity"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icons/icon.ico"
+    },
+    "extraResources": [
+      {
+        "from": "backend",
+        "to": "backend",
+        "filter": ["**/*"]
+      }
+    ]
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "framer-motion": "^11.0.6",
+    "lucide-react": "^0.323.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-markdown": "^9.0.1",
+    "react-router-dom": "^6.22.1",
+    "react-syntax-highlighter": "^15.5.0",
+    "zustand": "^4.5.1",
+    "socket.io-client": "^4.7.4",
+    "remark-gfm": "^4.0.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.17",
+    "concurrently": "^8.2.2",
+    "electron": "^29.1.0",
+    "electron-builder": "^24.12.0",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.1.3",
+    "wait-on": "^7.2.0"
+  }
+}
