@@ -16,6 +16,13 @@ function getBackendPath() {
 }
 
 function getPythonPath() {
+  // Check for venv Python first (dev mode)
+  if (isDev) {
+    const venvPython = path.join(__dirname, '..', 'venv', 'bin', 'python3')
+    if (fs.existsSync(venvPython)) {
+      return venvPython
+    }
+  }
   const candidates = [
     'python3',
     'python',
