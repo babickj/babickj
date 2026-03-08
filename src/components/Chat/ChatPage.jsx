@@ -10,7 +10,6 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { useAppStore } from '../../store/useAppStore'
 import { getAgent, streamChat } from '../../utils/api'
-import { EdgeRunnerLogo } from '../../assets/EdgeRunnerLogo'
 
 export default function ChatPage() {
   const { agentId } = useParams()

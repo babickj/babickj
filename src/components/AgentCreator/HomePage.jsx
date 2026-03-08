@@ -7,7 +7,7 @@ import {
 } from 'lucide-react'
 import { useAppStore } from '../../store/useAppStore'
 import { getAgents, deleteAgent } from '../../utils/api'
-import { EdgeRunnerLogo } from '../../assets/EdgeRunnerLogo'
+import EdgeRunnerLogo from '../../assets/EdgeRunnerLogo'
 
 const container = {
   hidden: { opacity: 0 },
