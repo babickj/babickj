@@ -61,7 +61,7 @@ export default function Layout({ children }) {
               onClick={() => navigate(path)}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150
                 ${isActive(path)
-                  ? 'text-slate-100 bg-edge-600/25 border border-edge-500/20'
+                  ? 'text-slate-100 bg-edge-600/15 border border-edge-600/25'
                   : 'text-slate-400 hover:text-slate-100 hover:bg-white/5'
                 }`}
               title={sidebarCollapsed ? label : undefined}

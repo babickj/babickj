@@ -4,8 +4,11 @@
 
 @layer base {
   :root {
-    --scrollbar-thumb: #2d2f4a;
+    --scrollbar-thumb: #2a2a2a;
     --scrollbar-track: transparent;
+    --brand-red: #dc2626;
+    --brand-red-bright: #ef4444;
+    --brand-red-dark: #991b1b;
   }
 
   * {
@@ -28,7 +31,7 @@
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #4f46e5;
+    background: var(--brand-red);
   }
 
   body {
@@ -48,27 +51,29 @@
 
 @layer components {
   .glass {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+    @apply bg-white/5 backdrop-blur-xl border border-white/8;
   }
 
   .glass-hover {
-    @apply hover:bg-white/10 transition-colors duration-200;
+    @apply hover:bg-white/8 transition-colors duration-200;
   }
 
   .glass-card {
     @apply glass rounded-2xl shadow-glass;
   }
 
+  /* Red neon border */
   .neon-border {
-    box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.3), 0 0 20px rgba(99, 102, 241, 0.1);
+    box-shadow: 0 0 0 1px rgba(220, 38, 38, 0.3), 0 0 20px rgba(220, 38, 38, 0.1);
   }
 
   .neon-border-hover {
     @apply hover:neon-border transition-all duration-300;
   }
 
+  /* Red gradient text */
   .gradient-text {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6, #06b6d4);
+    background: linear-gradient(135deg, #ef4444, #dc2626, #b91c1c);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -76,9 +81,9 @@
 
   .btn-primary {
     @apply px-4 py-2 rounded-xl font-medium text-sm transition-all duration-200
-           bg-gradient-to-r from-edge-600 to-edge-500
-           hover:from-edge-500 hover:to-neon-purple
-           text-white shadow-neon-blue
+           bg-gradient-to-r from-edge-700 to-edge-600
+           hover:from-edge-600 hover:to-edge-500
+           text-white shadow-neon-red
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
@@ -90,8 +95,8 @@
 
   .input-field {
     @apply w-full bg-dark-300/80 border border-white/10 rounded-xl px-4 py-3
-           text-slate-100 placeholder-slate-500
-           focus:outline-none focus:border-edge-500/50 focus:ring-1 focus:ring-edge-500/30
+           text-slate-100 placeholder-slate-600
+           focus:outline-none focus:border-edge-600/50 focus:ring-1 focus:ring-edge-600/30
            transition-all duration-200 text-sm;
   }
 
@@ -102,12 +107,12 @@
   }
 
   .sidebar-item-active {
-    @apply sidebar-item text-slate-100 bg-edge-600/20 border border-edge-500/20;
+    @apply sidebar-item text-slate-100 bg-edge-600/15 border border-edge-600/25;
   }
 
   /* Citation card */
   .citation-card {
-    @apply glass rounded-xl p-3 text-xs border-l-2 border-edge-500/50;
+    @apply glass rounded-xl p-3 text-xs border-l-2 border-edge-600/60;
   }
 
   /* Code blocks in markdown */
@@ -119,15 +124,15 @@
     @apply text-neon-cyan font-mono text-xs;
   }
 
-  /* Mesh background */
+  /* Mesh background — pure black with subtle red depth */
   .bg-mesh {
-    background-color: #090b18;
+    background-color: #080808;
     background-image:
-      radial-gradient(at 40% 20%, hsla(228, 100%, 74%, 0.08) 0, transparent 50%),
-      radial-gradient(at 80% 0%, hsla(262, 100%, 74%, 0.08) 0, transparent 50%),
-      radial-gradient(at 0% 50%, hsla(200, 100%, 74%, 0.05) 0, transparent 50%),
-      radial-gradient(at 80% 50%, hsla(228, 100%, 74%, 0.05) 0, transparent 50%),
-      radial-gradient(at 0% 100%, hsla(262, 100%, 74%, 0.05) 0, transparent 50%);
+      radial-gradient(at 40% 20%, hsla(0, 100%, 50%, 0.05) 0, transparent 50%),
+      radial-gradient(at 80% 0%, hsla(10, 90%, 40%, 0.04) 0, transparent 50%),
+      radial-gradient(at 0% 50%, hsla(0, 80%, 30%, 0.03) 0, transparent 50%),
+      radial-gradient(at 80% 50%, hsla(0, 100%, 50%, 0.03) 0, transparent 50%),
+      radial-gradient(at 0% 100%, hsla(10, 90%, 30%, 0.03) 0, transparent 50%);
   }
 
   /* Status dot */
@@ -163,16 +168,16 @@
   margin-bottom: 0.5em;
 }
 .chat-markdown code {
-  background: rgba(99, 102, 241, 0.15);
-  border: 1px solid rgba(99, 102, 241, 0.25);
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.2);
   padding: 0.15em 0.4em;
   border-radius: 4px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.85em;
-  color: #06b6d4;
+  color: #fca5a5;
 }
 .chat-markdown pre {
-  background: rgba(14, 16, 32, 0.8);
+  background: rgba(10, 10, 10, 0.9);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 12px;
   padding: 1em;
@@ -187,7 +192,7 @@
 }
 .chat-markdown strong { color: #f1f5f9; font-weight: 600; }
 .chat-markdown blockquote {
-  border-left: 3px solid #6366f1;
+  border-left: 3px solid #dc2626;
   padding-left: 1em;
   color: #94a3b8;
   margin: 0.75em 0;
@@ -203,4 +208,4 @@
   padding: 0.5em 0.75em;
   text-align: left;
 }
-.chat-markdown th { background: rgba(99,102,241,0.1); color: #c7d2fe; }
+.chat-markdown th { background: rgba(220,38,38,0.1); color: #fca5a5; }
