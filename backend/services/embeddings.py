@@ -28,7 +28,7 @@ class OllamaEmbeddings:
         with httpx.Client(timeout=60.0) as client:
             resp = client.post(
                 f"{self.base_url}/api/embed",
-                json={"model": self.model, "input": text.strip()},
+                json={"model": self.model, "input": text.strip(), "truncate": True},
             )
             if not resp.is_success:
                 raise httpx.HTTPStatusError(

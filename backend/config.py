@@ -20,8 +20,8 @@ class AppConfig(BaseModel):
     llama_server_host: str = "http://localhost:8080"
     active_backend: str = "ollama"  # "ollama" | "llama_server"
     embedding_model: str = "nomic-embed-text"
-    chunk_size: int = 1000
-    chunk_overlap: int = 150
+    chunk_size: int = 300
+    chunk_overlap: int = 50
     retrieval_k: int = 6
     temperature: float = 0.1
     max_tokens: int = 2048
