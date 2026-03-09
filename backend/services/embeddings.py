@@ -22,13 +22,18 @@ class OllamaEmbeddings:
     def embed_query(self, text: str) -> List[float]:
         return self._embed(text)
 
+    # nomic-embed-text has a 2048 token context; ~4 chars/token → 6000 chars is safe
+    _MAX_CHARS = 6000
+
     def _embed(self, text: str) -> List[float]:
-        if not text or not text.strip():
+        text = (text or "").strip()
+        if not text:
             raise ValueError("Cannot embed empty text")
+        text = text[: self._MAX_CHARS]
         with httpx.Client(timeout=60.0) as client:
             resp = client.post(
                 f"{self.base_url}/api/embed",
-                json={"model": self.model, "input": text.strip(), "truncate": True},
+                json={"model": self.model, "input": text},
             )
             if not resp.is_success:
                 raise httpx.HTTPStatusError(
