@@ -23,12 +23,19 @@ class OllamaEmbeddings:
         return self._embed(text)
 
     def _embed(self, text: str) -> List[float]:
+        if not text or not text.strip():
+            raise ValueError("Cannot embed empty text")
         with httpx.Client(timeout=60.0) as client:
             resp = client.post(
                 f"{self.base_url}/api/embed",
-                json={"model": self.model, "input": text},
+                json={"model": self.model, "input": text.strip()},
             )
-            resp.raise_for_status()
+            if not resp.is_success:
+                raise httpx.HTTPStatusError(
+                    f"{resp.status_code} from /api/embed: {resp.text[:300]}",
+                    request=resp.request,
+                    response=resp,
+                )
             data = resp.json()
             # Ollama >= 0.1.26 returns {"embeddings": [[...float...]]}
             raw = data.get("embeddings") or data.get("embedding")
