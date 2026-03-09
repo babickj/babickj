@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Padres Season Ticket Dashboard</title>
+<style>
+  :root {
+    --navy: #002D62;
+    --gold: #FFC425;
+    --sand: #F5E6C8;
+    --white: #FFFFFF;
+    --green: #27ae60;
+    --red: #e74c3c;
+    --orange: #e67e22;
+    --gray: #95a5a6;
+    --light: #f8f9fa;
+    --border: #dee2e6;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f0f2f5;
+    color: #333;
+    font-size: 14px;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+  }
+  .header h1 { font-size: 20px; font-weight: 700; }
+  .header .subtitle { font-size: 12px; opacity: .7; margin-top: 2px; }
+  .header .badge {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  /* ── Summary Cards ── */
+  .summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    padding: 16px 24px;
+  }
+  .card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.08);
+  }
+  .card .label { font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #666; margin-bottom: 4px; }
+  .card .value { font-size: 22px; font-weight: 700; }
+  .card .sub { font-size: 11px; color: #888; margin-top: 2px; }
+  .card.highlight { background: var(--navy); color: var(--white); }
+  .card.highlight .label { color: rgba(255,255,255,.6); }
+  .card.highlight .sub { color: rgba(255,255,255,.5); }
+  .card.green .value { color: var(--green); }
+  .card.red .value { color: var(--red); }
+  .card.gold .value { color: #c8960f; }
+
+  /* ── Controls ── */
+  .controls {
+    display: flex;
+    gap: 10px;
+    padding: 0 24px 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .controls select, .controls input {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 13px;
+    background: var(--white);
+    cursor: pointer;
+  }
+  .controls label { font-size: 13px; color: #555; }
+  .btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .btn-primary { background: var(--navy); color: var(--white); }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .btn-sm { padding: 3px 8px; font-size: 11px; font-weight: 600; border-radius: 4px; border: none; cursor: pointer; }
+  .btn-outline { background: transparent; border: 1px solid var(--border); color: #555; }
+  .btn-outline:hover { background: var(--light); }
+
+  /* ── Table ── */
+  .table-wrap {
+    padding: 0 24px 32px;
+    overflow-x: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.08);
+  }
+  thead th {
+    background: var(--navy);
+    color: var(--white);
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    white-space: nowrap;
+  }
+  tbody tr { border-bottom: 1px solid #f0f0f0; transition: background .1s; }
+  tbody tr:hover { background: #fafafa; }
+  tbody tr.series-header td {
+    background: #f0f4fa;
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--navy);
+    padding: 6px 12px;
+    border-bottom: 2px solid #dce8f5;
+  }
+  tbody tr.row-attend { background: #f0faf4; }
+  tbody tr.row-attend:hover { background: #e6f7ed; }
+  tbody tr.row-locked { background: #fff8e1; }
+  tbody tr.row-locked:hover { background: #fff3cd; }
+  td { padding: 9px 12px; vertical-align: middle; }
+
+  /* ── Status Badges ── */
+  .badge-status {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .badge-sell { background: #fde8e8; color: #c0392b; }
+  .badge-attend { background: #e8f5e9; color: #1b7e35; }
+  .badge-locked { background: #fff3cd; color: #8a5e00; }
+  .badge-sold { background: #e3f2fd; color: #1565c0; }
+
+  .badge-tier {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .tier-1 { background: #c0392b; color: white; }
+  .tier-2 { background: #e67e22; color: white; }
+  .tier-3 { background: #f39c12; color: white; }
+  .tier-4 { background: #27ae60; color: white; }
+  .tier-5 { background: #95a5a6; color: white; }
+
+  /* ── Price / Listing ── */
+  .price { font-weight: 700; color: var(--navy); }
+  .price-low { color: #888; }
+  .list-date { font-size: 12px; }
+  .list-urgent { color: var(--red); font-weight: 700; }
+  .list-soon { color: var(--orange); font-weight: 600; }
+  .list-ok { color: var(--green); }
+
+  .seats-toggle {
+    display: flex;
+    gap: 4px;
+  }
+  .seat-btn {
+    padding: 2px 7px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    background: var(--white);
+    color: #666;
+  }
+  .seat-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+  .action-group { display: flex; gap: 4px; flex-wrap: wrap; }
+  .btn-attend { background: #e8f5e9; color: #1b7e35; }
+  .btn-sell-mark { background: #fde8e8; color: #c0392b; }
+  .btn-sold { background: #e3f2fd; color: #1565c0; }
+
+  .sold-price-input {
+    width: 80px;
+    padding: 3px 6px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 12px;
+  }
+
+  /* ── Notes ── */
+  .note { font-size: 11px; color: #888; font-style: italic; }
+  .special-tag {
+    display: inline-block;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    margin-left: 4px;
+  }
+  .tag-holiday { background: #e8f5e9; color: #1b7e35; }
+  .tag-rivalry { background: #fde8e8; color: #c0392b; }
+  .tag-verify { background: #fff3cd; color: #856404; }
+
+  /* ── Modal ── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 24px;
+    width: 400px;
+    max-width: 95vw;
+    box-shadow: 0 8px 32px rgba(0,0,0,.2);
+  }
+  .modal h3 { margin-bottom: 16px; color: var(--navy); }
+  .modal label { display: block; font-size: 12px; color: #666; margin-bottom: 4px; margin-top: 12px; }
+  .modal input, .modal select, .modal textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  .modal-actions { display: flex; gap: 8px; margin-top: 20px; justify-content: flex-end; }
+
+  /* ── Tips section ── */
+  .tips {
+    margin: 0 24px 24px;
+    background: var(--white);
+    border-radius: 10px;
+    padding: 16px 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.08);
+  }
+  .tips h3 { color: var(--navy); margin-bottom: 10px; font-size: 14px; }
+  .tips ul { padding-left: 18px; }
+  .tips li { margin-bottom: 6px; font-size: 13px; line-height: 1.5; }
+
+  @media (max-width: 768px) {
+    .summary { grid-template-columns: repeat(2, 1fr); }
+    .header h1 { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>⚾ Padres Ticket Dashboard</h1>
+    <div class="subtitle">Agave Club · Row 1 · Seats 24–27 · 2026 Season</div>
+  </div>
+  <span class="badge">Season Cost: $72,000</span>
+</div>
+
+<div class="summary" id="summaryCards"></div>
+
+<div class="controls">
+  <label>Filter:</label>
+  <select id="filterStatus" onchange="renderTable()">
+    <option value="all">All Games</option>
+    <option value="sell">Sell Only</option>
+    <option value="attend">Attend Only</option>
+    <option value="sold">Sold</option>
+    <option value="unsold">Unsold (to sell)</option>
+  </select>
+  <select id="filterMonth" onchange="renderTable()">
+    <option value="all">All Months</option>
+    <option value="3">March</option>
+    <option value="4">April</option>
+    <option value="5">May</option>
+    <option value="6">June</option>
+    <option value="7">July</option>
+    <option value="8">August</option>
+    <option value="9">September</option>
+  </select>
+  <select id="filterTier" onchange="renderTable()">
+    <option value="all">All Opponents</option>
+    <option value="1">Tier 1 (Premium)</option>
+    <option value="2">Tier 2 (High)</option>
+    <option value="3">Tier 3 (Good)</option>
+    <option value="4">Tier 4 (Standard)</option>
+    <option value="5">Tier 5 (Low)</option>
+  </select>
+  <button class="btn btn-gold" onclick="openAddModal()">+ Add Game</button>
+  <button class="btn btn-outline" onclick="exportCSV()">Export CSV</button>
+  <button class="btn btn-outline" onclick="resetAll()" style="color:#c0392b">Reset All</button>
+</div>
+
+<div class="table-wrap">
+  <table id="scheduleTable">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Day</th>
+        <th>Opponent</th>
+        <th>Time</th>
+        <th>Tier</th>
+        <th>Status</th>
+        <th>Seats Kept</th>
+        <th>Seats for Sale</th>
+        <th>Rec. List Price</th>
+        <th>List By</th>
+        <th>Actual Sale</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+
+<div class="tips">
+  <h3>📋 Listing Strategy Guide — Agave Club Row 1</h3>
+  <ul>
+    <li><strong>Dodgers / Yankees / Giants (Tier 1–2):</strong> List 4–6 weeks out. These sell fast. Start at recommended price; drop 10% if unsold 5 days before game.</li>
+    <li><strong>Standard weekend games (Tier 3–4):</strong> List 2–3 weeks out. Price competitively; Agave Club unlimited food/beverage is a major selling point — mention it in the listing.</li>
+    <li><strong>Weekday / low-demand games:</strong> List 1–2 weeks out. Consider pricing slightly below comparable seats to move quickly.</li>
+    <li><strong>SeatGeek tips:</strong> Set a "Deal Score" minimum of 70. Always mention <em>"Agave Club — unlimited food & non-alcoholic drinks included"</em> in your listing notes. Row 1 commands a 15–25% premium over other rows.</li>
+    <li><strong>Price floor:</strong> At $72,000 / 81 games / 4 seats = <strong>$222/seat cost basis</strong>. Avoid selling 4-seat sets below $800 total on low-tier games.</li>
+    <li><strong>Re-price trigger:</strong> If unsold 72 hours before game, drop 12–15%. If unsold 24 hours before, drop to cost basis.</li>
+  </ul>
+</div>
+
+<!-- Mark Sold Modal -->
+<div class="modal-overlay" id="soldModal">
+  <div class="modal">
+    <h3>Mark as Sold</h3>
+    <label>Sale Price (total for all seats sold)</label>
+    <input type="number" id="soldPriceInput" placeholder="e.g. 1200">
+    <label>Platform</label>
+    <select id="soldPlatform">
+      <option>SeatGeek</option>
+      <option>StubHub</option>
+      <option>Ticketmaster</option>
+      <option>Vivid Seats</option>
+      <option>Other</option>
+    </select>
+    <label>Notes (optional)</label>
+    <input type="text" id="soldNotes" placeholder="e.g. sold 2 weeks out">
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('soldModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmSold()">Confirm Sale</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Game Modal -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal">
+    <h3>Add / Edit Game</h3>
+    <label>Date</label>
+    <input type="date" id="addDate">
+    <label>Opponent</label>
+    <input type="text" id="addOpponent" placeholder="e.g. Los Angeles Dodgers">
+    <label>Time (PT)</label>
+    <input type="text" id="addTime" placeholder="e.g. 6:40 PM">
+    <label>Series Name</label>
+    <input type="text" id="addSeries" placeholder="e.g. vs. Dodgers (Jun)">
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal('addModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmAdd()">Add Game</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ──────────────────────────────────────────────
+// DATA: 2026 PADRES HOME SCHEDULE
+// ──────────────────────────────────────────────
+
+const COST_BASIS = 72000;
+const TOTAL_SEATS = 4;
+const COST_PER_SEAT = COST_BASIS / 81 / TOTAL_SEATS; // ~$222/seat per game
+
+// Opponent tiers (for pricing)
+const OPPONENT_TIERS = {
+  // Tier 1 — Premium (division rival + marquee AL)
+  'Los Angeles Dodgers': 1,
+  'New York Yankees': 1,
+  // Tier 2 — High demand
+  'San Francisco Giants': 2,
+  'Chicago Cubs': 2,
+  'New York Mets': 2,
+  'Houston Astros': 2,
+  // Tier 3 — Good draw
+  'St. Louis Cardinals': 3,
+  'Atlanta Braves': 3,
+  'Philadelphia Phillies': 3,
+  'Seattle Mariners': 3,
+  'Toronto Blue Jays': 3,
+  // Tier 4 — Standard
+  'Arizona Diamondbacks': 4,
+  'Milwaukee Brewers': 4,
+  'Minnesota Twins': 4,
+  'Cleveland Guardians': 4,
+  'Colorado Rockies': 4,
+  'Cincinnati Reds': 4,
+  'Kansas City Royals': 4,
+  'Baltimore Orioles': 4,
+  // Tier 5 — Low demand
+  'Detroit Tigers': 5,
+  'Chicago White Sox': 5,
+  'Oakland Athletics': 5,
+  'Pittsburgh Pirates': 5,
+  'Washington Nationals': 5,
+  'Miami Marlins': 5,
+  'Tampa Bay Rays': 5,
+  'Texas Rangers': 5,
+};
+
+const TIER_LABELS = { 1:'T1', 2:'T2', 3:'T3', 4:'T4', 5:'T5' };
+const TIER_NAMES = { 1:'Premium', 2:'High', 3:'Good', 4:'Standard', 5:'Low' };
+
+// Base price per seat for Agave Club Row 1 (reflect club value)
+const BASE_SEAT_PRICE = 275;
+
+// Tier multipliers
+const TIER_MULT = { 1: 3.2, 2: 2.2, 3: 1.6, 4: 1.1, 5: 0.85 };
+
+// Day of week multipliers
+const DAY_MULT = {
+  'Sat': 1.45, 'Sun': 1.25, 'Fri': 1.15,
+  'Mon': 1.0, 'Tue': 0.95, 'Wed': 0.95, 'Thu': 1.0
+};
+
+// Special game multipliers
+function specialMult(game) {
+  if (game.isOpeningDay) return 4.0;
+  if (game.isLastGame) return 1.8;
+  const d = new Date(game.date + 'T12:00:00');
+  const mo = d.getMonth() + 1;
+  const dy = d.getDate();
+  // Mother's Day
+  if (mo === 5 && dy === 10) return 1.3;
+  // Memorial Day
+  if (mo === 5 && dy === 25) return 1.35;
+  // Labor Day
+  if (mo === 9 && dy === 7) return 1.2;
+  // Star Wars Weekend
+  if (mo === 5 && dy >= 22 && dy <= 24) return 1.25;
+  // Jackie Robinson Day
+  if (mo === 4 && dy === 15) return 1.1;
+  return 1.0;
+}
+
+// Month multipliers (playoff race premium in Sept)
+function monthMult(dateStr) {
+  const mo = parseInt(dateStr.split('-')[1]);
+  const mult = { 3:1.3, 4:1.1, 5:1.15, 6:1.05, 7:1.15, 8:1.1, 9:1.25 };
+  return mult[mo] || 1.0;
+}
+
+function calcRecommendedPrice(game, seatsToSell) {
+  const tier = OPPONENT_TIERS[game.opponent] || 4;
+  const d = new Date(game.date + 'T12:00:00');
+  const dayName = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()];
+  const price = BASE_SEAT_PRICE
+    * TIER_MULT[tier]
+    * (DAY_MULT[dayName] || 1.0)
+    * specialMult(game)
+    * monthMult(game.date);
+  return Math.round(price / 5) * 5 * seatsToSell; // round to nearest $5
+}
+
+// How many days before game to list
+function listingLeadDays(game) {
+  const tier = OPPONENT_TIERS[game.opponent] || 4;
+  if (game.isOpeningDay) return 56;
+  if (tier === 1) return 35;
+  if (tier === 2) return 28;
+  if (tier === 3) return 18;
+  const d = new Date(game.date + 'T12:00:00');
+  const dayName = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()];
+  if (['Fri','Sat','Sun'].includes(dayName)) return 14;
+  return 10;
+}
+
+function calcListByDate(game) {
+  const gameDate = new Date(game.date + 'T12:00:00');
+  const leadDays = listingLeadDays(game);
+  const listDate = new Date(gameDate);
+  listDate.setDate(listDate.getDate() - leadDays);
+  return listDate.toISOString().split('T')[0];
+}
+
+// ── The Schedule ──
+// Format: { id, date, opponent, time, series, isOpeningDay, isLastGame, needsVerify }
+const SCHEDULE_RAW = [
+  // === MARCH — Detroit Tigers (Opening Series) ===
+  { date:'2026-03-26', opponent:'Detroit Tigers',      time:'1:10 PM', series:'vs. Tigers (Mar)',    isOpeningDay:true  },
+  { date:'2026-03-27', opponent:'Detroit Tigers',      time:'6:40 PM', series:'vs. Tigers (Mar)'                       },
+  { date:'2026-03-28', opponent:'Detroit Tigers',      time:'5:40 PM', series:'vs. Tigers (Mar)'                       },
+  // === MARCH/APRIL — San Francisco Giants ===
+  { date:'2026-03-30', opponent:'San Francisco Giants',time:'6:40 PM', series:'vs. Giants (Mar/Apr)'                   },
+  { date:'2026-03-31', opponent:'San Francisco Giants',time:'6:40 PM', series:'vs. Giants (Mar/Apr)'                   },
+  { date:'2026-04-01', opponent:'San Francisco Giants',time:'1:10 PM', series:'vs. Giants (Mar/Apr)'                   },
+  // === APRIL — Colorado Rockies ===
+  { date:'2026-04-09', opponent:'Colorado Rockies',    time:'6:40 PM', series:'vs. Rockies (Apr)'                      },
+  { date:'2026-04-10', opponent:'Colorado Rockies',    time:'6:40 PM', series:'vs. Rockies (Apr)'                      },
+  { date:'2026-04-11', opponent:'Colorado Rockies',    time:'5:40 PM', series:'vs. Rockies (Apr)'                      },
+  { date:'2026-04-12', opponent:'Colorado Rockies',    time:'1:10 PM', series:'vs. Rockies (Apr)'                      },
+  // === APRIL — Seattle Mariners ===
+  { date:'2026-04-14', opponent:'Seattle Mariners',    time:'6:40 PM', series:'vs. Mariners (Apr)'                     },
+  { date:'2026-04-15', opponent:'Seattle Mariners',    time:'6:40 PM', series:'vs. Mariners (Apr)'                     },
+  { date:'2026-04-16', opponent:'Seattle Mariners',    time:'5:40 PM', series:'vs. Mariners (Apr)'                     },
+  // === APRIL — Oakland Athletics ===
+  { date:'2026-04-22', opponent:'Oakland Athletics',   time:'6:40 PM', series:'vs. Athletics (Apr)'                    },
+  { date:'2026-04-23', opponent:'Oakland Athletics',   time:'6:40 PM', series:'vs. Athletics (Apr)'                    },
+  { date:'2026-04-24', opponent:'Oakland Athletics',   time:'6:40 PM', series:'vs. Athletics (Apr)'                    },
+  // === APRIL — Chicago Cubs ===
+  { date:'2026-04-27', opponent:'Chicago Cubs',        time:'6:40 PM', series:'vs. Cubs (Apr)'                         },
+  { date:'2026-04-28', opponent:'Chicago Cubs',        time:'6:40 PM', series:'vs. Cubs (Apr)'                         },
+  { date:'2026-04-29', opponent:'Chicago Cubs',        time:'1:10 PM', series:'vs. Cubs (Apr)'                         },
+  // === MAY — Chicago White Sox ===
+  { date:'2026-05-01', opponent:'Chicago White Sox',   time:'6:40 PM', series:'vs. White Sox (May)'                    },
+  { date:'2026-05-02', opponent:'Chicago White Sox',   time:'5:40 PM', series:'vs. White Sox (May)'                    },
+  { date:'2026-05-03', opponent:'Chicago White Sox',   time:'1:10 PM', series:'vs. White Sox (May)'                    },
+  // === MAY — St. Louis Cardinals ===
+  { date:'2026-05-08', opponent:'St. Louis Cardinals', time:'6:40 PM', series:'vs. Cardinals (May)'                    },
+  { date:'2026-05-09', opponent:'St. Louis Cardinals', time:'4:15 PM', series:'vs. Cardinals (May)'                    },
+  { date:'2026-05-10', opponent:'St. Louis Cardinals', time:'1:10 PM', series:'vs. Cardinals (May)'                    },
+  // === MAY — Los Angeles Dodgers ===
+  { date:'2026-05-18', opponent:'Los Angeles Dodgers', time:'6:40 PM', series:'vs. Dodgers (May)'                      },
+  { date:'2026-05-19', opponent:'Los Angeles Dodgers', time:'6:40 PM', series:'vs. Dodgers (May)'                      },
+  { date:'2026-05-20', opponent:'Los Angeles Dodgers', time:'1:10 PM', series:'vs. Dodgers (May)'                      },
+  // === MAY — Oakland Athletics (Star Wars Weekend) ===
+  { date:'2026-05-22', opponent:'Oakland Athletics',   time:'6:40 PM', series:'vs. Athletics (May)'                    },
+  { date:'2026-05-23', opponent:'Oakland Athletics',   time:'5:40 PM', series:'vs. Athletics (May)'                    },
+  { date:'2026-05-24', opponent:'Oakland Athletics',   time:'1:10 PM', series:'vs. Athletics (May)'                    },
+  // === MAY — Philadelphia Phillies (Memorial Day) ===
+  { date:'2026-05-25', opponent:'Philadelphia Phillies',time:'6:40 PM',series:'vs. Phillies (May)'                     },
+  { date:'2026-05-26', opponent:'Philadelphia Phillies',time:'6:40 PM',series:'vs. Phillies (May)'                     },
+  { date:'2026-05-27', opponent:'Philadelphia Phillies',time:'1:10 PM',series:'vs. Phillies (May)'                     },
+  // === MAY — Unknown (May 29-31) ===
+  { date:'2026-05-29', opponent:'TBD — Verify',        time:'6:40 PM', series:'vs. TBD (May 29-31)', needsVerify:true  },
+  { date:'2026-05-30', opponent:'TBD — Verify',        time:'5:40 PM', series:'vs. TBD (May 29-31)', needsVerify:true  },
+  { date:'2026-05-31', opponent:'TBD — Verify',        time:'1:10 PM', series:'vs. TBD (May 29-31)', needsVerify:true  },
+  // === JUNE — New York Mets ===
+  { date:'2026-06-05', opponent:'New York Mets',       time:'6:40 PM', series:'vs. Mets (Jun)'                         },
+  { date:'2026-06-06', opponent:'New York Mets',       time:'7:10 PM', series:'vs. Mets (Jun)'                         },
+  { date:'2026-06-07', opponent:'New York Mets',       time:'1:10 PM', series:'vs. Mets (Jun)'                         },
+  // === JUNE — Cincinnati Reds ===
+  { date:'2026-06-08', opponent:'Cincinnati Reds',     time:'6:40 PM', series:'vs. Reds (Jun)'                         },
+  { date:'2026-06-09', opponent:'Cincinnati Reds',     time:'6:40 PM', series:'vs. Reds (Jun)'                         },
+  { date:'2026-06-10', opponent:'Cincinnati Reds',     time:'1:10 PM', series:'vs. Reds (Jun)'                         },
+  // === JUNE — Unknown mid-June (possibly Pirates/Royals) ===
+  { date:'2026-06-15', opponent:'TBD — Verify',        time:'6:40 PM', series:'vs. TBD (Jun 15-17)', needsVerify:true  },
+  { date:'2026-06-16', opponent:'TBD — Verify',        time:'6:40 PM', series:'vs. TBD (Jun 15-17)', needsVerify:true  },
+  { date:'2026-06-17', opponent:'TBD — Verify',        time:'1:10 PM', series:'vs. TBD (Jun 15-17)', needsVerify:true  },
+  // === JUNE — Atlanta Braves ===
+  { date:'2026-06-22', opponent:'Atlanta Braves',      time:'7:10 PM', series:'vs. Braves (Jun)'                       },
+  { date:'2026-06-23', opponent:'Atlanta Braves',      time:'6:40 PM', series:'vs. Braves (Jun)'                       },
+  { date:'2026-06-24', opponent:'Atlanta Braves',      time:'5:40 PM', series:'vs. Braves (Jun)'                       },
+  // === JUNE — Los Angeles Dodgers ===
+  { date:'2026-06-26', opponent:'Los Angeles Dodgers', time:'6:40 PM', series:'vs. Dodgers (Jun)'                      },
+  { date:'2026-06-27', opponent:'Los Angeles Dodgers', time:'5:40 PM', series:'vs. Dodgers (Jun)'                      },
+  { date:'2026-06-28', opponent:'Los Angeles Dodgers', time:'1:10 PM', series:'vs. Dodgers (Jun)'                      },
+  // === JULY — Arizona Diamondbacks ===
+  { date:'2026-07-06', opponent:'Arizona Diamondbacks',time:'6:40 PM', series:'vs. D-backs (Jul)'                      },
+  { date:'2026-07-07', opponent:'Arizona Diamondbacks',time:'6:40 PM', series:'vs. D-backs (Jul)'                      },
+  { date:'2026-07-08', opponent:'Arizona Diamondbacks',time:'7:10 PM', series:'vs. D-backs (Jul)'                      },
+  { date:'2026-07-09', opponent:'Arizona Diamondbacks',time:'6:40 PM', series:'vs. D-backs (Jul)'                      },
+  // === JULY — Toronto Blue Jays ===
+  { date:'2026-07-10', opponent:'Toronto Blue Jays',   time:'6:40 PM', series:'vs. Blue Jays (Jul)'                    },
+  { date:'2026-07-11', opponent:'Toronto Blue Jays',   time:'5:40 PM', series:'vs. Blue Jays (Jul)'                    },
+  { date:'2026-07-12', opponent:'Toronto Blue Jays',   time:'1:10 PM', series:'vs. Blue Jays (Jul)'                    },
+  // === JULY — Colorado Rockies ===
+  { date:'2026-07-28', opponent:'Colorado Rockies',    time:'6:40 PM', series:'vs. Rockies (Jul)'                      },
+  { date:'2026-07-29', opponent:'Colorado Rockies',    time:'1:10 PM', series:'vs. Rockies (Jul)'                      },
+  // === JULY/AUGUST — San Francisco Giants ===
+  { date:'2026-07-30', opponent:'San Francisco Giants',time:'6:40 PM', series:'vs. Giants (Jul/Aug)'                   },
+  { date:'2026-07-31', opponent:'San Francisco Giants',time:'6:40 PM', series:'vs. Giants (Jul/Aug)'                   },
+  { date:'2026-08-01', opponent:'San Francisco Giants',time:'5:40 PM', series:'vs. Giants (Jul/Aug)'                   },
+  { date:'2026-08-02', opponent:'San Francisco Giants',time:'1:10 PM', series:'vs. Giants (Jul/Aug)'                   },
+  // === AUGUST — Houston Astros ===
+  { date:'2026-08-07', opponent:'Houston Astros',      time:'6:40 PM', series:'vs. Astros (Aug)'                       },
+  { date:'2026-08-08', opponent:'Houston Astros',      time:'4:15 PM', series:'vs. Astros (Aug)'                       },
+  { date:'2026-08-09', opponent:'Houston Astros',      time:'5:20 PM', series:'vs. Astros (Aug)'                       },
+  // === AUGUST — Milwaukee Brewers ===
+  { date:'2026-08-10', opponent:'Milwaukee Brewers',   time:'6:40 PM', series:'vs. Brewers (Aug)'                      },
+  { date:'2026-08-11', opponent:'Milwaukee Brewers',   time:'6:40 PM', series:'vs. Brewers (Aug)'                      },
+  { date:'2026-08-12', opponent:'Milwaukee Brewers',   time:'1:10 PM', series:'vs. Brewers (Aug)'                      },
+  // === AUGUST — Cleveland Guardians ===
+  { date:'2026-08-14', opponent:'Cleveland Guardians', time:'6:40 PM', series:'vs. Guardians (Aug)'                    },
+  { date:'2026-08-15', opponent:'Cleveland Guardians', time:'5:40 PM', series:'vs. Guardians (Aug)'                    },
+  { date:'2026-08-16', opponent:'Cleveland Guardians', time:'1:10 PM', series:'vs. Guardians (Aug)'                    },
+  // === AUGUST — Minnesota Twins ===
+  { date:'2026-08-21', opponent:'Minnesota Twins',     time:'6:40 PM', series:'vs. Twins (Aug)'                        },
+  { date:'2026-08-22', opponent:'Minnesota Twins',     time:'5:40 PM', series:'vs. Twins (Aug)'                        },
+  { date:'2026-08-23', opponent:'Minnesota Twins',     time:'1:10 PM', series:'vs. Twins (Aug)'                        },
+  // === AUGUST — Pittsburgh Pirates ===
+  { date:'2026-08-24', opponent:'Pittsburgh Pirates',  time:'6:40 PM', series:'vs. Pirates (Aug)'                      },
+  { date:'2026-08-25', opponent:'Pittsburgh Pirates',  time:'6:40 PM', series:'vs. Pirates (Aug)'                      },
+  { date:'2026-08-26', opponent:'Pittsburgh Pirates',  time:'1:10 PM', series:'vs. Pirates (Aug)'                      },
+  // === SEPTEMBER — New York Yankees ===
+  { date:'2026-09-04', opponent:'New York Yankees',    time:'6:40 PM', series:'vs. Yankees (Sep)'                      },
+  { date:'2026-09-05', opponent:'New York Yankees',    time:'5:40 PM', series:'vs. Yankees (Sep)'                      },
+  { date:'2026-09-06', opponent:'New York Yankees',    time:'1:10 PM', series:'vs. Yankees (Sep)'                      },
+  // === SEPTEMBER — Washington Nationals (Labor Day) ===
+  { date:'2026-09-07', opponent:'Washington Nationals',time:'6:40 PM', series:'vs. Nationals (Sep)'                    },
+  { date:'2026-09-08', opponent:'Washington Nationals',time:'6:40 PM', series:'vs. Nationals (Sep)'                    },
+  // === SEPTEMBER — Miami Marlins ===
+  { date:'2026-09-18', opponent:'Miami Marlins',       time:'6:40 PM', series:'vs. Marlins (Sep)'                      },
+  { date:'2026-09-19', opponent:'Miami Marlins',       time:'5:40 PM', series:'vs. Marlins (Sep)'                      },
+  { date:'2026-09-20', opponent:'Miami Marlins',       time:'1:10 PM', series:'vs. Marlins (Sep)'                      },
+  // === SEPTEMBER — Arizona Diamondbacks (FINAL HOME SERIES) ===
+  { date:'2026-09-25', opponent:'Arizona Diamondbacks',time:'6:40 PM', series:'vs. D-backs (Sep)'                      },
+  { date:'2026-09-26', opponent:'Arizona Diamondbacks',time:'5:40 PM', series:'vs. D-backs (Sep)'                      },
+  { date:'2026-09-27', opponent:'Arizona Diamondbacks',time:'1:10 PM', series:'vs. D-backs (Sep)', isLastGame:true      },
+];
+
+// ──────────────────────────────────────────────
+// STATE
+// ──────────────────────────────────────────────
+
+const DAY_NAMES = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function initGames() {
+  return SCHEDULE_RAW.map((raw, i) => {
+    const d = new Date(raw.date + 'T12:00:00');
+    const dayName = DAY_NAMES[d.getDay()];
+    const isWeekend = ['Fri','Sat','Sun'].includes(dayName);
+    return {
+      id: `game_${i}`,
+      date: raw.date,
+      displayDate: `${MONTH_NAMES[d.getMonth()]} ${d.getDate()}`,
+      dayName,
+      isWeekend,
+      opponent: raw.opponent,
+      time: raw.time,
+      series: raw.series,
+      isOpeningDay: !!raw.isOpeningDay,
+      isLastGame: !!raw.isLastGame,
+      needsVerify: !!raw.needsVerify,
+      // user-editable
+      status: 'pending',   // 'attend' | 'sell' | 'sold' | 'pending'
+      seatsKept: 4,        // how many seats owner keeps (0,2,4)
+      soldPrice: null,
+      soldPlatform: null,
+      soldNotes: null,
+    };
+  });
+}
+
+function applyAutoStrategy(games) {
+  // Group by series
+  const seriesMap = {};
+  games.forEach(g => {
+    if (!seriesMap[g.series]) seriesMap[g.series] = [];
+    seriesMap[g.series].push(g);
+  });
+
+  // For each series: pick 1 game to attend, rest to sell
+  Object.values(seriesMap).forEach(seriesGames => {
+    // Sort by date
+    seriesGames.sort((a,b) => a.date.localeCompare(b.date));
+
+    // Find the game to keep:
+    // 1. Must-attend (Opening Day / Last Game) always kept
+    // 2. Otherwise: prefer Sat > Sun > Fri > others
+    // 3. Among ties, pick later in series (usually better seats for resale earlier)
+
+    let keepIdx = -1;
+
+    // Check for locked games
+    const lockedIdx = seriesGames.findIndex(g => g.isOpeningDay || g.isLastGame);
+    if (lockedIdx >= 0) {
+      keepIdx = lockedIdx;
+    } else {
+      // Prefer weekend
+      const satIdx = seriesGames.findIndex(g => g.dayName === 'Sat');
+      const sunIdx = seriesGames.findIndex(g => g.dayName === 'Sun');
+      const friIdx = seriesGames.findIndex(g => g.dayName === 'Fri');
+      if (satIdx >= 0) keepIdx = satIdx;
+      else if (sunIdx >= 0) keepIdx = sunIdx;
+      else if (friIdx >= 0) keepIdx = friIdx;
+      else keepIdx = 0; // first game of series
+    }
+
+    seriesGames.forEach((g, idx) => {
+      if (g.status !== 'sold') { // don't overwrite already sold
+        if (idx === keepIdx) {
+          g.status = g.isOpeningDay || g.isLastGame ? 'attend' : 'attend';
+        } else {
+          g.status = 'sell';
+        }
+      }
+    });
+  });
+
+  return games;
+}
+
+let STATE = loadState();
+let pendingSoldGameId = null;
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem('padres_dashboard_2026');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // Merge saved state with fresh schedule (allows adding new games)
+      const fresh = initGames();
+      fresh.forEach(fg => {
+        const match = parsed.games.find(sg => sg.id === fg.id);
+        if (match) {
+          fg.status = match.status;
+          fg.seatsKept = match.seatsKept;
+          fg.soldPrice = match.soldPrice;
+          fg.soldPlatform = match.soldPlatform;
+          fg.soldNotes = match.soldNotes;
+        }
+      });
+      // Add any custom games
+      const customGames = parsed.games.filter(g => g.id.startsWith('custom_'));
+      return { games: [...fresh, ...customGames] };
+    }
+  } catch(e) {}
+  const games = applyAutoStrategy(initGames());
+  return { games };
+}
+
+function saveState() {
+  localStorage.setItem('padres_dashboard_2026', JSON.stringify(STATE));
+}
+
+// ──────────────────────────────────────────────
+// SUMMARY CARDS
+// ──────────────────────────────────────────────
+
+function updateSummary() {
+  const games = STATE.games;
+  const totalGames = games.length;
+  const attendGames = games.filter(g => g.status === 'attend').length;
+  const sellGames   = games.filter(g => g.status === 'sell').length;
+  const soldGames   = games.filter(g => g.status === 'sold').length;
+
+  const actualRevenue = games
+    .filter(g => g.status === 'sold' && g.soldPrice)
+    .reduce((s, g) => s + g.soldPrice, 0);
+
+  const projectedFromUnsold = games
+    .filter(g => g.status === 'sell')
+    .reduce((s, g) => s + calcRecommendedPrice(g, TOTAL_SEATS - g.seatsKept), 0);
+
+  const totalProjected = actualRevenue + projectedFromUnsold;
+  const netCost = COST_BASIS - totalProjected;
+  const pctOffset = Math.min(100, Math.round((totalProjected / COST_BASIS) * 100));
+
+  const pctSell = Math.round(((sellGames + soldGames) / totalGames) * 100);
+
+  document.getElementById('summaryCards').innerHTML = `
+    <div class="card highlight">
+      <div class="label">Season Cost Basis</div>
+      <div class="value">$${COST_BASIS.toLocaleString()}</div>
+      <div class="sub">$${Math.round(COST_BASIS/totalGames/4).toLocaleString()}/seat/game avg</div>
+    </div>
+    <div class="card ${actualRevenue > 0 ? 'green' : ''}">
+      <div class="label">Actual Revenue</div>
+      <div class="value">$${actualRevenue.toLocaleString()}</div>
+      <div class="sub">${soldGames} games sold</div>
+    </div>
+    <div class="card">
+      <div class="label">Projected Revenue</div>
+      <div class="value">$${Math.round(totalProjected).toLocaleString()}</div>
+      <div class="sub">+$${Math.round(projectedFromUnsold).toLocaleString()} from ${sellGames} pending</div>
+    </div>
+    <div class="card ${netCost < 0 ? 'green' : 'red'}">
+      <div class="label">Net Cost (After Sales)</div>
+      <div class="value">$${Math.round(netCost).toLocaleString()}</div>
+      <div class="sub">${pctOffset}% of season offset</div>
+    </div>
+    <div class="card gold">
+      <div class="label">Games Attended</div>
+      <div class="value">${attendGames}</div>
+      <div class="sub">of ${totalGames} home games</div>
+    </div>
+    <div class="card">
+      <div class="label">Sell Rate</div>
+      <div class="value">${pctSell}%</div>
+      <div class="sub">${sellGames + soldGames} games to sell (goal ≥50%)</div>
+    </div>
+  `;
+}
+
+// ──────────────────────────────────────────────
+// TABLE RENDER
+// ──────────────────────────────────────────────
+
+function getFilteredGames() {
+  const status = document.getElementById('filterStatus').value;
+  const month  = document.getElementById('filterMonth').value;
+  const tier   = document.getElementById('filterTier').value;
+
+  return STATE.games.filter(g => {
+    if (status === 'sell'   && g.status !== 'sell') return false;
+    if (status === 'attend' && g.status !== 'attend') return false;
+    if (status === 'sold'   && g.status !== 'sold') return false;
+    if (status === 'unsold' && g.status !== 'sell') return false;
+    if (month !== 'all' && parseInt(g.date.split('-')[1]) !== parseInt(month)) return false;
+    if (tier !== 'all' && (OPPONENT_TIERS[g.opponent] || 4) !== parseInt(tier)) return false;
+    return true;
+  });
+}
+
+function renderTable() {
+  const filtered = getFilteredGames();
+  const tbody = document.getElementById('tableBody');
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="12" style="text-align:center;padding:24px;color:#888">No games match filter</td></tr>';
+    return;
+  }
+
+  let html = '';
+  let lastSeries = null;
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  filtered.forEach(g => {
+    if (g.series !== lastSeries) {
+      html += `<tr class="series-header"><td colspan="12">📅 ${g.series}</td></tr>`;
+      lastSeries = g.series;
+    }
+
+    const tier = OPPONENT_TIERS[g.opponent] || 4;
+    const seatsToSell = g.status === 'attend' || g.status === 'sold' && g.seatsKept > 0
+      ? TOTAL_SEATS - g.seatsKept
+      : g.status === 'sell' ? TOTAL_SEATS : 0;
+    const recPrice = calcRecommendedPrice(g, seatsToSell > 0 ? seatsToSell : TOTAL_SEATS);
+    const listByDate = calcListByDate(g);
+    const listBy = new Date(listByDate + 'T12:00:00');
+    const daysUntilList = Math.ceil((listBy - today) / (1000*60*60*24));
+    const gameDate = new Date(g.date + 'T12:00:00');
+    const daysUntilGame = Math.ceil((gameDate - today) / (1000*60*60*24));
+
+    // Row class
+    let rowClass = '';
+    if (g.isOpeningDay || g.isLastGame) rowClass = 'row-locked';
+    else if (g.status === 'attend') rowClass = 'row-attend';
+
+    // Status badge
+    let statusBadge = '';
+    if (g.isOpeningDay) statusBadge = `<span class="badge-status badge-locked">🔒 Opening Day</span>`;
+    else if (g.isLastGame) statusBadge = `<span class="badge-status badge-locked">🔒 Last Game</span>`;
+    else if (g.status === 'attend') statusBadge = `<span class="badge-status badge-attend">✅ Attend</span>`;
+    else if (g.status === 'sell')   statusBadge = `<span class="badge-status badge-sell">🎟 Sell</span>`;
+    else if (g.status === 'sold')   statusBadge = `<span class="badge-status badge-sold">💰 Sold</span>`;
+
+    // Tier badge
+    const tierBadge = `<span class="badge-tier tier-${tier}">${TIER_LABELS[tier]}</span>`;
+
+    // Special tags
+    let specialTags = '';
+    if (g.needsVerify) specialTags += `<span class="special-tag tag-verify">⚠️ Verify</span>`;
+    if (tier === 1) specialTags += `<span class="special-tag tag-rivalry">🔥 Rivalry</span>`;
+    const d = new Date(g.date + 'T12:00:00');
+    const mo = d.getMonth()+1, dy = d.getDate();
+    if (g.isOpeningDay) specialTags += `<span class="special-tag tag-holiday">⭐ Opening Day</span>`;
+    if (g.isLastGame) specialTags += `<span class="special-tag tag-holiday">⭐ Last Game</span>`;
+    if (mo===5 && dy===25) specialTags += `<span class="special-tag tag-holiday">🇺🇸 Mem. Day</span>`;
+    if (mo===9 && dy===7)  specialTags += `<span class="special-tag tag-holiday">🇺🇸 Labor Day</span>`;
+    if (mo===5 && dy===10) specialTags += `<span class="special-tag tag-holiday">🌸 Mother's Day</span>`;
+    if (mo===4 && dy===15) specialTags += `<span class="special-tag tag-holiday">#42 Jackie Robinson</span>`;
+    if (mo===5 && dy>=22 && dy<=24) specialTags += `<span class="special-tag tag-holiday">🌟 Star Wars</span>`;
+
+    // Listing date display
+    let listDateHtml = '';
+    if (g.status === 'sell') {
+      if (daysUntilList < 0) {
+        listDateHtml = `<span class="list-date list-urgent">⚡ LIST NOW</span>`;
+      } else if (daysUntilList <= 3) {
+        listDateHtml = `<span class="list-date list-urgent">🔴 ${listByDate} (${daysUntilList}d)</span>`;
+      } else if (daysUntilList <= 7) {
+        listDateHtml = `<span class="list-date list-soon">🟡 ${listByDate} (${daysUntilList}d)</span>`;
+      } else {
+        listDateHtml = `<span class="list-date list-ok">🟢 ${listByDate}</span>`;
+      }
+    } else if (g.status === 'sold') {
+      listDateHtml = `<span class="note">sold</span>`;
+    } else {
+      listDateHtml = '—';
+    }
+
+    // Recommended price
+    let priceHtml = '';
+    if (g.status === 'sell') {
+      const seatsS = TOTAL_SEATS - g.seatsKept;
+      const recP = calcRecommendedPrice(g, seatsS > 0 ? seatsS : TOTAL_SEATS);
+      const perSeat = Math.round(recP / (seatsS > 0 ? seatsS : TOTAL_SEATS));
+      priceHtml = `<span class="price">$${recP.toLocaleString()}</span><br><span class="note">($${perSeat}/seat)</span>`;
+    } else if (g.status === 'sold' && g.soldPrice) {
+      priceHtml = `<span class="price" style="color:var(--green)">$${g.soldPrice.toLocaleString()}</span><br><span class="note">${g.soldPlatform||''}</span>`;
+    } else {
+      priceHtml = '—';
+    }
+
+    // Actual sale
+    let actualHtml = g.status === 'sold' && g.soldPrice
+      ? `<span style="color:var(--green);font-weight:700">$${g.soldPrice.toLocaleString()}</span>`
+      : '—';
+
+    // Seats kept toggle (only for attend/sell)
+    let seatsKeptHtml = '—';
+    if (g.status === 'attend') {
+      seatsKeptHtml = `
+        <div class="seats-toggle">
+          ${[2,4].map(n => `<button class="seat-btn ${g.seatsKept===n?'active':''}"
+            onclick="setSeatsKept('${g.id}',${n})">${n}</button>`).join('')}
+        </div>`;
+    } else if (g.status === 'sell') {
+      seatsKeptHtml = `<span class="note">0 kept</span>`;
+    } else if (g.status === 'sold') {
+      seatsKeptHtml = g.seatsKept > 0 ? `<span class="note">${g.seatsKept} kept</span>` : `<span class="note">all sold</span>`;
+    }
+
+    // Seats for sale
+    let seatsForSaleHtml = '—';
+    if (g.status === 'sell') {
+      seatsForSaleHtml = `<strong>${TOTAL_SEATS - g.seatsKept}</strong>`;
+    } else if (g.status === 'attend' && g.seatsKept < TOTAL_SEATS) {
+      seatsForSaleHtml = `<strong>${TOTAL_SEATS - g.seatsKept}</strong>`;
+    }
+
+    // Actions
+    let actionsHtml = '<div class="action-group">';
+    if (!g.isOpeningDay && !g.isLastGame) {
+      if (g.status !== 'attend') {
+        actionsHtml += `<button class="btn-sm btn-attend" onclick="setStatus('${g.id}','attend')">Keep</button>`;
+      }
+      if (g.status !== 'sell') {
+        actionsHtml += `<button class="btn-sm btn-sell-mark" onclick="setStatus('${g.id}','sell')">Sell</button>`;
+      }
+    }
+    if (g.status === 'sell') {
+      actionsHtml += `<button class="btn-sm btn-sold" onclick="openSoldModal('${g.id}')">Mark Sold</button>`;
+    }
+    if (g.status === 'sold') {
+      actionsHtml += `<button class="btn-sm btn-outline" onclick="undoSold('${g.id}')">Undo</button>`;
+    }
+    actionsHtml += '</div>';
+
+    // Past game indicator
+    const isPast = daysUntilGame < 0;
+    const rowStyle = isPast ? 'opacity:0.55' : '';
+
+    html += `
+      <tr class="${rowClass}" style="${rowStyle}">
+        <td><strong>${g.displayDate}</strong>${isPast ? ' <span class="note">(past)</span>':''}</td>
+        <td>${g.dayName}</td>
+        <td>${g.opponent}${specialTags}</td>
+        <td>${g.time}</td>
+        <td>${tierBadge} <span class="note">${TIER_NAMES[tier]}</span></td>
+        <td>${statusBadge}</td>
+        <td>${seatsKeptHtml}</td>
+        <td>${seatsForSaleHtml}</td>
+        <td>${priceHtml}</td>
+        <td>${listDateHtml}</td>
+        <td>${actualHtml}</td>
+        <td>${actionsHtml}</td>
+      </tr>`;
+  });
+
+  tbody.innerHTML = html;
+  updateSummary();
+}
+
+// ──────────────────────────────────────────────
+// ACTIONS
+// ──────────────────────────────────────────────
+
+function setStatus(id, status) {
+  const g = STATE.games.find(g => g.id === id);
+  if (!g) return;
+  if (g.isOpeningDay || g.isLastGame) return;
+  g.status = status;
+  if (status === 'sell') g.seatsKept = 0;
+  if (status === 'attend') g.seatsKept = 4;
+  saveState();
+  renderTable();
+}
+
+function setSeatsKept(id, seats) {
+  const g = STATE.games.find(g => g.id === id);
+  if (!g) return;
+  g.seatsKept = seats;
+  saveState();
+  renderTable();
+}
+
+function openSoldModal(id) {
+  pendingSoldGameId = id;
+  document.getElementById('soldPriceInput').value = '';
+  document.getElementById('soldNotes').value = '';
+  document.getElementById('soldModal').classList.add('active');
+  document.getElementById('soldPriceInput').focus();
+}
+
+function confirmSold() {
+  const price = parseFloat(document.getElementById('soldPriceInput').value);
+  if (!price || price <= 0) { alert('Enter a valid sale price.'); return; }
+  const platform = document.getElementById('soldPlatform').value;
+  const notes = document.getElementById('soldNotes').value;
+  const g = STATE.games.find(g => g.id === pendingSoldGameId);
+  if (g) {
+    g.status = 'sold';
+    g.soldPrice = price;
+    g.soldPlatform = platform;
+    g.soldNotes = notes;
+    g.seatsKept = 0;
+  }
+  saveState();
+  closeModal('soldModal');
+  renderTable();
+}
+
+function undoSold(id) {
+  const g = STATE.games.find(g => g.id === id);
+  if (!g) return;
+  g.status = 'sell';
+  g.soldPrice = null;
+  g.soldPlatform = null;
+  g.soldNotes = null;
+  g.seatsKept = 0;
+  saveState();
+  renderTable();
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+}
+
+let customGameCounter = 0;
+function openAddModal() {
+  document.getElementById('addDate').value = '';
+  document.getElementById('addOpponent').value = '';
+  document.getElementById('addTime').value = '6:40 PM';
+  document.getElementById('addSeries').value = '';
+  document.getElementById('addModal').classList.add('active');
+}
+
+function confirmAdd() {
+  const date = document.getElementById('addDate').value;
+  const opponent = document.getElementById('addOpponent').value.trim();
+  const time = document.getElementById('addTime').value.trim();
+  const series = document.getElementById('addSeries').value.trim();
+  if (!date || !opponent) { alert('Date and opponent are required.'); return; }
+  const d = new Date(date + 'T12:00:00');
+  const dayName = DAY_NAMES[d.getDay()];
+  customGameCounter++;
+  const newGame = {
+    id: `custom_${Date.now()}`,
+    date,
+    displayDate: `${MONTH_NAMES[d.getMonth()]} ${d.getDate()}`,
+    dayName,
+    isWeekend: ['Fri','Sat','Sun'].includes(dayName),
+    opponent,
+    time: time || '6:40 PM',
+    series: series || `vs. ${opponent}`,
+    isOpeningDay: false,
+    isLastGame: false,
+    needsVerify: false,
+    status: 'sell',
+    seatsKept: 0,
+    soldPrice: null,
+    soldPlatform: null,
+    soldNotes: null,
+  };
+  STATE.games.push(newGame);
+  STATE.games.sort((a,b) => a.date.localeCompare(b.date));
+  saveState();
+  closeModal('addModal');
+  renderTable();
+}
+
+function exportCSV() {
+  const headers = ['Date','Day','Opponent','Time','Tier','Status','Seats Kept','Seats for Sale','Rec. Price','List By','Sold Price','Platform'];
+  const rows = STATE.games.map(g => {
+    const tier = OPPONENT_TIERS[g.opponent] || 4;
+    const seatsToSell = g.status === 'sell' ? TOTAL_SEATS - g.seatsKept : g.status === 'attend' ? TOTAL_SEATS - g.seatsKept : 0;
+    return [
+      g.date, g.dayName, g.opponent, g.time,
+      `T${tier}`, g.status, g.seatsKept, seatsToSell > 0 ? seatsToSell : 0,
+      g.status === 'sell' ? calcRecommendedPrice(g, seatsToSell || 4) : '',
+      g.status === 'sell' ? calcListByDate(g) : '',
+      g.soldPrice || '', g.soldPlatform || ''
+    ];
+  });
+  const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'padres_2026_tickets.csv';
+  a.click();
+}
+
+function resetAll() {
+  if (!confirm('Reset all game statuses to auto-strategy? Sold games will be lost.')) return;
+  const games = applyAutoStrategy(initGames());
+  STATE = { games };
+  saveState();
+  renderTable();
+}
+
+// Close modals on overlay click
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target === el) el.classList.remove('active'); });
+});
+
+// ──────────────────────────────────────────────
+// INIT
+// ──────────────────────────────────────────────
+
+// If no saved state, apply auto strategy
+if (!localStorage.getItem('padres_dashboard_2026')) {
+  STATE.games = applyAutoStrategy(STATE.games);
+  saveState();
+}
+
+renderTable();
+</script>
+</body>
+</html>
