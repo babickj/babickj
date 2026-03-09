@@ -513,126 +513,112 @@ function calcListByDate(game) {
 // Format: { id, date, opponent, time, series, isOpeningDay, isLastGame, needsVerify }
 const SCHEDULE_RAW = [
   // === MARCH — Detroit Tigers (Opening Series) ===
-  { date:'2026-03-26', opponent:'Detroit Tigers',      time:'1:10 PM', series:'vs. Tigers (Mar)',    isOpeningDay:true  },
-  { date:'2026-03-27', opponent:'Detroit Tigers',      time:'6:40 PM', series:'vs. Tigers (Mar)'                       },
-  { date:'2026-03-28', opponent:'Detroit Tigers',      time:'5:40 PM', series:'vs. Tigers (Mar)'                       },
+  { date:'2026-03-26', opponent:'Detroit Tigers',       time:'1:10 PM', series:'vs. Tigers (Mar)',       isOpeningDay:true },
+  { date:'2026-03-27', opponent:'Detroit Tigers',       time:'6:40 PM', series:'vs. Tigers (Mar)'                         },
+  { date:'2026-03-28', opponent:'Detroit Tigers',       time:'5:40 PM', series:'vs. Tigers (Mar)'                         },
   // === MARCH/APRIL — San Francisco Giants ===
-  { date:'2026-03-30', opponent:'San Francisco Giants',time:'6:40 PM', series:'vs. Giants (Mar/Apr)'                   },
-  { date:'2026-03-31', opponent:'San Francisco Giants',time:'6:40 PM', series:'vs. Giants (Mar/Apr)'                   },
-  { date:'2026-04-01', opponent:'San Francisco Giants',time:'1:10 PM', series:'vs. Giants (Mar/Apr)'                   },
+  { date:'2026-03-30', opponent:'San Francisco Giants', time:'6:40 PM', series:'vs. Giants (Mar/Apr)'                     },
+  { date:'2026-03-31', opponent:'San Francisco Giants', time:'6:40 PM', series:'vs. Giants (Mar/Apr)'                     },
+  { date:'2026-04-01', opponent:'San Francisco Giants', time:'1:10 PM', series:'vs. Giants (Mar/Apr)'                     },
   // === APRIL — Colorado Rockies ===
-  { date:'2026-04-09', opponent:'Colorado Rockies',    time:'6:40 PM', series:'vs. Rockies (Apr)'                      },
-  { date:'2026-04-10', opponent:'Colorado Rockies',    time:'6:40 PM', series:'vs. Rockies (Apr)'                      },
-  { date:'2026-04-11', opponent:'Colorado Rockies',    time:'5:40 PM', series:'vs. Rockies (Apr)'                      },
-  { date:'2026-04-12', opponent:'Colorado Rockies',    time:'1:10 PM', series:'vs. Rockies (Apr)'                      },
-  // === APRIL — Seattle Mariners ===
-  { date:'2026-04-14', opponent:'Seattle Mariners',    time:'6:40 PM', series:'vs. Mariners (Apr)'                     },
-  { date:'2026-04-15', opponent:'Seattle Mariners',    time:'6:40 PM', series:'vs. Mariners (Apr)'                     },
-  { date:'2026-04-16', opponent:'Seattle Mariners',    time:'5:40 PM', series:'vs. Mariners (Apr)'                     },
-  // === APRIL — Oakland Athletics ===
-  { date:'2026-04-22', opponent:'Oakland Athletics',   time:'6:40 PM', series:'vs. Athletics (Apr)'                    },
-  { date:'2026-04-23', opponent:'Oakland Athletics',   time:'6:40 PM', series:'vs. Athletics (Apr)'                    },
-  { date:'2026-04-24', opponent:'Oakland Athletics',   time:'6:40 PM', series:'vs. Athletics (Apr)'                    },
+  { date:'2026-04-09', opponent:'Colorado Rockies',     time:'6:40 PM', series:'vs. Rockies (Apr)'                        },
+  { date:'2026-04-10', opponent:'Colorado Rockies',     time:'6:40 PM', series:'vs. Rockies (Apr)'                        },
+  { date:'2026-04-11', opponent:'Colorado Rockies',     time:'5:40 PM', series:'vs. Rockies (Apr)'                        },
+  { date:'2026-04-12', opponent:'Colorado Rockies',     time:'1:10 PM', series:'vs. Rockies (Apr)'                        },
+  // === APRIL — Seattle Mariners (Apr 13-15, Mon-Wed) ===
+  { date:'2026-04-13', opponent:'Seattle Mariners',     time:'6:40 PM', series:'vs. Mariners (Apr)'                       },
+  { date:'2026-04-14', opponent:'Seattle Mariners',     time:'6:40 PM', series:'vs. Mariners (Apr)'                       },
+  { date:'2026-04-15', opponent:'Seattle Mariners',     time:'5:40 PM', series:'vs. Mariners (Apr)'                       },
   // === APRIL — Chicago Cubs ===
-  { date:'2026-04-27', opponent:'Chicago Cubs',        time:'6:40 PM', series:'vs. Cubs (Apr)'                         },
-  { date:'2026-04-28', opponent:'Chicago Cubs',        time:'6:40 PM', series:'vs. Cubs (Apr)'                         },
-  { date:'2026-04-29', opponent:'Chicago Cubs',        time:'1:10 PM', series:'vs. Cubs (Apr)'                         },
+  { date:'2026-04-27', opponent:'Chicago Cubs',         time:'6:40 PM', series:'vs. Cubs (Apr)'                           },
+  { date:'2026-04-28', opponent:'Chicago Cubs',         time:'6:40 PM', series:'vs. Cubs (Apr)'                           },
+  { date:'2026-04-29', opponent:'Chicago Cubs',         time:'6:40 PM', series:'vs. Cubs (Apr)'                           },
   // === MAY — Chicago White Sox ===
-  { date:'2026-05-01', opponent:'Chicago White Sox',   time:'6:40 PM', series:'vs. White Sox (May)'                    },
-  { date:'2026-05-02', opponent:'Chicago White Sox',   time:'5:40 PM', series:'vs. White Sox (May)'                    },
-  { date:'2026-05-03', opponent:'Chicago White Sox',   time:'1:10 PM', series:'vs. White Sox (May)'                    },
-  // === MAY — St. Louis Cardinals ===
-  { date:'2026-05-08', opponent:'St. Louis Cardinals', time:'6:40 PM', series:'vs. Cardinals (May)'                    },
-  { date:'2026-05-09', opponent:'St. Louis Cardinals', time:'4:15 PM', series:'vs. Cardinals (May)'                    },
-  { date:'2026-05-10', opponent:'St. Louis Cardinals', time:'1:10 PM', series:'vs. Cardinals (May)'                    },
+  { date:'2026-05-01', opponent:'Chicago White Sox',    time:'6:40 PM', series:'vs. White Sox (May)'                      },
+  { date:'2026-05-02', opponent:'Chicago White Sox',    time:'5:40 PM', series:'vs. White Sox (May)'                      },
+  { date:'2026-05-03', opponent:'Chicago White Sox',    time:'1:10 PM', series:'vs. White Sox (May)'                      },
+  // === MAY — St. Louis Cardinals (May 7-10, Thu-Sun) ===
+  { date:'2026-05-07', opponent:'St. Louis Cardinals',  time:'7:10 PM', series:'vs. Cardinals (May)'                      },
+  { date:'2026-05-08', opponent:'St. Louis Cardinals',  time:'6:40 PM', series:'vs. Cardinals (May)'                      },
+  { date:'2026-05-09', opponent:'St. Louis Cardinals',  time:'4:15 PM', series:'vs. Cardinals (May)'                      },
+  { date:'2026-05-10', opponent:'St. Louis Cardinals',  time:'1:10 PM', series:'vs. Cardinals (May)'                      },
   // === MAY — Los Angeles Dodgers ===
-  { date:'2026-05-18', opponent:'Los Angeles Dodgers', time:'6:40 PM', series:'vs. Dodgers (May)'                      },
-  { date:'2026-05-19', opponent:'Los Angeles Dodgers', time:'6:40 PM', series:'vs. Dodgers (May)'                      },
-  { date:'2026-05-20', opponent:'Los Angeles Dodgers', time:'1:10 PM', series:'vs. Dodgers (May)'                      },
+  { date:'2026-05-18', opponent:'Los Angeles Dodgers',  time:'6:40 PM', series:'vs. Dodgers (May)'                        },
+  { date:'2026-05-19', opponent:'Los Angeles Dodgers',  time:'6:40 PM', series:'vs. Dodgers (May)'                        },
+  { date:'2026-05-20', opponent:'Los Angeles Dodgers',  time:'5:40 PM', series:'vs. Dodgers (May)'                        },
   // === MAY — Oakland Athletics (Star Wars Weekend) ===
-  { date:'2026-05-22', opponent:'Oakland Athletics',   time:'6:40 PM', series:'vs. Athletics (May)'                    },
-  { date:'2026-05-23', opponent:'Oakland Athletics',   time:'5:40 PM', series:'vs. Athletics (May)'                    },
-  { date:'2026-05-24', opponent:'Oakland Athletics',   time:'1:10 PM', series:'vs. Athletics (May)'                    },
-  // === MAY — Philadelphia Phillies (Memorial Day) ===
-  { date:'2026-05-25', opponent:'Philadelphia Phillies',time:'6:40 PM',series:'vs. Phillies (May)'                     },
-  { date:'2026-05-26', opponent:'Philadelphia Phillies',time:'6:40 PM',series:'vs. Phillies (May)'                     },
-  { date:'2026-05-27', opponent:'Philadelphia Phillies',time:'1:10 PM',series:'vs. Phillies (May)'                     },
-  // === MAY — Unknown (May 29-31) ===
-  { date:'2026-05-29', opponent:'TBD — Verify',        time:'6:40 PM', series:'vs. TBD (May 29-31)', needsVerify:true  },
-  { date:'2026-05-30', opponent:'TBD — Verify',        time:'5:40 PM', series:'vs. TBD (May 29-31)', needsVerify:true  },
-  { date:'2026-05-31', opponent:'TBD — Verify',        time:'1:10 PM', series:'vs. TBD (May 29-31)', needsVerify:true  },
+  { date:'2026-05-22', opponent:'Oakland Athletics',    time:'6:40 PM', series:'vs. Athletics (May)'                      },
+  { date:'2026-05-23', opponent:'Oakland Athletics',    time:'5:40 PM', series:'vs. Athletics (May)'                      },
+  { date:'2026-05-24', opponent:'Oakland Athletics',    time:'1:10 PM', series:'vs. Athletics (May)'                      },
+  // === MAY — Philadelphia Phillies (Memorial Day Mon start) ===
+  { date:'2026-05-25', opponent:'Philadelphia Phillies',time:'3:40 PM', series:'vs. Phillies (May)'                       },
+  { date:'2026-05-26', opponent:'Philadelphia Phillies',time:'6:40 PM', series:'vs. Phillies (May)'                       },
+  { date:'2026-05-27', opponent:'Philadelphia Phillies',time:'1:10 PM', series:'vs. Phillies (May)'                       },
   // === JUNE — New York Mets ===
-  { date:'2026-06-05', opponent:'New York Mets',       time:'6:40 PM', series:'vs. Mets (Jun)'                         },
-  { date:'2026-06-06', opponent:'New York Mets',       time:'7:10 PM', series:'vs. Mets (Jun)'                         },
-  { date:'2026-06-07', opponent:'New York Mets',       time:'1:10 PM', series:'vs. Mets (Jun)'                         },
+  { date:'2026-06-05', opponent:'New York Mets',        time:'6:40 PM', series:'vs. Mets (Jun)'                           },
+  { date:'2026-06-06', opponent:'New York Mets',        time:'7:10 PM', series:'vs. Mets (Jun)'                           },
+  { date:'2026-06-07', opponent:'New York Mets',        time:'1:10 PM', series:'vs. Mets (Jun)'                           },
   // === JUNE — Cincinnati Reds ===
-  { date:'2026-06-08', opponent:'Cincinnati Reds',     time:'6:40 PM', series:'vs. Reds (Jun)'                         },
-  { date:'2026-06-09', opponent:'Cincinnati Reds',     time:'6:40 PM', series:'vs. Reds (Jun)'                         },
-  { date:'2026-06-10', opponent:'Cincinnati Reds',     time:'1:10 PM', series:'vs. Reds (Jun)'                         },
-  // === JUNE — Unknown mid-June (possibly Pirates/Royals) ===
-  { date:'2026-06-15', opponent:'TBD — Verify',        time:'6:40 PM', series:'vs. TBD (Jun 15-17)', needsVerify:true  },
-  { date:'2026-06-16', opponent:'TBD — Verify',        time:'6:40 PM', series:'vs. TBD (Jun 15-17)', needsVerify:true  },
-  { date:'2026-06-17', opponent:'TBD — Verify',        time:'1:10 PM', series:'vs. TBD (Jun 15-17)', needsVerify:true  },
+  { date:'2026-06-08', opponent:'Cincinnati Reds',      time:'6:40 PM', series:'vs. Reds (Jun)'                           },
+  { date:'2026-06-09', opponent:'Cincinnati Reds',      time:'6:40 PM', series:'vs. Reds (Jun)'                           },
+  { date:'2026-06-10', opponent:'Cincinnati Reds',      time:'1:10 PM', series:'vs. Reds (Jun)'                           },
   // === JUNE — Atlanta Braves ===
-  { date:'2026-06-22', opponent:'Atlanta Braves',      time:'7:10 PM', series:'vs. Braves (Jun)'                       },
-  { date:'2026-06-23', opponent:'Atlanta Braves',      time:'6:40 PM', series:'vs. Braves (Jun)'                       },
-  { date:'2026-06-24', opponent:'Atlanta Braves',      time:'5:40 PM', series:'vs. Braves (Jun)'                       },
+  { date:'2026-06-22', opponent:'Atlanta Braves',       time:'7:10 PM', series:'vs. Braves (Jun)'                         },
+  { date:'2026-06-23', opponent:'Atlanta Braves',       time:'6:40 PM', series:'vs. Braves (Jun)'                         },
+  { date:'2026-06-24', opponent:'Atlanta Braves',       time:'5:40 PM', series:'vs. Braves (Jun)'                         },
   // === JUNE — Los Angeles Dodgers ===
-  { date:'2026-06-26', opponent:'Los Angeles Dodgers', time:'6:40 PM', series:'vs. Dodgers (Jun)'                      },
-  { date:'2026-06-27', opponent:'Los Angeles Dodgers', time:'5:40 PM', series:'vs. Dodgers (Jun)'                      },
-  { date:'2026-06-28', opponent:'Los Angeles Dodgers', time:'1:10 PM', series:'vs. Dodgers (Jun)'                      },
+  { date:'2026-06-26', opponent:'Los Angeles Dodgers',  time:'6:40 PM', series:'vs. Dodgers (Jun)'                        },
+  { date:'2026-06-27', opponent:'Los Angeles Dodgers',  time:'5:40 PM', series:'vs. Dodgers (Jun)'                        },
+  { date:'2026-06-28', opponent:'Los Angeles Dodgers',  time:'1:10 PM', series:'vs. Dodgers (Jun)'                        },
   // === JULY — Arizona Diamondbacks ===
-  { date:'2026-07-06', opponent:'Arizona Diamondbacks',time:'6:40 PM', series:'vs. D-backs (Jul)'                      },
-  { date:'2026-07-07', opponent:'Arizona Diamondbacks',time:'6:40 PM', series:'vs. D-backs (Jul)'                      },
-  { date:'2026-07-08', opponent:'Arizona Diamondbacks',time:'7:10 PM', series:'vs. D-backs (Jul)'                      },
-  { date:'2026-07-09', opponent:'Arizona Diamondbacks',time:'6:40 PM', series:'vs. D-backs (Jul)'                      },
+  { date:'2026-07-06', opponent:'Arizona Diamondbacks', time:'6:40 PM', series:'vs. D-backs (Jul)'                        },
+  { date:'2026-07-07', opponent:'Arizona Diamondbacks', time:'6:40 PM', series:'vs. D-backs (Jul)'                        },
+  { date:'2026-07-08', opponent:'Arizona Diamondbacks', time:'7:10 PM', series:'vs. D-backs (Jul)'                        },
+  { date:'2026-07-09', opponent:'Arizona Diamondbacks', time:'6:40 PM', series:'vs. D-backs (Jul)'                        },
   // === JULY — Toronto Blue Jays ===
-  { date:'2026-07-10', opponent:'Toronto Blue Jays',   time:'6:40 PM', series:'vs. Blue Jays (Jul)'                    },
-  { date:'2026-07-11', opponent:'Toronto Blue Jays',   time:'5:40 PM', series:'vs. Blue Jays (Jul)'                    },
-  { date:'2026-07-12', opponent:'Toronto Blue Jays',   time:'1:10 PM', series:'vs. Blue Jays (Jul)'                    },
+  { date:'2026-07-10', opponent:'Toronto Blue Jays',    time:'6:40 PM', series:'vs. Blue Jays (Jul)'                      },
+  { date:'2026-07-11', opponent:'Toronto Blue Jays',    time:'5:40 PM', series:'vs. Blue Jays (Jul)'                      },
+  { date:'2026-07-12', opponent:'Toronto Blue Jays',    time:'1:10 PM', series:'vs. Blue Jays (Jul)'                      },
   // === JULY — Colorado Rockies ===
-  { date:'2026-07-28', opponent:'Colorado Rockies',    time:'6:40 PM', series:'vs. Rockies (Jul)'                      },
-  { date:'2026-07-29', opponent:'Colorado Rockies',    time:'1:10 PM', series:'vs. Rockies (Jul)'                      },
-  // === JULY/AUGUST — San Francisco Giants ===
-  { date:'2026-07-30', opponent:'San Francisco Giants',time:'6:40 PM', series:'vs. Giants (Jul/Aug)'                   },
-  { date:'2026-07-31', opponent:'San Francisco Giants',time:'6:40 PM', series:'vs. Giants (Jul/Aug)'                   },
-  { date:'2026-08-01', opponent:'San Francisco Giants',time:'5:40 PM', series:'vs. Giants (Jul/Aug)'                   },
-  { date:'2026-08-02', opponent:'San Francisco Giants',time:'1:10 PM', series:'vs. Giants (Jul/Aug)'                   },
+  { date:'2026-07-28', opponent:'Colorado Rockies',     time:'6:40 PM', series:'vs. Rockies (Jul)'                        },
+  { date:'2026-07-29', opponent:'Colorado Rockies',     time:'1:10 PM', series:'vs. Rockies (Jul)'                        },
+  // === JULY/AUGUST — San Francisco Giants (4-game series) ===
+  { date:'2026-07-30', opponent:'San Francisco Giants', time:'6:40 PM', series:'vs. Giants (Jul/Aug)'                     },
+  { date:'2026-07-31', opponent:'San Francisco Giants', time:'6:40 PM', series:'vs. Giants (Jul/Aug)'                     },
+  { date:'2026-08-01', opponent:'San Francisco Giants', time:'5:40 PM', series:'vs. Giants (Jul/Aug)'                     },
+  { date:'2026-08-02', opponent:'San Francisco Giants', time:'1:10 PM', series:'vs. Giants (Jul/Aug)'                     },
   // === AUGUST — Houston Astros ===
-  { date:'2026-08-07', opponent:'Houston Astros',      time:'6:40 PM', series:'vs. Astros (Aug)'                       },
-  { date:'2026-08-08', opponent:'Houston Astros',      time:'4:15 PM', series:'vs. Astros (Aug)'                       },
-  { date:'2026-08-09', opponent:'Houston Astros',      time:'5:20 PM', series:'vs. Astros (Aug)'                       },
+  { date:'2026-08-07', opponent:'Houston Astros',       time:'6:40 PM', series:'vs. Astros (Aug)'                         },
+  { date:'2026-08-08', opponent:'Houston Astros',       time:'5:40 PM', series:'vs. Astros (Aug)'                         },
+  { date:'2026-08-09', opponent:'Houston Astros',       time:'1:10 PM', series:'vs. Astros (Aug)'                         },
   // === AUGUST — Milwaukee Brewers ===
-  { date:'2026-08-10', opponent:'Milwaukee Brewers',   time:'6:40 PM', series:'vs. Brewers (Aug)'                      },
-  { date:'2026-08-11', opponent:'Milwaukee Brewers',   time:'6:40 PM', series:'vs. Brewers (Aug)'                      },
-  { date:'2026-08-12', opponent:'Milwaukee Brewers',   time:'1:10 PM', series:'vs. Brewers (Aug)'                      },
-  // === AUGUST — Cleveland Guardians ===
-  { date:'2026-08-14', opponent:'Cleveland Guardians', time:'6:40 PM', series:'vs. Guardians (Aug)'                    },
-  { date:'2026-08-15', opponent:'Cleveland Guardians', time:'5:40 PM', series:'vs. Guardians (Aug)'                    },
-  { date:'2026-08-16', opponent:'Cleveland Guardians', time:'1:10 PM', series:'vs. Guardians (Aug)'                    },
+  { date:'2026-08-10', opponent:'Milwaukee Brewers',    time:'6:40 PM', series:'vs. Brewers (Aug)'                        },
+  { date:'2026-08-11', opponent:'Milwaukee Brewers',    time:'6:40 PM', series:'vs. Brewers (Aug)'                        },
+  { date:'2026-08-12', opponent:'Milwaukee Brewers',    time:'1:10 PM', series:'vs. Brewers (Aug)'                        },
   // === AUGUST — Minnesota Twins ===
-  { date:'2026-08-21', opponent:'Minnesota Twins',     time:'6:40 PM', series:'vs. Twins (Aug)'                        },
-  { date:'2026-08-22', opponent:'Minnesota Twins',     time:'5:40 PM', series:'vs. Twins (Aug)'                        },
-  { date:'2026-08-23', opponent:'Minnesota Twins',     time:'1:10 PM', series:'vs. Twins (Aug)'                        },
+  { date:'2026-08-21', opponent:'Minnesota Twins',      time:'6:40 PM', series:'vs. Twins (Aug)'                          },
+  { date:'2026-08-22', opponent:'Minnesota Twins',      time:'5:40 PM', series:'vs. Twins (Aug)'                          },
+  { date:'2026-08-23', opponent:'Minnesota Twins',      time:'1:10 PM', series:'vs. Twins (Aug)'                          },
   // === AUGUST — Pittsburgh Pirates ===
-  { date:'2026-08-24', opponent:'Pittsburgh Pirates',  time:'6:40 PM', series:'vs. Pirates (Aug)'                      },
-  { date:'2026-08-25', opponent:'Pittsburgh Pirates',  time:'6:40 PM', series:'vs. Pirates (Aug)'                      },
-  { date:'2026-08-26', opponent:'Pittsburgh Pirates',  time:'1:10 PM', series:'vs. Pirates (Aug)'                      },
+  { date:'2026-08-24', opponent:'Pittsburgh Pirates',   time:'6:40 PM', series:'vs. Pirates (Aug)'                        },
+  { date:'2026-08-25', opponent:'Pittsburgh Pirates',   time:'6:40 PM', series:'vs. Pirates (Aug)'                        },
+  { date:'2026-08-26', opponent:'Pittsburgh Pirates',   time:'1:10 PM', series:'vs. Pirates (Aug)'                        },
   // === SEPTEMBER — New York Yankees ===
-  { date:'2026-09-04', opponent:'New York Yankees',    time:'6:40 PM', series:'vs. Yankees (Sep)'                      },
-  { date:'2026-09-05', opponent:'New York Yankees',    time:'5:40 PM', series:'vs. Yankees (Sep)'                      },
-  { date:'2026-09-06', opponent:'New York Yankees',    time:'1:10 PM', series:'vs. Yankees (Sep)'                      },
-  // === SEPTEMBER — Washington Nationals (Labor Day) ===
-  { date:'2026-09-07', opponent:'Washington Nationals',time:'6:40 PM', series:'vs. Nationals (Sep)'                    },
-  { date:'2026-09-08', opponent:'Washington Nationals',time:'6:40 PM', series:'vs. Nationals (Sep)'                    },
+  { date:'2026-09-04', opponent:'New York Yankees',     time:'6:40 PM', series:'vs. Yankees (Sep)'                        },
+  { date:'2026-09-05', opponent:'New York Yankees',     time:'5:40 PM', series:'vs. Yankees (Sep)'                        },
+  { date:'2026-09-06', opponent:'New York Yankees',     time:'1:10 PM', series:'vs. Yankees (Sep)'                        },
+  // === SEPTEMBER — Washington Nationals (Labor Day Mon + 2) ===
+  { date:'2026-09-07', opponent:'Washington Nationals', time:'2:10 PM', series:'vs. Nationals (Sep)'                      },
+  { date:'2026-09-08', opponent:'Washington Nationals', time:'6:40 PM', series:'vs. Nationals (Sep)'                      },
+  { date:'2026-09-09', opponent:'Washington Nationals', time:'1:10 PM', series:'vs. Nationals (Sep)'                      },
   // === SEPTEMBER — Miami Marlins ===
-  { date:'2026-09-18', opponent:'Miami Marlins',       time:'6:40 PM', series:'vs. Marlins (Sep)'                      },
-  { date:'2026-09-19', opponent:'Miami Marlins',       time:'5:40 PM', series:'vs. Marlins (Sep)'                      },
-  { date:'2026-09-20', opponent:'Miami Marlins',       time:'1:10 PM', series:'vs. Marlins (Sep)'                      },
+  { date:'2026-09-18', opponent:'Miami Marlins',        time:'6:40 PM', series:'vs. Marlins (Sep)'                        },
+  { date:'2026-09-19', opponent:'Miami Marlins',        time:'5:40 PM', series:'vs. Marlins (Sep)'                        },
+  { date:'2026-09-20', opponent:'Miami Marlins',        time:'1:10 PM', series:'vs. Marlins (Sep)'                        },
   // === SEPTEMBER — Arizona Diamondbacks (FINAL HOME SERIES) ===
-  { date:'2026-09-25', opponent:'Arizona Diamondbacks',time:'6:40 PM', series:'vs. D-backs (Sep)'                      },
-  { date:'2026-09-26', opponent:'Arizona Diamondbacks',time:'5:40 PM', series:'vs. D-backs (Sep)'                      },
-  { date:'2026-09-27', opponent:'Arizona Diamondbacks',time:'1:10 PM', series:'vs. D-backs (Sep)', isLastGame:true      },
+  { date:'2026-09-25', opponent:'Arizona Diamondbacks', time:'6:40 PM', series:'vs. D-backs (Sep)'                        },
+  { date:'2026-09-26', opponent:'Arizona Diamondbacks', time:'5:40 PM', series:'vs. D-backs (Sep)'                        },
+  { date:'2026-09-27', opponent:'Arizona Diamondbacks', time:'12:10 PM',series:'vs. D-backs (Sep)',  isLastGame:true       },
 ];
 
 // ──────────────────────────────────────────────
@@ -723,7 +709,7 @@ let pendingSoldGameId = null;
 
 function loadState() {
   try {
-    const saved = localStorage.getItem('padres_dashboard_2026');
+    const saved = localStorage.getItem('padres_dashboard_2026_v2_v2');
     if (saved) {
       const parsed = JSON.parse(saved);
       // Merge saved state with fresh schedule (allows adding new games)
@@ -748,7 +734,7 @@ function loadState() {
 }
 
 function saveState() {
-  localStorage.setItem('padres_dashboard_2026', JSON.stringify(STATE));
+  localStorage.setItem('padres_dashboard_2026_v2', JSON.stringify(STATE));
 }
 
 // ──────────────────────────────────────────────
@@ -1138,7 +1124,7 @@ document.querySelectorAll('.modal-overlay').forEach(el => {
 // ──────────────────────────────────────────────
 
 // If no saved state, apply auto strategy
-if (!localStorage.getItem('padres_dashboard_2026')) {
+if (!localStorage.getItem('padres_dashboard_2026_v2')) {
   STATE.games = applyAutoStrategy(STATE.games);
   saveState();
 }
