@@ -80,8 +80,8 @@ def extract_text(file_path: Path) -> List[Tuple[str, int]]:
 
 
 def chunk_text(text: str, chunk_size: int = None, overlap: int = None) -> List[str]:
-    chunk_size = chunk_size or app_config.chunk_size
-    overlap = overlap or app_config.chunk_overlap
+    chunk_size = min(chunk_size or app_config.chunk_size, 200)  # cap at 200 words regardless of config
+    overlap = min(overlap or app_config.chunk_overlap, chunk_size // 4)
     words = text.split()
     chunks = []
     i = 0
