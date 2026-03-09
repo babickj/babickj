@@ -22,8 +22,8 @@ class OllamaEmbeddings:
     def embed_query(self, text: str) -> List[float]:
         return self._embed(text)
 
-    # nomic-embed-text num_ctx=8192; 4000 chars ≈ 1000 tokens, well within limit
-    _MAX_CHARS = 4000
+    # BERT tokenizer: ~4 chars/token; 800 chars ≈ 200 tokens max, safe for any context
+    _MAX_CHARS = 800
 
     def _embed(self, text: str) -> List[float]:
         text = (text or "").strip()
