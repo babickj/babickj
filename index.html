@@ -276,7 +276,7 @@
     <h1>⚾ Padres Ticket Dashboard</h1>
     <div class="subtitle">Agave Club · Row 1 · Seats 24–27 · 2026 Season</div>
   </div>
-  <span class="badge">Season Cost: $72,000</span>
+  <span class="badge">Season Cost: $78,000</span>
 </div>
 
 <div class="summary" id="summaryCards"></div>
@@ -342,8 +342,8 @@
     <li><strong>Standard weekend games (Tier 3–4):</strong> List 2–3 weeks out. Price competitively; Agave Club unlimited food/beverage is a major selling point — mention it in the listing.</li>
     <li><strong>Weekday / low-demand games:</strong> List 1–2 weeks out. Consider pricing slightly below comparable seats to move quickly.</li>
     <li><strong>SeatGeek tips:</strong> Set a "Deal Score" minimum of 70. Always mention <em>"Agave Club — unlimited food & non-alcoholic drinks included"</em> in your listing notes. Row 1 commands a 15–25% premium over other rows.</li>
-    <li><strong>Price floor:</strong> At $72,000 / 81 games / 4 seats = <strong>$222/seat cost basis</strong>. Avoid selling 4-seat sets below $800 total on low-tier games.</li>
-    <li><strong>Re-price trigger:</strong> If unsold 72 hours before game, drop 12–15%. If unsold 24 hours before, drop to cost basis.</li>
+    <li><strong>Cost basis:</strong> $78,000 / 81 games / 4 seats = <strong>$240/seat</strong>. Low-tier weekday games will likely sell below cost — that's expected. Selling at a small loss beats an empty seat at zero.</li>
+    <li><strong>Re-price trigger:</strong> If unsold 72 hours before game, drop 10–12%. If unsold 24 hours before, drop to market floor and move it.</li>
   </ul>
 </div>
 
@@ -394,9 +394,9 @@
 // DATA: 2026 PADRES HOME SCHEDULE
 // ──────────────────────────────────────────────
 
-const COST_BASIS = 72000;
+const COST_BASIS = 78000;
 const TOTAL_SEATS = 4;
-const COST_PER_SEAT = COST_BASIS / 81 / TOTAL_SEATS; // ~$222/seat per game
+const COST_PER_SEAT = COST_BASIS / 81 / TOTAL_SEATS; // ~$240/seat per game
 
 // Opponent tiers (for pricing)
 const OPPONENT_TIERS = {
@@ -437,16 +437,18 @@ const OPPONENT_TIERS = {
 const TIER_LABELS = { 1:'T1', 2:'T2', 3:'T3', 4:'T4', 5:'T5' };
 const TIER_NAMES = { 1:'Premium', 2:'High', 3:'Good', 4:'Standard', 5:'Low' };
 
-// Base price per seat for Agave Club Row 1 (reflect club value)
-const BASE_SEAT_PRICE = 275;
+// Base price per seat — calibrated to Agave Club Row 1 secondary market
+// (all-inclusive food/drink included; price to sell, not to maximize)
+const BASE_SEAT_PRICE = 200;
 
-// Tier multipliers
-const TIER_MULT = { 1: 3.2, 2: 2.2, 3: 1.6, 4: 1.1, 5: 0.85 };
+// Tier multipliers — scaled for realistic sell-through
+// Tier 1: ~$300-500/seat  Tier 3: ~$190-260  Tier 5: ~$100-150
+const TIER_MULT = { 1: 1.8, 2: 1.3, 3: 1.0, 4: 0.75, 5: 0.58 };
 
 // Day of week multipliers
 const DAY_MULT = {
-  'Sat': 1.45, 'Sun': 1.25, 'Fri': 1.15,
-  'Mon': 1.0, 'Tue': 0.95, 'Wed': 0.95, 'Thu': 1.0
+  'Sat': 1.35, 'Sun': 1.2, 'Fri': 1.1,
+  'Mon': 0.95, 'Tue': 0.9, 'Wed': 0.9, 'Thu': 0.95
 };
 
 // Special game multipliers
@@ -472,7 +474,7 @@ function specialMult(game) {
 // Month multipliers (playoff race premium in Sept)
 function monthMult(dateStr) {
   const mo = parseInt(dateStr.split('-')[1]);
-  const mult = { 3:1.3, 4:1.1, 5:1.15, 6:1.05, 7:1.15, 8:1.1, 9:1.25 };
+  const mult = { 3:1.1, 4:1.0, 5:1.05, 6:0.95, 7:1.05, 8:1.0, 9:1.1 };
   return mult[mo] || 1.0;
 }
 
@@ -709,7 +711,7 @@ let pendingSoldGameId = null;
 
 function loadState() {
   try {
-    const saved = localStorage.getItem('padres_dashboard_2026_v2_v2');
+    const saved = localStorage.getItem('padres_dashboard_2026_v3_v2');
     if (saved) {
       const parsed = JSON.parse(saved);
       // Merge saved state with fresh schedule (allows adding new games)
@@ -734,7 +736,7 @@ function loadState() {
 }
 
 function saveState() {
-  localStorage.setItem('padres_dashboard_2026_v2', JSON.stringify(STATE));
+  localStorage.setItem('padres_dashboard_2026_v3', JSON.stringify(STATE));
 }
 
 // ──────────────────────────────────────────────
@@ -1124,7 +1126,7 @@ document.querySelectorAll('.modal-overlay').forEach(el => {
 // ──────────────────────────────────────────────
 
 // If no saved state, apply auto strategy
-if (!localStorage.getItem('padres_dashboard_2026_v2')) {
+if (!localStorage.getItem('padres_dashboard_2026_v3')) {
   STATE.games = applyAutoStrategy(STATE.games);
   saveState();
 }
