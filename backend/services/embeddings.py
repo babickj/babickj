@@ -23,22 +23,30 @@ class OllamaEmbeddings:
         return self._embed(text)
 
     def _embed(self, text: str) -> List[float]:
+        import logging
+        log = logging.getLogger(__name__)
         with httpx.Client(timeout=60.0) as client:
             # Try new /api/embed endpoint first (Ollama >= 0.1.26)
             resp = client.post(
                 f"{self.base_url}/api/embed",
                 json={"model": self.model, "input": text},
             )
+            log.warning("EMBED /api/embed status=%s body=%s", resp.status_code, resp.text[:300])
             if resp.status_code == 200:
                 data = resp.json()
                 # New API returns {"embeddings": [[...float...]]}
-                embeddings = data.get("embeddings")
-                if embeddings:
-                    return embeddings[0]
+                # Some versions return flat list, others return nested list
+                raw = data.get("embeddings") or data.get("embedding")
+                if raw:
+                    # Handle both [[...]] and [...] formats
+                    if isinstance(raw[0], list):
+                        return raw[0]
+                    return raw
             # Fall back to legacy /api/embeddings endpoint
-            resp = client.post(
+            resp2 = client.post(
                 f"{self.base_url}/api/embeddings",
                 json={"model": self.model, "prompt": text},
             )
-            resp.raise_for_status()
-            return resp.json()["embedding"]
+            log.warning("EMBED /api/embeddings status=%s body=%s", resp2.status_code, resp2.text[:300])
+            resp2.raise_for_status()
+            return resp2.json()["embedding"]
