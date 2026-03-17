@@ -1,12 +1,12 @@
 {
   "name": "isat-db-connection",
   "version": "1.0.0",
-  "description": "Node.js connection to ISATTactical SQL Server database",
+  "description": "Node.js ODBC connection to ISATTactical Access database",
   "main": "isat-db-connect.js",
   "scripts": {
     "start": "node isat-db-connect.js"
   },
   "dependencies": {
-    "mssql": "^11.0.1"
+    "odbc": "^2.4.9"
   }
 }
