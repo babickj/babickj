@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>FireCommand AI — Field Tablet</title>
+<style>
+  :root {
+    --fire: #ff4500;
+    --fire2: #ff7b00;
+    --ember: #ffb347;
+    --critical: #ff2244;
+    --warn: #ffaa00;
+    --info: #00c8ff;
+    --safe: #00e676;
+    --bg: #060a0e;
+    --panel: #0c1420;
+    --border: #1a2e48;
+    --text: #d0dff0;
+    --muted: #5a7a99;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    background: linear-gradient(90deg, #0a0f18, #141f35, #0a0f18);
+    border-bottom: 2px solid var(--fire);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 0 20px rgba(255,69,0,0.4);
+    flex-shrink: 0;
+  }
+  .logo { font-size: 16px; font-weight: 800; color: var(--fire); letter-spacing: 1px; text-shadow: 0 0 12px rgba(255,69,0,0.7); }
+  .unit-select-wrap { display: flex; align-items: center; gap: 8px; }
+  .unit-select-wrap label { font-size: 11px; color: var(--muted); }
+  select {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 700;
+    outline: none;
+  }
+  .conn-dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: #444;
+  }
+  .conn-dot.connected { background: var(--safe); box-shadow: 0 0 8px var(--safe); }
+
+  /* Alert bar */
+  .alert-bar {
+    background: rgba(255,34,68,0.15);
+    border-bottom: 1px solid var(--critical);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--critical);
+    animation: pulse-bg 2s ease-in-out infinite;
+  }
+  .alert-bar.hidden { display: none; }
+  @keyframes pulse-bg { 0%,100%{background:rgba(255,34,68,0.1)} 50%{background:rgba(255,34,68,0.25)} }
+  .alert-icon { font-size: 18px; animation: shake 0.5s ease infinite alternate; }
+  @keyframes shake { 0%{transform:rotate(-5deg)} 100%{transform:rotate(5deg)} }
+
+  /* Main scroll area */
+  main { flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 10px; }
+  main::-webkit-scrollbar { width: 4px; }
+  main::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* Section cards */
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .card-header {
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 14px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .card-dot.fire  { background: var(--fire); box-shadow: 0 0 6px var(--fire); }
+  .card-dot.safe  { background: var(--safe); box-shadow: 0 0 6px var(--safe); }
+  .card-dot.info  { background: var(--info); box-shadow: 0 0 6px var(--info); }
+  .card-dot.warn  { background: var(--warn); box-shadow: 0 0 6px var(--warn); }
+  .card-body { padding: 12px 14px; }
+
+  /* AI Recommendation */
+  .ai-card { border-color: rgba(255,69,0,0.5); }
+  .ai-card .card-header { background: rgba(255,69,0,0.07); border-color: rgba(255,69,0,0.3); }
+  .ai-pulse { width: 9px; height: 9px; border-radius: 50%; background: var(--fire); box-shadow: 0 0 8px var(--fire); animation: pulse 1.5s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.5)} }
+  .ai-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+    white-space: pre-wrap;
+    min-height: 60px;
+  }
+  .ai-text.loading { color: var(--muted); font-style: italic; font-size: 13px; }
+  .ai-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .ai-ts { font-size: 10px; color: var(--muted); }
+  .refresh-btn {
+    background: rgba(255,69,0,0.15);
+    border: 1px solid rgba(255,69,0,0.4);
+    border-radius: 5px;
+    color: var(--fire2);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 12px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+  }
+  .refresh-btn:active { background: rgba(255,69,0,0.3); transform: scale(0.97); }
+  .refresh-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* Conditions grid */
+  .cond-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cond-cell {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+    text-align: center;
+  }
+  .cond-cell.danger { border-color: var(--critical); background: rgba(255,34,68,0.08); }
+  .cond-cell.warn   { border-color: var(--warn);     background: rgba(255,170,0,0.08); }
+  .cond-val { font-size: 26px; font-weight: 800; line-height: 1; color: var(--fire2); }
+  .cond-val.danger { color: var(--critical); }
+  .cond-val.warn   { color: var(--warn); }
+  .cond-val.safe   { color: var(--safe); }
+  .cond-unit { font-size: 10px; color: var(--muted); }
+  .cond-lbl  { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-top: 3px; }
+
+  /* Wind direction */
+  .wind-row { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 8px; }
+  .mini-compass {
+    width: 50px; height: 50px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    background: rgba(0,0,0,0.3);
+    position: relative;
+    flex-shrink: 0;
+  }
+  .mini-arrow {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 2px; height: 20px;
+    background: linear-gradient(to bottom, var(--fire), transparent);
+    transform-origin: bottom center;
+    transform: translate(-50%, -100%);
+    transition: transform 1s ease;
+    border-radius: 1px;
+  }
+  .wind-text { text-align: center; }
+  .wind-dir-big { font-size: 24px; font-weight: 800; color: var(--fire2); }
+  .wind-desc { font-size: 10px; color: var(--muted); }
+
+  /* Incident status */
+  .status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(26,46,72,0.5);
+  }
+  .status-row:last-child { border-bottom: none; }
+  .status-lbl { color: var(--muted); font-size: 12px; }
+  .status-val { font-weight: 700; font-size: 13px; }
+  .status-val.crit  { color: var(--critical); }
+  .status-val.warn  { color: var(--warn); }
+  .status-val.safe  { color: var(--safe); }
+  .status-val.info  { color: var(--info); }
+  .status-val.fire  { color: var(--fire2); }
+
+  .contain-bar-wrap { margin-top: 6px; }
+  .contain-bar-bg {
+    width: 100%; height: 8px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .contain-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--safe), #00ff88);
+    box-shadow: 0 0 8px rgba(0,230,118,0.5);
+    border-radius: 4px;
+    transition: width 1s ease;
+  }
+
+  /* Events */
+  .event-item {
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(26,46,72,0.4);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .event-item:last-child { border-bottom: none; }
+  .ev-time { font-size: 10px; color: var(--muted); min-width: 34px; padding-top: 1px; }
+  .ev-badge {
+    font-size: 8px;
+    font-weight: 800;
+    padding: 2px 5px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .ev-badge.CRITICAL { background: rgba(255,34,68,0.2); color: var(--critical); border: 1px solid var(--critical); }
+  .ev-badge.HIGH     { background: rgba(255,120,0,0.2); color: var(--fire2);    border: 1px solid var(--fire2); }
+  .ev-badge.MEDIUM   { background: rgba(255,170,0,0.15);color: var(--warn);     border: 1px solid var(--warn); }
+  .ev-badge.INFO     { background: rgba(0,200,255,0.1); color: var(--info);     border: 1px solid var(--info); }
+  .ev-msg { font-size: 12px; color: var(--text); line-height: 1.4; }
+
+  /* SOS button */
+  .sos-btn {
+    width: 100%;
+    padding: 16px;
+    background: rgba(255,34,68,0.15);
+    border: 2px solid var(--critical);
+    border-radius: 8px;
+    color: var(--critical);
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-shadow: 0 0 10px rgba(255,34,68,0.5);
+  }
+  .sos-btn:active { background: rgba(255,34,68,0.35); transform: scale(0.98); }
+
+  footer {
+    padding: 8px 16px;
+    background: var(--panel);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">🔥 FIRECOMMAND AI</div>
+  <div class="unit-select-wrap">
+    <label>UNIT:</label>
+    <select id="unit-select">
+      <option value="E-14">E-14 Engine</option>
+      <option value="E-22">E-22 Engine</option>
+      <option value="D-3">D-3 Dozer</option>
+      <option value="H-1">H-1 Helicopter</option>
+      <option value="H-2">H-2 Helicopter</option>
+      <option value="T-7">T-7 Tender</option>
+    </select>
+    <div class="conn-dot" id="conn-dot"></div>
+  </div>
+</header>
+
+<div class="alert-bar hidden" id="alert-bar">
+  <span class="alert-icon">🚨</span>
+  <span id="alert-text">CRITICAL ALERT</span>
+</div>
+
+<main>
+
+  <!-- AI Recommendation -->
+  <div class="card ai-card">
+    <div class="card-header"><div class="ai-pulse"></div>AI TACTICAL RECOMMENDATION</div>
+    <div class="card-body">
+      <div class="ai-text loading" id="ai-text">Connecting to command AI…</div>
+      <div class="ai-footer">
+        <span class="ai-ts" id="ai-ts">—</span>
+        <button class="refresh-btn" id="refresh-btn" onclick="requestRecommendation()">⟳ REFRESH</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Current Conditions -->
+  <div class="card">
+    <div class="card-header"><div class="card-dot warn"></div>LOCAL CONDITIONS</div>
+    <div class="card-body">
+      <div class="cond-grid">
+        <div class="cond-cell" id="wind-cell">
+          <div class="cond-val" id="c-wind">—</div>
+          <div class="cond-unit">mph</div>
+          <div class="cond-lbl">Wind</div>
+        </div>
+        <div class="cond-cell" id="gust-cell">
+          <div class="cond-val" id="c-gust">—</div>
+          <div class="cond-unit">mph</div>
+          <div class="cond-lbl">Gusts</div>
+        </div>
+        <div class="cond-cell" id="rh-cell">
+          <div class="cond-val" id="c-rh">—</div>
+          <div class="cond-unit">%</div>
+          <div class="cond-lbl">Humidity</div>
+        </div>
+        <div class="cond-cell" id="temp-cell">
+          <div class="cond-val" id="c-temp">—</div>
+          <div class="cond-unit">°F</div>
+          <div class="cond-lbl">Temp</div>
+        </div>
+      </div>
+      <div class="wind-row">
+        <div class="mini-compass">
+          <div class="mini-arrow" id="mini-arrow"></div>
+        </div>
+        <div class="wind-text">
+          <div class="wind-dir-big" id="c-winddir">—</div>
+          <div class="wind-desc">WIND DIRECTION</div>
+          <div class="wind-desc" id="c-ros" style="color:var(--warn);font-weight:700;margin-top:4px">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Incident Status -->
+  <div class="card">
+    <div class="card-header"><div class="card-dot fire"></div>INCIDENT STATUS</div>
+    <div class="card-body">
+      <div class="status-row">
+        <span class="status-lbl">Incident</span>
+        <span class="status-val info" id="s-incident">—</span>
+      </div>
+      <div class="status-row">
+        <span class="status-lbl">Acres burned</span>
+        <span class="status-val fire" id="s-acres">—</span>
+      </div>
+      <div class="status-row">
+        <span class="status-lbl">Structures threatened</span>
+        <span class="status-val warn" id="s-struct">—</span>
+      </div>
+      <div class="status-row">
+        <span class="status-lbl">Road closures</span>
+        <span class="status-val crit" id="s-roads">—</span>
+      </div>
+      <div class="status-row">
+        <span class="status-lbl">Water main</span>
+        <span class="status-val" id="s-water">—</span>
+      </div>
+      <div class="contain-bar-wrap">
+        <div class="status-row" style="border:none;padding-bottom:4px">
+          <span class="status-lbl">Containment</span>
+          <span class="status-val safe" id="s-contain">—</span>
+        </div>
+        <div class="contain-bar-bg"><div class="contain-bar-fill" id="contain-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Events -->
+  <div class="card">
+    <div class="card-header"><div class="card-dot info"></div>RECENT EVENTS</div>
+    <div class="card-body" id="events-list" style="padding:0 14px"></div>
+  </div>
+
+  <!-- SOS -->
+  <button class="sos-btn" onclick="sendSOS()">🆘 EMERGENCY — SOS TO COMMAND</button>
+
+</main>
+
+<footer>
+  <span id="f-unit">Unit: —</span>
+  <span id="f-incident">—</span>
+  <span id="f-time">—</span>
+</footer>
+
+<script>
+const unitSelect = document.getElementById('unit-select');
+let ws, simState = null, reconnectDelay = 1000;
+let lastAIRefresh = 0;
+
+function getUnit() { return unitSelect.value; }
+
+// Clock
+function tick() {
+  document.getElementById('f-time').textContent =
+    new Date().toLocaleTimeString('en-US', {hour12:false});
+}
+setInterval(tick, 1000); tick();
+
+// WebSocket
+function connect() {
+  if (ws && ws.readyState < 2) ws.close();
+  const unit = getUnit();
+  ws = new WebSocket(`ws://${location.host}/ws/tablet/${encodeURIComponent(unit)}`);
+
+  ws.onopen = () => {
+    reconnectDelay = 1000;
+    document.getElementById('conn-dot').className = 'conn-dot connected';
+  };
+  ws.onclose = () => {
+    document.getElementById('conn-dot').className = 'conn-dot';
+    setTimeout(connect, Math.min(reconnectDelay *= 2, 10000));
+  };
+  ws.onmessage = e => {
+    const msg = JSON.parse(e.data);
+    if (msg.type === 'state') updateUI(msg.data);
+    if (msg.type === 'ai') {
+      document.getElementById('ai-text').textContent = msg.recommendation;
+      document.getElementById('ai-text').classList.remove('loading');
+      document.getElementById('ai-ts').textContent = 'Updated ' + new Date().toLocaleTimeString('en-US',{hour12:false});
+    }
+  };
+}
+connect();
+unitSelect.addEventListener('change', () => { connect(); requestRecommendation(); });
+
+function updateUI(s) {
+  simState = s;
+
+  // Conditions
+  const ws_ = s.wind_speed, gu = s.wind_gust, rh = s.humidity, tmp = s.temperature;
+  document.getElementById('c-wind').textContent   = ws_;
+  document.getElementById('c-gust').textContent   = gu;
+  document.getElementById('c-rh').textContent     = rh;
+  document.getElementById('c-temp').textContent   = tmp;
+  document.getElementById('c-winddir').textContent = s.wind_dir;
+  document.getElementById('c-ros').textContent    = s.rate_of_spread + ' SPREAD';
+
+  // Color coding
+  document.getElementById('wind-cell').className = 'cond-cell' + (ws_ > 25 ? ' danger' : ws_ > 15 ? ' warn' : '');
+  document.getElementById('gust-cell').className = 'cond-cell' + (gu > 35 ? ' danger' : gu > 25 ? ' warn' : '');
+  document.getElementById('rh-cell').className   = 'cond-cell' + (rh < 12 ? ' danger' : rh < 20 ? ' warn' : '');
+  document.getElementById('temp-cell').className = 'cond-cell' + (tmp > 100 ? ' danger' : tmp > 90 ? ' warn' : '');
+  document.getElementById('c-wind').className = 'cond-val' + (ws_ > 25 ? ' danger' : ws_ > 15 ? ' warn' : '');
+  document.getElementById('c-gust').className = 'cond-val' + (gu > 35 ? ' danger' : gu > 25 ? ' warn' : '');
+  document.getElementById('c-rh').className   = 'cond-val' + (rh < 12 ? ' danger' : rh < 20 ? ' warn' : '');
+  document.getElementById('c-temp').className = 'cond-val' + (tmp > 100 ? ' danger' : tmp > 90 ? ' warn' : '');
+
+  // Wind compass
+  const dirMap = {N:180,NE:225,E:270,SE:315,S:0,SW:45,W:90,NW:135};
+  const deg = dirMap[s.wind_dir] || 0;
+  document.getElementById('mini-arrow').style.transform = `translate(-50%,-100%) rotate(${deg}deg)`;
+
+  // Alert bar
+  const alertBar = document.getElementById('alert-bar');
+  if (s.red_flag || s.water_main_break || s.rate_of_spread === 'EXTREME') {
+    alertBar.classList.remove('hidden');
+    const msgs = [];
+    if (s.red_flag)                        msgs.push('RED FLAG — extreme fire weather');
+    if (s.water_main_break)                msgs.push('WATER MAIN BREAK — reduced hydrant pressure');
+    if (s.rate_of_spread === 'EXTREME')    msgs.push('EXTREME rate of spread');
+    document.getElementById('alert-text').textContent = msgs.join(' | ');
+  } else {
+    alertBar.classList.add('hidden');
+  }
+
+  // Incident status
+  document.getElementById('s-incident').textContent  = s.incident;
+  document.getElementById('s-acres').textContent     = s.acres_burned.toLocaleString() + ' acres';
+  document.getElementById('s-struct').textContent    = s.structures_threatened + ' structures';
+  document.getElementById('s-roads').textContent     = s.road_closures.join(', ');
+  const wm = document.getElementById('s-water');
+  wm.textContent  = s.water_main_break ? '⚠ BREAK ACTIVE' : '✓ Operational';
+  wm.className    = 'status-val ' + (s.water_main_break ? 'crit' : 'safe');
+  document.getElementById('s-contain').textContent   = s.containment_pct + '%';
+  document.getElementById('contain-fill').style.width = s.containment_pct + '%';
+
+  // Events
+  const el = document.getElementById('events-list');
+  el.innerHTML = s.events.slice(0,6).map(ev => `
+    <div class="event-item">
+      <span class="ev-time">${ev.time}</span>
+      <span class="ev-badge ${ev.severity}">${ev.severity}</span>
+      <span class="ev-msg">${ev.msg}</span>
+    </div>
+  `).join('');
+
+  // Footer
+  document.getElementById('f-unit').textContent     = 'Unit: ' + getUnit();
+  document.getElementById('f-incident').textContent = s.incident;
+}
+
+async function requestRecommendation() {
+  const now = Date.now();
+  if (now - lastAIRefresh < 5000) return; // debounce
+  lastAIRefresh = now;
+
+  const btn = document.getElementById('refresh-btn');
+  btn.disabled = true;
+  btn.textContent = '⟳ THINKING…';
+  document.getElementById('ai-text').textContent = 'Analyzing your position and current conditions…';
+  document.getElementById('ai-text').classList.add('loading');
+
+  try {
+    const body = {
+      unit_id: getUnit(),
+      lat: 50 + Math.random() * 10,
+      lon: 50 + Math.random() * 10,
+      conditions: simState ? {
+        wind_speed: simState.wind_speed,
+        wind_dir:   simState.wind_dir,
+        humidity:   simState.humidity,
+      } : {},
+    };
+    const res  = await fetch('/api/tablet/recommend', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    document.getElementById('ai-text').textContent = data.recommendation;
+    document.getElementById('ai-text').classList.remove('loading');
+    document.getElementById('ai-ts').textContent = 'Updated ' + new Date().toLocaleTimeString('en-US',{hour12:false});
+  } catch (e) {
+    document.getElementById('ai-text').textContent = 'Unable to reach command AI — use last known guidance.';
+    document.getElementById('ai-text').classList.add('loading');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '⟳ REFRESH';
+  }
+}
+
+function sendSOS() {
+  if (ws && ws.readyState === 1) {
+    ws.send(JSON.stringify({type:'sos', unit: getUnit(), time: new Date().toISOString()}));
+  }
+  alert('🆘 SOS TRANSMITTED TO COMMAND\n\nUnit: ' + getUnit() + '\nTime: ' + new Date().toLocaleTimeString());
+}
+
+// Auto-refresh AI on connect
+setTimeout(requestRecommendation, 2000);
+</script>
+</body>
+</html>
