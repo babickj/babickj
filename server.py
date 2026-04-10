@@ -334,6 +334,41 @@ async def api_state():
     return state_snapshot()
 
 
+@app.post("/api/chat")
+async def chat(body: dict):
+    """General LLM chat with fire state injected as system context."""
+    messages = body.get("messages", [])
+    s = state
+    system = f"""You are FireCommand AI, an intelligent assistant embedded in a wildfire incident command center.
+
+Current incident: {s['incident']} at {s['location']}
+Fire status: {s['acres_burned']:,} acres burned, {s['containment_pct']}% contained, {s['rate_of_spread']} rate of spread
+Weather: Wind {s['wind_speed']} mph (gusts {s['wind_gust']}) from {s['wind_dir']}, {s['humidity']}% RH, {s['temperature']}°F
+Resources: {s['ground_units']} ground units, {s['aircraft']} aircraft, {s['dozers']} dozers, {s['water_tenders']} water tenders
+Infrastructure: Water main break: {'YES' if s['water_main_break'] else 'No'} | Roads closed: {', '.join(s['road_closures'])}
+Active hotspots: {', '.join(h['label'] for h in s['hotspots'])}
+
+Answer questions concisely. When asked for recommendations or analysis, reference the live data above."""
+
+    try:
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            resp = await client.post(
+                f"{LLM_BASE}/v1/chat/completions",
+                json={
+                    "model": "default",
+                    "messages": [{"role": "system", "content": system}] + messages,
+                    "max_tokens": 400,
+                    "temperature": 0.5,
+                },
+            )
+            resp.raise_for_status()
+            data = resp.json()
+            reply = data["choices"][0]["message"]["content"].strip()
+            return {"reply": reply}
+    except Exception as e:
+        return {"reply": f"[LLM unavailable — check port 8001] Error: {str(e)[:80]}"}
+
+
 @app.post("/api/tablet/recommend")
 async def tablet_recommend(body: dict):
     unit_id = body.get("unit_id", "FIELD")
