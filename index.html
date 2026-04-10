@@ -6,19 +6,18 @@
 <title>FireCommand AI — Incident Command Center</title>
 <style>
   :root {
-    --fire: #ff4500;
-    --fire2: #ff7b00;
-    --ember: #ffb347;
-    --critical: #ff2244;
-    --warn: #ffaa00;
-    --info: #00c8ff;
-    --safe: #00e676;
-    --bg: #080c10;
-    --panel: #0d1520;
-    --panel2: #111d2e;
-    --border: #1e3050;
-    --text: #d0dff0;
-    --muted: #5a7a99;
+    --fire: #e05a20;
+    --fire2: #d97020;
+    --critical: #d63040;
+    --warn: #c89010;
+    --info: #2080c0;
+    --safe: #20a060;
+    --bg: #111418;
+    --panel: #181c22;
+    --panel2: #1c2028;
+    --border: #2a3040;
+    --text: #c8d4e0;
+    --muted: #607080;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -34,91 +33,54 @@
 
   /* ── Header ── */
   header {
-    background: linear-gradient(90deg, #0a0f18 0%, #12203a 50%, #0a0f18 100%);
-    border-bottom: 1px solid var(--fire);
+    background: var(--panel2);
+    border-bottom: 1px solid var(--border);
     padding: 0 16px;
-    height: 52px;
+    height: 48px;
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 20px;
     flex-shrink: 0;
-    box-shadow: 0 0 30px rgba(255,69,0,0.3);
   }
   .logo {
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     color: var(--fire);
-    text-shadow: 0 0 20px rgba(255,69,0,0.8);
     white-space: nowrap;
   }
-  .logo span { color: var(--ember); }
   .incident-badge {
-    background: rgba(255,34,68,0.15);
-    border: 1px solid var(--critical);
-    border-radius: 4px;
-    padding: 4px 12px;
+    background: rgba(214,48,64,0.12);
+    border: 1px solid rgba(214,48,64,0.4);
+    border-radius: 3px;
+    padding: 3px 10px;
     font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
     color: var(--critical);
-    text-shadow: 0 0 10px rgba(255,34,68,0.6);
-    animation: pulse-border 2s ease-in-out infinite;
-  }
-  @keyframes pulse-border {
-    0%,100% { box-shadow: 0 0 6px rgba(255,34,68,0.4); }
-    50% { box-shadow: 0 0 16px rgba(255,34,68,0.8); }
-  }
-  .header-stats {
-    display: flex;
-    gap: 20px;
-    margin-left: auto;
-  }
-  .hstat {
-    text-align: center;
-    min-width: 70px;
-  }
-  .hstat .val {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--fire2);
-    line-height: 1;
-  }
-  .hstat .lbl {
-    font-size: 9px;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 2px;
-  }
-  .clock {
-    font-size: 22px;
-    font-weight: 300;
-    color: var(--text);
-    letter-spacing: 2px;
-    min-width: 80px;
-    text-align: right;
   }
   .red-flag-banner {
-    background: rgba(255,34,68,0.12);
-    border: 1px solid var(--critical);
+    background: rgba(214,48,64,0.1);
+    border: 1px solid rgba(214,48,64,0.35);
     border-radius: 3px;
     padding: 3px 10px;
     font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 2px;
+    font-weight: 600;
     color: var(--critical);
-    animation: blink 1.5s step-end infinite;
   }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .header-stats { display: flex; gap: 24px; margin-left: auto; }
+  .hstat { text-align: center; min-width: 64px; }
+  .hstat .val { font-size: 17px; font-weight: 600; color: var(--text); line-height: 1; }
+  .hstat .lbl { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+  .clock { font-size: 18px; font-weight: 400; color: var(--muted); letter-spacing: 1px; }
 
-  /* ── Main grid ── */
+  /* ── Layout ── */
   .main {
     display: grid;
-    grid-template-columns: 240px 1fr 280px;
-    grid-template-rows: 1fr 180px;
-    gap: 6px;
-    padding: 6px;
+    grid-template-columns: 220px 1fr 300px;
+    grid-template-rows: 1fr 160px;
+    gap: 5px;
+    padding: 5px;
     flex: 1;
     overflow: hidden;
   }
@@ -127,7 +89,7 @@
   .panel {
     background: var(--panel);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: 4px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -135,289 +97,181 @@
   .panel-title {
     background: var(--panel2);
     border-bottom: 1px solid var(--border);
-    padding: 6px 12px;
+    padding: 5px 11px;
     font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
+    font-weight: 600;
+    letter-spacing: 1px;
     text-transform: uppercase;
     color: var(--muted);
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
     flex-shrink: 0;
   }
-  .panel-title .dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--fire);
-    box-shadow: 0 0 6px var(--fire);
-  }
-  .panel-title .dot.green { background: var(--safe); box-shadow: 0 0 6px var(--safe); }
-  .panel-title .dot.blue  { background: var(--info); box-shadow: 0 0 6px var(--info); }
-  .panel-body { padding: 10px; flex: 1; overflow-y: auto; }
-  .panel-body::-webkit-scrollbar { width: 4px; }
-  .panel-body::-webkit-scrollbar-track { background: transparent; }
+  .panel-title .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); }
+  .panel-title .dot.orange { background: var(--fire); }
+  .panel-title .dot.green  { background: var(--safe); }
+  .panel-title .dot.blue   { background: var(--info); }
+  .panel-body { padding: 9px; flex: 1; overflow-y: auto; }
+  .panel-body::-webkit-scrollbar { width: 3px; }
   .panel-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-  /* ── Left panel ── */
+  /* ── Left: resources ── */
   #left-panel { grid-row: 1/3; }
-  .metric-group { margin-bottom: 16px; }
+  .metric-group { margin-bottom: 14px; }
   .metric-group-title {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 8px;
-    padding-bottom: 4px;
-    border-bottom: 1px solid var(--border);
+    font-size: 9px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid var(--border);
   }
   .metric-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px 0;
-    border-bottom: 1px solid rgba(30,48,80,0.4);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 4px 0; border-bottom: 1px solid rgba(42,48,64,0.5);
   }
   .metric-row .label { color: var(--muted); font-size: 11px; }
-  .metric-row .value { font-weight: 700; font-size: 13px; }
-  .metric-row .value.fire-color { color: var(--fire2); }
-  .metric-row .value.warn-color { color: var(--warn); }
-  .metric-row .value.crit-color { color: var(--critical); }
-  .metric-row .value.safe-color { color: var(--safe); }
-  .metric-row .value.info-color { color: var(--info); }
+  .metric-row .value { font-weight: 600; font-size: 12px; }
+  .v-fire { color: var(--fire2); }
+  .v-warn { color: var(--warn); }
+  .v-crit { color: var(--critical); }
+  .v-safe { color: var(--safe); }
+  .v-info { color: var(--info); }
+  .progress-bar { width: 100%; height: 5px; background: rgba(255,255,255,0.07); border-radius: 3px; margin-top: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; border-radius: 3px; background: var(--safe); transition: width 1s ease; }
 
-  .progress-bar {
-    width: 100%;
-    height: 6px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 3px;
-    margin-top: 4px;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    border-radius: 3px;
-    transition: width 1s ease;
-  }
-  .progress-fill.containment {
-    background: linear-gradient(90deg, var(--safe), #00ff88);
-    box-shadow: 0 0 8px rgba(0,230,118,0.5);
-  }
-
-  .unit-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 5px 0;
-    border-bottom: 1px solid rgba(30,48,80,0.4);
-  }
-  .unit-icon {
-    width: 28px; height: 28px;
-    border-radius: 4px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
-    flex-shrink: 0;
-  }
-  .unit-icon.engine  { background: rgba(255,120,0,0.2); border: 1px solid var(--fire2); }
-  .unit-icon.heli    { background: rgba(0,200,255,0.15); border: 1px solid var(--info); }
-  .unit-icon.dozer   { background: rgba(255,170,0,0.15); border: 1px solid var(--warn); }
-  .unit-icon.tender  { background: rgba(0,200,255,0.1);  border: 1px solid #4488cc; }
-  .unit-icon.command { background: rgba(0,230,118,0.1);  border: 1px solid var(--safe); }
+  .unit-row { display: flex; align-items: center; gap: 7px; padding: 5px 0; border-bottom: 1px solid rgba(42,48,64,0.5); }
+  .unit-icon { width: 26px; height: 26px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; background: rgba(255,255,255,0.04); border: 1px solid var(--border); }
   .unit-info { flex: 1; min-width: 0; }
-  .unit-id   { font-weight: 700; font-size: 12px; color: var(--text); }
+  .unit-id   { font-weight: 600; font-size: 12px; }
   .unit-task { font-size: 10px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .unit-status {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    padding: 2px 6px;
-    border-radius: 3px;
-  }
-  .unit-status.ACTIVE   { background: rgba(0,230,118,0.15); color: var(--safe); }
-  .unit-status.STANDBY  { background: rgba(255,170,0,0.15); color: var(--warn); }
-  .unit-status.COMMAND  { background: rgba(0,200,255,0.15); color: var(--info); }
+  .unit-status { font-size: 9px; font-weight: 600; padding: 2px 5px; border-radius: 2px; }
+  .unit-status.ACTIVE  { background: rgba(32,160,96,0.12);  color: var(--safe); }
+  .unit-status.STANDBY { background: rgba(200,144,16,0.12); color: var(--warn); }
+  .unit-status.COMMAND { background: rgba(32,128,192,0.12); color: var(--info); }
+  .tablet-count { font-size: 9px; color: var(--info); margin-left: auto; }
 
-  /* ── Map panel ── */
+  /* ── Map ── */
   #map-panel { grid-column: 2; grid-row: 1; position: relative; }
   #fire-canvas { width: 100%; height: 100%; display: block; }
-  .map-overlay {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none;
-  }
+  .map-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; }
   .map-legend {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background: rgba(8,12,16,0.85);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 8px 12px;
-    display: flex;
-    gap: 16px;
-    font-size: 10px;
+    position: absolute; bottom: 8px; left: 8px;
+    background: rgba(17,20,24,0.9); border: 1px solid var(--border);
+    border-radius: 4px; padding: 6px 10px; display: flex; gap: 14px; font-size: 10px;
   }
-  .legend-item { display: flex; align-items: center; gap: 5px; }
-  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-
+  .legend-item { display: flex; align-items: center; gap: 4px; }
+  .legend-dot  { width: 8px; height: 8px; border-radius: 50%; }
   .wind-indicator {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(8,12,16,0.85);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 8px 12px;
-    text-align: center;
+    position: absolute; top: 8px; right: 8px;
+    background: rgba(17,20,24,0.9); border: 1px solid var(--border);
+    border-radius: 4px; padding: 7px 10px; text-align: center;
   }
   .wind-compass {
-    width: 60px; height: 60px;
-    border: 2px solid var(--border);
-    border-radius: 50%;
-    position: relative;
-    margin: 0 auto 4px;
-    background: rgba(0,0,0,0.3);
+    width: 54px; height: 54px; border: 1px solid var(--border); border-radius: 50%;
+    position: relative; margin: 0 auto 4px; background: rgba(0,0,0,0.2);
   }
   .wind-arrow {
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 2px; height: 24px;
-    background: linear-gradient(to bottom, var(--fire), transparent);
-    transform-origin: bottom center;
-    transform: translate(-50%, -100%);
-    transition: transform 1s ease;
-    border-radius: 1px;
+    position: absolute; top: 50%; left: 50%;
+    width: 2px; height: 20px; background: linear-gradient(to bottom, var(--fire), transparent);
+    transform-origin: bottom center; transform: translate(-50%, -100%); transition: transform 1s ease; border-radius: 1px;
   }
-  .wind-stats { font-size: 11px; color: var(--fire2); font-weight: 700; }
+  .wind-stats { font-size: 11px; color: var(--fire2); font-weight: 600; }
   .wind-lbl   { font-size: 9px; color: var(--muted); }
 
-  /* ── Right panel ── */
-  #right-panel { grid-row: 1/3; }
-  .ai-box {
-    background: rgba(255,69,0,0.05);
-    border: 1px solid rgba(255,69,0,0.3);
-    border-radius: 6px;
-    padding: 10px;
-    margin-bottom: 12px;
-    position: relative;
-    min-height: 80px;
+  /* ── Right panel: tabs ── */
+  #right-panel { grid-row: 1/3; display: flex; flex-direction: column; }
+  .tab-bar {
+    display: flex; border-bottom: 1px solid var(--border); background: var(--panel2); flex-shrink: 0;
   }
-  .ai-label {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--fire);
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+  .tab-btn {
+    flex: 1; padding: 8px 4px; font-size: 10px; font-weight: 600; letter-spacing: 0.5px;
+    text-transform: uppercase; color: var(--muted); background: none; border: none;
+    border-bottom: 2px solid transparent; cursor: pointer; transition: color 0.15s;
   }
-  .ai-pulse {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--fire);
-    box-shadow: 0 0 8px var(--fire);
-    animation: pulse 1.5s ease-in-out infinite;
-  }
-  @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:0.6} }
-  .ai-text { font-size: 12px; line-height: 1.6; color: var(--text); white-space: pre-wrap; }
-  .ai-thinking { color: var(--muted); font-style: italic; font-size: 11px; }
-  .ai-timestamp { font-size: 9px; color: var(--muted); margin-top: 6px; text-align: right; }
+  .tab-btn.active { color: var(--text); border-bottom-color: var(--fire); }
+  .tab-content { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+  .tab-pane { display: none; flex: 1; overflow-y: auto; padding: 10px; flex-direction: column; gap: 10px; }
+  .tab-pane.active { display: flex; }
+  .tab-pane::-webkit-scrollbar { width: 3px; }
+  .tab-pane::-webkit-scrollbar-thumb { background: var(--border); }
 
-  .evac-zone {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 6px 8px;
-    border-radius: 4px;
-    margin-bottom: 5px;
-    font-size: 11px;
-    font-weight: 600;
-  }
-  .evac-zone.mandatory { background: rgba(255,34,68,0.15); border: 1px solid var(--critical); color: var(--critical); }
-  .evac-zone.warning   { background: rgba(255,170,0,0.15); border: 1px solid var(--warn); color: var(--warn); }
+  /* AI tab */
+  .ai-box { background: rgba(224,90,32,0.05); border: 1px solid rgba(224,90,32,0.2); border-radius: 4px; padding: 10px; }
+  .ai-label { font-size: 9px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--fire); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+  .ai-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--fire); }
+  .ai-thinking .ai-dot { animation: blink 1.2s ease-in-out infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .ai-text { font-size: 12px; line-height: 1.65; color: var(--text); white-space: pre-wrap; }
+  .ai-ts   { font-size: 9px; color: var(--muted); margin-top: 6px; text-align: right; }
 
-  /* ── Events panel (bottom) ── */
+  .evac-zone { display: flex; align-items: center; gap: 6px; padding: 5px 7px; border-radius: 3px; margin-bottom: 4px; font-size: 11px; font-weight: 600; }
+  .evac-zone.mandatory { background: rgba(214,48,64,0.1);  border: 1px solid rgba(214,48,64,0.3); color: var(--critical); }
+  .evac-zone.warning   { background: rgba(200,144,16,0.1); border: 1px solid rgba(200,144,16,0.3); color: var(--warn); }
+
+  /* Chat tab */
+  #chat-pane { padding: 0; overflow: hidden; }
+  .chat-messages {
+    flex: 1; overflow-y: auto; padding: 10px; display: flex; flex-direction: column; gap: 8px; min-height: 0;
+  }
+  .chat-messages::-webkit-scrollbar { width: 3px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--border); }
+  .chat-msg { max-width: 92%; }
+  .chat-msg.user { align-self: flex-end; }
+  .chat-msg.assistant { align-self: flex-start; }
+  .chat-bubble {
+    padding: 7px 11px; border-radius: 4px; font-size: 12px; line-height: 1.55; white-space: pre-wrap; word-break: break-word;
+  }
+  .chat-msg.user .chat-bubble      { background: rgba(32,128,192,0.15); border: 1px solid rgba(32,128,192,0.3); color: var(--text); }
+  .chat-msg.assistant .chat-bubble { background: var(--panel2); border: 1px solid var(--border); color: var(--text); }
+  .chat-msg.thinking .chat-bubble  { color: var(--muted); font-style: italic; }
+  .chat-sender { font-size: 9px; color: var(--muted); margin-bottom: 3px; font-weight: 600; letter-spacing: 0.5px; }
+  .chat-msg.user .chat-sender { text-align: right; }
+  .chat-input-row {
+    display: flex; gap: 6px; padding: 8px; border-top: 1px solid var(--border); background: var(--panel2); flex-shrink: 0;
+  }
+  #chat-input {
+    flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 3px;
+    color: var(--text); font-size: 12px; padding: 6px 9px; outline: none; resize: none; height: 34px;
+    font-family: inherit;
+  }
+  #chat-input:focus { border-color: rgba(32,128,192,0.5); }
+  #chat-send {
+    background: rgba(32,128,192,0.15); border: 1px solid rgba(32,128,192,0.4); border-radius: 3px;
+    color: var(--info); font-size: 11px; font-weight: 600; padding: 0 12px; cursor: pointer;
+  }
+  #chat-send:hover { background: rgba(32,128,192,0.25); }
+  #chat-send:disabled { opacity: 0.4; cursor: not-allowed; }
+  .chat-empty { color: var(--muted); font-size: 11px; text-align: center; margin-top: 40px; line-height: 1.8; }
+
+  /* ── Bottom center: events ── */
   #events-panel { grid-column: 2; grid-row: 2; }
   #events-panel .panel-body { padding: 0; }
-  .event-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 6px 12px;
-    border-bottom: 1px solid rgba(30,48,80,0.4);
-    transition: background 0.3s;
-  }
-  .event-row:first-child { background: rgba(255,255,255,0.03); }
-  .event-time { font-size: 10px; color: var(--muted); min-width: 36px; }
-  .event-badge {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    padding: 2px 6px;
-    border-radius: 3px;
-    min-width: 58px;
-    text-align: center;
-    flex-shrink: 0;
-  }
-  .event-badge.CRITICAL { background: rgba(255,34,68,0.2);  color: var(--critical); border: 1px solid var(--critical); }
-  .event-badge.HIGH     { background: rgba(255,120,0,0.2);  color: var(--fire2);    border: 1px solid var(--fire2); }
-  .event-badge.MEDIUM   { background: rgba(255,170,0,0.15); color: var(--warn);     border: 1px solid var(--warn); }
-  .event-badge.INFO     { background: rgba(0,200,255,0.1);  color: var(--info);     border: 1px solid var(--info); }
-  .event-msg { font-size: 11px; color: var(--text); }
+  .event-row { display: flex; align-items: center; gap: 8px; padding: 5px 10px; border-bottom: 1px solid rgba(42,48,64,0.4); }
+  .event-time { font-size: 10px; color: var(--muted); min-width: 34px; }
+  .event-badge { font-size: 9px; font-weight: 600; padding: 1px 5px; border-radius: 2px; min-width: 54px; text-align: center; flex-shrink: 0; }
+  .event-badge.CRITICAL { background: rgba(214,48,64,0.15);  color: var(--critical); border: 1px solid rgba(214,48,64,0.3); }
+  .event-badge.HIGH     { background: rgba(224,90,32,0.15);  color: var(--fire2);    border: 1px solid rgba(224,90,32,0.3); }
+  .event-badge.MEDIUM   { background: rgba(200,144,16,0.12); color: var(--warn);     border: 1px solid rgba(200,144,16,0.25); }
+  .event-badge.INFO     { background: rgba(32,128,192,0.1);  color: var(--info);     border: 1px solid rgba(32,128,192,0.25); }
+  .event-msg { font-size: 11px; }
 
-  /* ── Bottom-left: weather ── */
+  /* ── Bottom left: weather ── */
   #weather-panel { grid-column: 1; grid-row: 2; }
-  .weather-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-  }
-  .weather-cell {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 6px;
-    text-align: center;
-  }
-  .weather-cell .wval { font-size: 20px; font-weight: 700; color: var(--fire2); line-height: 1; }
+  .weather-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+  .weather-cell { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 3px; padding: 6px; text-align: center; }
+  .weather-cell .wval { font-size: 20px; font-weight: 600; color: var(--text); line-height: 1; }
   .weather-cell .wunit { font-size: 9px; color: var(--muted); }
-  .weather-cell .wlbl { font-size: 9px; color: var(--muted); margin-top: 2px; text-transform: uppercase; letter-spacing: 1px; }
-
-  .infra-alert {
-    background: rgba(255,34,68,0.1);
-    border: 1px solid var(--critical);
-    border-radius: 4px;
-    padding: 5px 8px;
-    font-size: 11px;
-    color: var(--critical);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 8px;
-  }
+  .weather-cell .wlbl  { font-size: 9px; color: var(--muted); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .weather-cell.danger { border-color: rgba(214,48,64,0.4); }
+  .weather-cell.danger .wval { color: var(--critical); }
+  .infra-alert { background: rgba(214,48,64,0.08); border: 1px solid rgba(214,48,64,0.3); border-radius: 3px; padding: 4px 8px; font-size: 10px; color: var(--critical); margin-top: 6px; }
   .infra-alert.hidden { display: none; }
-
-  /* tablet count pill */
-  .tablet-count {
-    background: rgba(0,200,255,0.1);
-    border: 1px solid var(--info);
-    border-radius: 10px;
-    padding: 1px 8px;
-    font-size: 9px;
-    color: var(--info);
-    margin-left: auto;
-  }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">🔥 FIRE<span>COMMAND</span> AI</div>
+  <div class="logo">🔥 FireCommand AI</div>
   <div class="incident-badge" id="h-incident">WILDFIRE ALPHA-7</div>
-  <div id="red-flag-banner" class="red-flag-banner">⚠ RED FLAG WARNING</div>
+  <div id="red-flag-banner" class="red-flag-banner">⚠ Red Flag Warning</div>
   <div class="header-stats">
     <div class="hstat"><div class="val" id="h-acres">—</div><div class="lbl">Acres</div></div>
     <div class="hstat"><div class="val" id="h-contain">—</div><div class="lbl">Contained</div></div>
@@ -431,99 +285,96 @@
 
   <!-- Left: Resources -->
   <div class="panel" id="left-panel">
-    <div class="panel-title"><div class="dot green"></div>FIELD RESOURCES <span class="tablet-count" id="tablet-count">0 tablets</span></div>
+    <div class="panel-title"><div class="dot green"></div>Field Resources <span class="tablet-count" id="tablet-count"></span></div>
     <div class="panel-body" id="units-list"></div>
   </div>
 
-  <!-- Center: Fire Map -->
+  <!-- Center: Map -->
   <div class="panel" id="map-panel">
     <canvas id="fire-canvas"></canvas>
     <div class="map-overlay">
       <div class="wind-indicator">
-        <div class="wind-compass">
-          <div class="wind-arrow" id="wind-arrow"></div>
-        </div>
-        <div class="wind-stats" id="wind-speed-disp">— mph</div>
-        <div class="wind-lbl" id="wind-dir-disp">—</div>
-        <div class="wind-lbl" style="margin-top:2px">WIND</div>
+        <div class="wind-compass"><div class="wind-arrow" id="wind-arrow"></div></div>
+        <div class="wind-stats" id="wind-speed-disp">—</div>
+        <div class="wind-lbl"  id="wind-dir-disp">—</div>
+        <div class="wind-lbl">WIND</div>
       </div>
       <div class="map-legend">
-        <div class="legend-item"><div class="legend-dot" style="background:#ff4500"></div>Fire perimeter</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#ff9900;opacity:0.8"></div>Hotspot</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#00c8ff"></div>Water source</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#00e676"></div>Unit</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#888"></div>Road</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#c05020"></div>Fire</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#e08020"></div>Hotspot</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#2080c0"></div>Water</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#20a060"></div>Unit</div>
       </div>
     </div>
   </div>
 
-  <!-- Right: AI + Evac -->
+  <!-- Right: Tabbed panel -->
   <div class="panel" id="right-panel">
-    <div class="panel-title"><div class="dot"></div>AI TACTICAL ADVISOR</div>
-    <div class="panel-body">
-      <div class="ai-box">
-        <div class="ai-label"><div class="ai-pulse"></div>LIVE RECOMMENDATION</div>
-        <div class="ai-text" id="ai-text"><span class="ai-thinking">Analyzing conditions…</span></div>
-        <div class="ai-timestamp" id="ai-ts"></div>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="showTab('status')">Status</button>
+      <button class="tab-btn" onclick="showTab('chat')">AI Chat</button>
+    </div>
+    <div class="tab-content">
+
+      <!-- Status tab -->
+      <div class="tab-pane active" id="status-pane">
+        <div class="ai-box" id="ai-box">
+          <div class="ai-label"><div class="ai-dot"></div>AI Recommendation</div>
+          <div class="ai-text" id="ai-text">Analyzing conditions…</div>
+          <div class="ai-ts"  id="ai-ts"></div>
+        </div>
+
+        <div>
+          <div class="metric-group-title" style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Evacuation Zones</div>
+          <div id="evac-zones"></div>
+        </div>
+
+        <div>
+          <div class="metric-group-title" style="font-size:9px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Fire Metrics</div>
+          <div class="metric-row"><span class="label">Rate of spread</span><span class="value v-warn" id="ros">—</span></div>
+          <div class="metric-row"><span class="label">Perimeter</span><span class="value v-fire" id="perimeter">—</span></div>
+          <div class="metric-row"><span class="label">Structures lost</span><span class="value v-crit" id="destroyed">—</span></div>
+          <div class="metric-row"><span class="label">Aircraft</span><span class="value v-info" id="aircraft">—</span></div>
+          <div class="metric-row"><span class="label">Dozers</span><span class="value v-warn" id="dozers">—</span></div>
+          <div class="metric-row" style="border:none;margin-top:6px"><span class="label">Containment</span><span class="value v-safe" id="contain-pct">—</span></div>
+          <div class="progress-bar"><div class="progress-fill" id="contain-bar" style="width:0%"></div></div>
+        </div>
       </div>
 
-      <div class="metric-group">
-        <div class="metric-group-title">Evacuation Status</div>
-        <div id="evac-zones"></div>
+      <!-- Chat tab -->
+      <div class="tab-pane" id="chat-pane" style="padding:0;gap:0">
+        <div class="chat-messages" id="chat-messages">
+          <div class="chat-empty" id="chat-empty">
+            Ask anything about the active incident.<br>
+            Live fire data is included in every response.
+          </div>
+        </div>
+        <div class="chat-input-row">
+          <textarea id="chat-input" placeholder="Ask FireCommand AI…" rows="1"></textarea>
+          <button id="chat-send" onclick="sendChat()">Send</button>
+        </div>
       </div>
 
-      <div class="metric-group">
-        <div class="metric-group-title">Fire Metrics</div>
-        <div class="metric-row"><span class="label">Rate of spread</span><span class="value warn-color" id="ros">—</span></div>
-        <div class="metric-row"><span class="label">Perimeter</span><span class="value fire-color" id="perimeter">—</span></div>
-        <div class="metric-row"><span class="label">Destroyed</span><span class="value crit-color" id="destroyed">—</span></div>
-        <div class="metric-row"><span class="label">Aircraft</span><span class="value info-color" id="aircraft">—</span></div>
-        <div class="metric-row"><span class="label">Dozers</span><span class="value warn-color" id="dozers">—</span></div>
-      </div>
-
-      <div class="metric-group">
-        <div class="metric-group-title">Containment Progress</div>
-        <div class="metric-row"><span class="label">Contained</span><span class="value safe-color" id="contain-pct">—</span></div>
-        <div class="progress-bar"><div class="progress-fill containment" id="contain-bar" style="width:0%"></div></div>
-      </div>
     </div>
   </div>
 
   <!-- Bottom center: Events -->
   <div class="panel" id="events-panel">
-    <div class="panel-title"><div class="dot"></div>INCIDENT LOG — LIVE</div>
+    <div class="panel-title"><div class="dot orange"></div>Incident Log</div>
     <div class="panel-body" id="events-list"></div>
   </div>
 
   <!-- Bottom left: Weather -->
   <div class="panel" id="weather-panel">
-    <div class="panel-title"><div class="dot blue"></div>CONDITIONS</div>
+    <div class="panel-title"><div class="dot blue"></div>Conditions</div>
     <div class="panel-body">
       <div class="weather-grid">
-        <div class="weather-cell">
-          <div class="wval" id="w-wind">—</div>
-          <div class="wunit">mph</div>
-          <div class="wlbl">Wind</div>
-        </div>
-        <div class="weather-cell">
-          <div class="wval" id="w-gust">—</div>
-          <div class="wunit">mph</div>
-          <div class="wlbl">Gusts</div>
-        </div>
-        <div class="weather-cell">
-          <div class="wval" id="w-rh">—</div>
-          <div class="wunit">%</div>
-          <div class="wlbl">Humidity</div>
-        </div>
-        <div class="weather-cell">
-          <div class="wval" id="w-temp">—</div>
-          <div class="wunit">°F</div>
-          <div class="wlbl">Temp</div>
-        </div>
+        <div class="weather-cell" id="wc-wind"><div class="wval" id="w-wind">—</div><div class="wunit">mph</div><div class="wlbl">Wind</div></div>
+        <div class="weather-cell" id="wc-gust"><div class="wval" id="w-gust">—</div><div class="wunit">mph</div><div class="wlbl">Gusts</div></div>
+        <div class="weather-cell" id="wc-rh"  ><div class="wval" id="w-rh">—</div><div class="wunit">%</div><div class="wlbl">Humidity</div></div>
+        <div class="weather-cell" id="wc-temp"><div class="wval" id="w-temp">—</div><div class="wunit">°F</div><div class="wlbl">Temp</div></div>
       </div>
-      <div class="infra-alert hidden" id="water-alert">
-        💧 WATER MAIN BREAK — Suppression capacity reduced
-      </div>
+      <div class="infra-alert hidden" id="water-alert">💧 Water main break — reduced capacity</div>
     </div>
   </div>
 
@@ -531,52 +382,26 @@
 
 <script>
 // ── Clock ──────────────────────────────────────────────────────────────────
-function updateClock() {
-  document.getElementById('clock').textContent =
-    new Date().toLocaleTimeString('en-US', {hour12: false});
-}
-setInterval(updateClock, 1000);
-updateClock();
+setInterval(() => {
+  document.getElementById('clock').textContent = new Date().toLocaleTimeString('en-US',{hour12:false});
+}, 1000);
 
-// ── Fire canvas ────────────────────────────────────────────────────────────
+// ── Tabs ───────────────────────────────────────────────────────────────────
+function showTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b,i)  => b.classList.toggle('active', ['status','chat'][i] === name));
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.getElementById(name + '-pane').classList.add('active');
+}
+
+// ── Canvas map ────────────────────────────────────────────────────────────
 const canvas = document.getElementById('fire-canvas');
 const ctx    = canvas.getContext('2d');
-
 let simState = null;
 let particles = [];
-let animFrame;
-
-const FIRE_SHAPES = [
-  {cx:38, cy:44, rx:12, ry:9},
-  {cx:55, cy:38, rx:7, ry:5},
-  {cx:30, cy:60, rx:6, ry:4},
-  {cx:45, cy:50, rx:10, ry:7},
-];
 
 function resizeCanvas() {
-  const rect = canvas.parentElement.getBoundingClientRect();
-  canvas.width  = rect.width;
-  canvas.height = rect.height;
-}
-
-// Spawn fire particles
-function spawnParticles() {
-  if (!simState) return;
-  simState.hotspots.forEach(h => {
-    for (let i = 0; i < 2; i++) {
-      const x = (h.x / 100) * canvas.width  + (Math.random() - 0.5) * 30;
-      const y = (h.y / 100) * canvas.height + (Math.random() - 0.5) * 30;
-      particles.push({
-        x, y,
-        vx: (Math.random() - 0.5) * 0.8,
-        vy: -(Math.random() * 1.5 + 0.5),
-        life: 1.0,
-        size: Math.random() * 4 + 2,
-        intensity: h.intensity,
-      });
-    }
-  });
-  if (particles.length > 800) particles.splice(0, particles.length - 800);
+  const r = canvas.parentElement.getBoundingClientRect();
+  canvas.width = r.width; canvas.height = r.height;
 }
 
 function drawMap() {
@@ -584,173 +409,121 @@ function drawMap() {
   const W = canvas.width, H = canvas.height;
   ctx.clearRect(0, 0, W, H);
 
-  // Background terrain
-  const terrain = ctx.createLinearGradient(0, 0, W, H);
-  terrain.addColorStop(0,   '#0d1a10');
-  terrain.addColorStop(0.4, '#0f2015');
-  terrain.addColorStop(0.7, '#111a0d');
-  terrain.addColorStop(1,   '#0a1509');
-  ctx.fillStyle = terrain;
-  ctx.fillRect(0, 0, W, H);
+  // Terrain background
+  const bg = ctx.createLinearGradient(0,0,W,H);
+  bg.addColorStop(0, '#121810'); bg.addColorStop(0.5,'#141c12'); bg.addColorStop(1,'#10180e');
+  ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
 
-  // Grid lines (topo-ish)
-  ctx.strokeStyle = 'rgba(255,255,255,0.04)';
-  ctx.lineWidth = 1;
-  for (let x = 0; x < W; x += 40) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
-  for (let y = 0; y < H; y += 40) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+  // Subtle grid
+  ctx.strokeStyle = 'rgba(255,255,255,0.03)'; ctx.lineWidth = 1;
+  for (let x=0; x<W; x+=50) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+  for (let y=0; y<H; y+=50) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
 
   // Roads
-  const roads = [
-    [{x:0.05,y:0.7},{x:0.5,y:0.65},{x:0.95,y:0.75}],
-    [{x:0.7,y:0},{x:0.68,y:0.5},{x:0.72,y:1}],
-    [{x:0,y:0.35},{x:0.4,y:0.40},{x:0.75,y:0.30}],
-  ];
-  roads.forEach((pts, i) => {
-    ctx.beginPath();
-    ctx.moveTo(pts[0].x*W, pts[0].y*H);
+  [
+    [{x:.05,y:.70},{x:.50,y:.65},{x:.95,y:.75}],
+    [{x:.70,y:0},  {x:.68,y:.50},{x:.72,y:1}],
+    [{x:0,  y:.35},{x:.40,y:.40},{x:.75,y:.30}],
+  ].forEach((pts, i) => {
+    ctx.beginPath(); ctx.moveTo(pts[0].x*W, pts[0].y*H);
     pts.slice(1).forEach(p => ctx.lineTo(p.x*W, p.y*H));
-    ctx.strokeStyle = i===0 ? 'rgba(180,160,80,0.35)' : 'rgba(130,130,130,0.2)';
-    ctx.lineWidth = i===0 ? 3 : 1.5;
-    ctx.setLineDash(i===1 ? [8,4] : []);
-    ctx.stroke();
-    ctx.setLineDash([]);
+    ctx.strokeStyle = i===0 ? 'rgba(160,140,60,0.3)' : 'rgba(100,100,100,0.18)';
+    ctx.lineWidth = i===0 ? 2.5 : 1.5;
+    ctx.setLineDash(i===1?[6,4]:[]);
+    ctx.stroke(); ctx.setLineDash([]);
   });
 
   // Water sources
-  const waters = [{x:0.22,y:0.75},{x:0.80,y:0.55},{x:0.12,y:0.45}];
-  waters.forEach(w => {
-    ctx.beginPath();
-    ctx.arc(w.x*W, w.y*H, 6, 0, Math.PI*2);
-    ctx.fillStyle = 'rgba(0,180,255,0.4)';
-    ctx.fill();
-    ctx.strokeStyle = '#00c8ff';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
+  [{x:.22,y:.75},{x:.80,y:.55},{x:.12,y:.45}].forEach(w => {
+    ctx.beginPath(); ctx.arc(w.x*W, w.y*H, 5, 0, Math.PI*2);
+    ctx.fillStyle='rgba(32,128,192,0.35)'; ctx.fill();
+    ctx.strokeStyle='#2080c0'; ctx.lineWidth=1; ctx.stroke();
   });
 
   if (!simState) { requestAnimationFrame(drawMap); return; }
 
-  // Fire perimeter blobs
+  // Fire blobs
   simState.hotspots.forEach((h, idx) => {
-    const cx = (h.x / 100) * W;
-    const cy = (h.y / 100) * H;
-    const r  = 30 + h.intensity * 50;
-
-    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * 1.8);
-    grad.addColorStop(0,   `rgba(255,100,0,${h.intensity * 0.6})`);
-    grad.addColorStop(0.4, `rgba(255,50,0,${h.intensity * 0.3})`);
-    grad.addColorStop(0.8, `rgba(180,0,0,${h.intensity * 0.15})`);
-    grad.addColorStop(1,   'rgba(0,0,0,0)');
-    ctx.beginPath();
-    // Irregular blob
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.scale(1 + 0.2*Math.sin(Date.now()/800+idx), 1 + 0.15*Math.cos(Date.now()/700+idx));
-    ctx.arc(0, 0, r * 1.4, 0, Math.PI*2);
-    ctx.restore();
-    ctx.fillStyle = grad;
-    ctx.fill();
-
-    // Hotspot label
-    ctx.fillStyle = 'rgba(255,200,0,0.9)';
-    ctx.font = 'bold 10px Segoe UI';
-    ctx.fillText(h.label, cx - 20, cy - r * 0.8);
+    const cx=(h.x/100)*W, cy=(h.y/100)*H, r=25+h.intensity*40;
+    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,r*1.6);
+    g.addColorStop(0,  `rgba(200,80,20,${h.intensity*0.5})`);
+    g.addColorStop(0.5,`rgba(180,50,10,${h.intensity*0.25})`);
+    g.addColorStop(1,  'rgba(0,0,0,0)');
+    ctx.save(); ctx.translate(cx,cy);
+    ctx.scale(1+.15*Math.sin(Date.now()/1200+idx), 1+.1*Math.cos(Date.now()/1000+idx));
+    ctx.beginPath(); ctx.arc(0,0,r*1.3,0,Math.PI*2);
+    ctx.restore(); ctx.fillStyle=g; ctx.fill();
+    ctx.fillStyle='rgba(220,160,60,0.7)'; ctx.font='bold 9px Segoe UI';
+    ctx.fillText(h.label, cx-18, cy-r*.7);
   });
 
-  // Fire particles
-  spawnParticles();
-  particles = particles.filter(p => p.life > 0.02);
+  // Particles (toned down)
+  simState.hotspots.forEach(h => {
+    if (Math.random() < 0.4) {
+      const x=(h.x/100)*W+(Math.random()-.5)*20, y=(h.y/100)*H+(Math.random()-.5)*20;
+      particles.push({x,y,vx:(Math.random()-.5)*.6,vy:-(Math.random()*1.2+.3),life:1,size:Math.random()*2.5+1,intensity:h.intensity});
+    }
+  });
+  particles = particles.filter(p=>p.life>0.03);
   particles.forEach(p => {
-    p.x  += p.vx;
-    p.y  += p.vy;
-    p.vy -= 0.02;
-    p.life *= 0.965;
-    const alpha = p.life * p.intensity;
-    const color = p.life > 0.5 ? `rgba(255,${Math.floor(100+p.life*155)},0,${alpha})` : `rgba(180,0,0,${alpha})`;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI*2);
-    ctx.fillStyle = color;
+    p.x+=p.vx; p.y+=p.vy; p.vy-=.015; p.life*=.97;
+    ctx.beginPath(); ctx.arc(p.x,p.y,p.size*p.life,0,Math.PI*2);
+    ctx.fillStyle=`rgba(${p.life>.5?'200,90,20':'160,40,10'},${p.life*p.intensity*.6})`;
     ctx.fill();
   });
+  if (particles.length > 400) particles.splice(0, particles.length-400);
 
-  // Field units
-  const icons = {engine:'🚒', heli:'🚁', dozer:'🚜', tender:'🚛', command:'⭐'};
-  const colors = {engine:['#ff7b00','#ff4500'], heli:['#00c8ff','#0088cc'], dozer:['#ffbb00','#cc8800'], tender:['#4499ff','#2266bb'], command:['#00e676','#00aa55']};
+  // Units
+  const icons = {engine:'🚒',heli:'🚁',dozer:'🚜',tender:'🚛',command:'⭐'};
   simState.units.forEach(u => {
-    const x = (u.x / 100) * W;
-    const y = (u.y / 100) * H;
-    const [c1, c2] = colors[u.type] || ['#aaa','#666'];
-    ctx.beginPath();
-    ctx.arc(x, y, 12, 0, Math.PI*2);
-    const g = ctx.createRadialGradient(x,y,0,x,y,12);
-    g.addColorStop(0, c1+'33'); g.addColorStop(1, c2+'11');
-    ctx.fillStyle = g;
-    ctx.fill();
-    ctx.strokeStyle = c1;
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-    ctx.font = '12px serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(icons[u.type]||'●', x, y);
-    ctx.font = 'bold 8px Segoe UI';
-    ctx.fillStyle = '#fff';
-    ctx.fillText(u.id, x, y + 18);
+    const x=(u.x/100)*W, y=(u.y/100)*H;
+    ctx.beginPath(); ctx.arc(x,y,10,0,Math.PI*2);
+    ctx.fillStyle='rgba(20,30,20,0.7)'; ctx.fill();
+    ctx.strokeStyle='rgba(32,160,96,0.6)'; ctx.lineWidth=1; ctx.stroke();
+    ctx.font='11px serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(icons[u.type]||'●',x,y);
+    ctx.font='bold 7px Segoe UI'; ctx.fillStyle='rgba(200,212,224,0.8)';
+    ctx.fillText(u.id,x,y+16);
   });
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'alphabetic';
-
+  ctx.textAlign='left'; ctx.textBaseline='alphabetic';
   requestAnimationFrame(drawMap);
 }
-
 drawMap();
 window.addEventListener('resize', resizeCanvas);
 
 // ── WebSocket ─────────────────────────────────────────────────────────────
-let ws, reconnectDelay = 1000;
-
+let ws, reconnectDelay=1000;
 function connect() {
   ws = new WebSocket(`ws://${location.host}/ws/dashboard`);
-
   ws.onmessage = e => {
     const msg = JSON.parse(e.data);
-    if (msg.type === 'state') updateUI(msg.data);
-    if (msg.type === 'ai')    updateAI(msg.recommendation);
+    if (msg.type==='state') updateUI(msg.data);
+    if (msg.type==='ai')    updateAI(msg.recommendation);
   };
-
-  ws.onclose = () => {
-    setTimeout(connect, Math.min(reconnectDelay *= 2, 10000));
-  };
-  ws.onopen = () => { reconnectDelay = 1000; };
+  ws.onclose = () => setTimeout(connect, Math.min(reconnectDelay*=2, 10000));
+  ws.onopen  = () => { reconnectDelay=1000; };
 }
 connect();
 
 function updateUI(s) {
   simState = s;
-
-  // Header
   document.getElementById('h-acres').textContent      = s.acres_burned.toLocaleString();
   document.getElementById('h-contain').textContent    = s.containment_pct + '%';
   document.getElementById('h-structures').textContent = s.structures_threatened.toLocaleString();
   document.getElementById('h-units').textContent      = s.ground_units;
+  document.getElementById('red-flag-banner').style.display = s.red_flag ? '' : 'none';
 
-  const rfb = document.getElementById('red-flag-banner');
-  rfb.style.display = s.red_flag ? 'block' : 'none';
-
-  // Weather
-  document.getElementById('w-wind').textContent  = s.wind_speed;
-  document.getElementById('w-gust').textContent  = s.wind_gust;
-  document.getElementById('w-rh').textContent    = s.humidity;
-  document.getElementById('w-temp').textContent  = s.temperature;
-  document.getElementById('wind-speed-disp').textContent = `${s.wind_speed} mph`;
+  document.getElementById('w-wind').textContent = s.wind_speed;
+  document.getElementById('w-gust').textContent = s.wind_gust;
+  document.getElementById('w-rh').textContent   = s.humidity;
+  document.getElementById('w-temp').textContent = s.temperature;
+  document.getElementById('wc-wind').className  = 'weather-cell' + (s.wind_speed>25?' danger':'');
+  document.getElementById('wc-rh').className    = 'weather-cell' + (s.humidity<15?' danger':'');
+  document.getElementById('wind-speed-disp').textContent = s.wind_speed + ' mph';
   document.getElementById('wind-dir-disp').textContent   = s.wind_dir;
+  const deg = {N:180,NE:225,E:270,SE:315,S:0,SW:45,W:90,NW:135}[s.wind_dir]||0;
+  document.getElementById('wind-arrow').style.transform = `translate(-50%,-100%) rotate(${deg}deg)`;
 
-  // Wind compass arrow
-  const dirMap = {N:180, NE:225, E:270, SE:315, S:0, SW:45, W:90, NW:135};
-  const deg = dirMap[s.wind_dir] || 0;
-  document.getElementById('wind-arrow').style.transform = `translate(-50%, -100%) rotate(${deg}deg)`;
-
-  // Right panel metrics
   document.getElementById('ros').textContent       = s.rate_of_spread;
   document.getElementById('perimeter').textContent = s.fire_perimeter + ' mi';
   document.getElementById('destroyed').textContent = s.structures_destroyed;
@@ -759,50 +532,90 @@ function updateUI(s) {
   document.getElementById('contain-pct').textContent = s.containment_pct + '%';
   document.getElementById('contain-bar').style.width  = s.containment_pct + '%';
 
-  // Evac zones
-  const ez = document.getElementById('evac-zones');
-  ez.innerHTML = s.evac_zones.map(z => {
+  document.getElementById('evac-zones').innerHTML = s.evac_zones.map(z => {
     const cls = z.includes('MANDATORY') ? 'mandatory' : 'warning';
     return `<div class="evac-zone ${cls}">⚠ ${z}</div>`;
   }).join('');
 
-  // Water main alert
-  const wa = document.getElementById('water-alert');
-  wa.classList.toggle('hidden', !s.water_main_break);
+  document.getElementById('water-alert').classList.toggle('hidden', !s.water_main_break);
 
-  // Units
-  const icons = {engine:'🚒', heli:'🚁', dozer:'🚜', tender:'🚛', command:'⭐'};
-  const ul = document.getElementById('units-list');
-  ul.innerHTML = s.units.map(u => `
+  const icons = {engine:'🚒',heli:'🚁',dozer:'🚜',tender:'🚛',command:'⭐'};
+  document.getElementById('units-list').innerHTML = s.units.map(u => `
     <div class="unit-row">
-      <div class="unit-icon ${u.type}">${icons[u.type]||'●'}</div>
-      <div class="unit-info">
-        <div class="unit-id">${u.id}</div>
-        <div class="unit-task">${u.task}</div>
-      </div>
+      <div class="unit-icon">${icons[u.type]||'●'}</div>
+      <div class="unit-info"><div class="unit-id">${u.id}</div><div class="unit-task">${u.task}</div></div>
       <div class="unit-status ${u.status}">${u.status}</div>
-    </div>
-  `).join('');
+    </div>`).join('');
 
-  // Tablet count
   const tc = Object.values(s.tablets||{}).filter(t=>t.connected).length;
-  document.getElementById('tablet-count').textContent = `${tc} tablet${tc!==1?'s':''}`;
+  document.getElementById('tablet-count').textContent = tc ? `${tc} tablet${tc>1?'s':''}` : '';
 
-  // Events
-  const el = document.getElementById('events-list');
-  el.innerHTML = s.events.slice(0,8).map((ev,i) => `
+  document.getElementById('events-list').innerHTML = s.events.slice(0,8).map(ev => `
     <div class="event-row">
       <span class="event-time">${ev.time}</span>
       <span class="event-badge ${ev.severity}">${ev.severity}</span>
       <span class="event-msg">${ev.msg}</span>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 function updateAI(text) {
+  document.getElementById('ai-box').classList.remove('ai-thinking');
   document.getElementById('ai-text').textContent = text;
-  const now = new Date().toLocaleTimeString('en-US',{hour12:false});
-  document.getElementById('ai-ts').textContent = `Updated ${now}`;
+  document.getElementById('ai-ts').textContent = 'Updated ' + new Date().toLocaleTimeString('en-US',{hour12:false});
+}
+
+// ── Chat ──────────────────────────────────────────────────────────────────
+let chatHistory = [];
+
+const chatInput = document.getElementById('chat-input');
+chatInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
+});
+
+function appendMessage(role, text, thinking=false) {
+  const empty = document.getElementById('chat-empty');
+  if (empty) empty.remove();
+
+  const div = document.createElement('div');
+  div.className = `chat-msg ${role}${thinking?' thinking':''}`;
+  div.innerHTML = `
+    <div class="chat-sender">${role==='user'?'YOU':'FIRECOMMAND AI'}</div>
+    <div class="chat-bubble">${text.replace(/</g,'&lt;')}</div>`;
+  document.getElementById('chat-messages').appendChild(div);
+  div.scrollIntoView({behavior:'smooth'});
+  return div;
+}
+
+async function sendChat() {
+  const input = chatInput.value.trim();
+  if (!input) return;
+  const sendBtn = document.getElementById('chat-send');
+
+  chatInput.value = '';
+  sendBtn.disabled = true;
+  appendMessage('user', input);
+  chatHistory.push({role:'user', content:input});
+
+  const thinking = appendMessage('assistant', 'Thinking…', true);
+
+  try {
+    const res  = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({messages: chatHistory}),
+    });
+    const data = await res.json();
+    thinking.remove();
+    appendMessage('assistant', data.reply);
+    chatHistory.push({role:'assistant', content:data.reply});
+    if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20);
+  } catch(e) {
+    thinking.remove();
+    appendMessage('assistant', 'Unable to reach AI — check that the LLM is running on port 8001.');
+  } finally {
+    sendBtn.disabled = false;
+    chatInput.focus();
+  }
 }
 </script>
 </body>
