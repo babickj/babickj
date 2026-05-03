@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5ive Tool Baseball Academy | San Diego's Premier Youth Baseball Training</title>
+  <meta name="description" content="San Diego's Premier Youth Baseball Training Organization. 1-on-1 private lessons, multi-day camps, online lessons, and coaches clinics led by former pro pitcher Jared Eichelberger." />
+  <meta name="keywords" content="baseball academy san diego, youth baseball lessons san diego, baseball camps san diego, private baseball lessons, jared eichelberger, 5ive tool baseball" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.5ivetool.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.5ivetool.com/" />
+  <meta property="og:title" content="5ive Tool Baseball Academy | San Diego's Premier Youth Baseball Training" />
+  <meta property="og:description" content="Private lessons, elite camps, and coaches clinics led by former pro pitcher Jared Eichelberger. Building the complete 5-tool player in San Diego, CA." />
+  <meta property="og:site_name" content="5ive Tool Baseball Academy" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="5ive Tool Baseball Academy" />
+  <meta name="twitter:description" content="San Diego's Premier Youth Baseball Training Organization." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── RESET & TOKENS ───────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:        #E8002D;
+      --red-dark:   #B8001F;
+      --gold:       #F4C542;
+      --white:      #FFFFFF;
+      --off-white:  #F0F0F0;
+      --black:      #080808;
+      --surface-1:  #111111;
+      --surface-2:  #191919;
+      --surface-3:  #222222;
+      --muted:      #777777;
+      --subtle:     #AAAAAA;
+      --border:     rgba(255,255,255,0.07);
+      --radius-sm:  6px;
+      --radius-md:  12px;
+      --radius-lg:  20px;
+      --shadow-red: 0 12px 40px rgba(232,0,45,0.35);
+      --transition: all 0.25s ease;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; }
+    ul { list-style: none; }
+
+    /* Skip to main for accessibility */
+    .skip-link {
+      position: absolute; top: -100px; left: 1rem; z-index: 9999;
+      background: var(--red); color: var(--white);
+      padding: 0.5rem 1rem; border-radius: var(--radius-sm);
+      font-weight: 700; font-size: 0.85rem;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    /* ─── TYPOGRAPHY ───────────────────────────────────────────────────────── */
+    .display, h1, h2, h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      letter-spacing: 0.02em;
+      line-height: 1.05;
+    }
+
+    .gradient-text {
+      background: linear-gradient(120deg, var(--red) 0%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.6rem;
+    }
+
+    /* ─── LAYOUT HELPERS ───────────────────────────────────────────────────── */
+    .container { max-width: 1320px; margin: 0 auto; padding: 0 2rem; }
+    section { padding: 7rem 0; }
+
+    /* ─── BUTTONS ──────────────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.875rem 2rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .btn-primary {
+      background: var(--red); color: var(--white);
+    }
+    .btn-primary:hover {
+      background: var(--red-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-red);
+    }
+    .btn-secondary {
+      background: transparent; color: var(--white);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.05);
+    }
+    .btn-white {
+      background: var(--white); color: var(--red);
+    }
+    .btn-white:hover {
+      background: var(--off-white);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+    .btn-lg { padding: 1.1rem 2.5rem; font-size: 0.9rem; }
+
+    /* ─── NAVBAR ───────────────────────────────────────────────────────────── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+      padding: 1.5rem 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: var(--transition);
+    }
+    #navbar.scrolled {
+      background: rgba(8,8,8,0.92);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.75rem; letter-spacing: 0.08em;
+      display: flex; align-items: center; gap: 0.15em;
+    }
+    .nav-logo .accent { color: var(--red); }
+
+    .nav-menu {
+      display: flex; align-items: center; gap: 0.25rem;
+    }
+    .nav-menu a {
+      padding: 0.5rem 0.875rem;
+      font-size: 0.8rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--subtle);
+      border-radius: var(--radius-sm);
+      transition: var(--transition);
+    }
+    .nav-menu a:hover { color: var(--white); background: rgba(255,255,255,0.05); }
+    .nav-menu .nav-cta {
+      background: var(--red); color: var(--white) !important;
+      margin-left: 0.5rem;
+    }
+    .nav-menu .nav-cta:hover { background: var(--red-dark) !important; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; padding: 6px;
+      cursor: pointer; z-index: 910;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--white); border-radius: 2px;
+      transition: var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile drawer */
+    .nav-drawer {
+      display: none; position: fixed;
+      inset: 0; z-index: 905;
+      background: var(--black);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 2rem;
+    }
+    .nav-drawer.open { display: flex; }
+    .nav-drawer a {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem; letter-spacing: 0.05em;
+      color: var(--white); transition: color 0.2s;
+    }
+    .nav-drawer a:hover { color: var(--red); }
+
+    /* ─── HERO ─────────────────────────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      background: var(--black);
+    }
+
+    .hero-noise {
+      position: absolute; inset: 0; z-index: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+    }
+
+    .hero-glow-1 {
+      position: absolute; z-index: 0;
+      width: 900px; height: 900px;
+      background: radial-gradient(circle, rgba(232,0,45,0.12) 0%, transparent 65%);
+      top: -200px; left: -200px; pointer-events: none;
+    }
+    .hero-glow-2 {
+      position: absolute; z-index: 0;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(244,197,66,0.07) 0%, transparent 65%);
+      bottom: -100px; right: -100px; pointer-events: none;
+    }
+
+    .hero-grid-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    }
+
+    .hero-inner {
+      position: relative; z-index: 2;
+      width: 100%; max-width: 1320px;
+      margin: 0 auto; padding: 0 2rem;
+      padding-top: 9rem; padding-bottom: 5rem;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: rgba(232,0,45,0.1);
+      border: 1px solid rgba(232,0,45,0.25);
+      padding: 0.35rem 1rem; border-radius: 100px;
+      font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: #FF6B80; margin-bottom: 2rem;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--red); animation: blink 2s ease infinite;
+    }
+    @keyframes blink {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.4; transform: scale(1.6); }
+    }
+
+    .hero-title {
+      font-size: clamp(4.5rem, 11vw, 10rem);
+      line-height: 0.92; margin-bottom: 2rem;
+    }
+    .hero-title .t1 { display: block; color: var(--white); }
+    .hero-title .t2 { display: block; color: var(--red); }
+    .hero-title .t3 {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1.5px rgba(255,255,255,0.2);
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      color: var(--subtle); max-width: 560px;
+      line-height: 1.75; margin-bottom: 2.5rem; font-weight: 300;
+    }
+
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
+
+    .hero-stats {
+      display: flex; align-items: center;
+      gap: 0; flex-wrap: wrap;
+    }
+    .stat-block {
+      display: flex; flex-direction: column;
+      padding: 0 2.5rem;
+      border-right: 1px solid var(--border);
+    }
+    .stat-block:first-child { padding-left: 0; }
+    .stat-block:last-child  { border-right: none; }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem; line-height: 1; color: var(--white);
+    }
+    .stat-lbl {
+      font-size: 0.7rem; color: var(--muted);
+      letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.2rem;
+    }
+
+    /* ─── MARQUEE ──────────────────────────────────────────────────────────── */
+    .marquee-wrap {
+      background: var(--red); overflow: hidden;
+      padding: 0.875rem 0; white-space: nowrap;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .marquee-track {
+      display: inline-flex; gap: 0;
+      animation: marquee 25s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      display: inline-flex; align-items: center; gap: 1.5rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem; letter-spacing: 0.2em;
+      padding: 0 2rem;
+    }
+    .marquee-sep { color: rgba(255,255,255,0.4); font-size: 0.6rem; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ─── SECTION HEADERS ──────────────────────────────────────────────────── */
+    .section-hdr { margin-bottom: 3.5rem; }
+    .section-hdr .section-title { font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem; }
+    .section-hdr .section-body  { font-size: 1.05rem; color: var(--muted); max-width: 560px; line-height: 1.75; }
+    .section-hdr.center { text-align: center; }
+    .section-hdr.center .section-body { margin: 0 auto; }
+    .section-hdr.split {
+      display: flex; justify-content: space-between;
+      align-items: flex-end; gap: 2rem; flex-wrap: wrap;
+    }
+
+    /* ─── THE 5 TOOLS ──────────────────────────────────────────────────────── */
+    #tools { background: var(--surface-1); }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .tool-card {
+      padding: 2.5rem 1.5rem;
+      background: var(--surface-2);
+      border-right: 1px solid var(--border);
+      text-align: center;
+      transition: background 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .tool-card:last-child { border-right: none; }
+    .tool-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 3px; background: var(--red);
+      transform: scaleX(0); transition: transform 0.3s;
+    }
+    .tool-card:hover { background: var(--surface-3); }
+    .tool-card:hover::after { transform: scaleX(1); }
+    .tool-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem; color: rgba(232,0,45,0.15);
+      line-height: 1; margin-bottom: 0.75rem;
+    }
+    .tool-emoji { font-size: 2rem; display: block; margin-bottom: 0.75rem; }
+    .tool-name  {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.35rem; margin-bottom: 0.4rem;
+    }
+    .tool-desc  { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+
+    /* ─── PROGRAMS ─────────────────────────────────────────────────────────── */
+    #programs { background: var(--black); }
+
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+    .prog-card {
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .prog-card:hover {
+      border-color: rgba(232,0,45,0.4);
+      transform: translateY(-5px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    }
+    .prog-card.wide { grid-column: span 2; flex-direction: row; }
+
+    .prog-thumb {
+      background: var(--surface-2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+      min-height: 200px;
+      position: relative;
+    }
+    .prog-card.wide .prog-thumb {
+      width: 38%; min-height: 280px; flex-shrink: 0;
+    }
+    .prog-badge {
+      position: absolute; top: 1rem; right: 1rem;
+      background: var(--red); color: var(--white);
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 0.3rem 0.75rem; border-radius: 100px;
+    }
+
+    .prog-body {
+      padding: 2rem;
+      flex: 1; display: flex; flex-direction: column;
+    }
+    .prog-label {
+      font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 0.4rem;
+    }
+    .prog-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.9rem; margin-bottom: 0.75rem;
+    }
+    .prog-desc {
+      font-size: 0.88rem; color: var(--muted);
+      line-height: 1.75; margin-bottom: 1.25rem; flex: 1;
+    }
+    .prog-features {
+      display: flex; flex-direction: column; gap: 0.4rem;
+      margin-bottom: 1.5rem;
+    }
+    .prog-features li {
+      font-size: 0.82rem; color: var(--subtle);
+      display: flex; align-items: flex-start; gap: 0.6rem;
+    }
+    .prog-features li::before {
+      content: '✓'; color: var(--red); font-weight: 800; flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+    .prog-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: var(--red); font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      transition: gap 0.2s;
+    }
+    .prog-link:hover { gap: 0.8rem; }
+
+    /* ─── ABOUT ────────────────────────────────────────────────────────────── */
+    #about { background: var(--surface-1); }
+
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 6rem; align-items: center;
+    }
+    .about-img-wrap { position: relative; }
+    .about-img {
+      aspect-ratio: 4/5;
+      background: linear-gradient(135deg, var(--surface-2) 0%, var(--surface-3) 100%);
+      border-radius: var(--radius-lg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 9rem; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .about-callout {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: var(--red); padding: 1.5rem 1.75rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-red);
+    }
+    .about-callout .big { font-family: 'Bebas Neue', sans-serif; font-size: 2.75rem; line-height: 1; }
+    .about-callout .sml { font-size: 0.72rem; opacity: 0.85; margin-top: 0.15rem; letter-spacing: 0.05em; }
+
+    .about-body { font-size: 1rem; color: var(--subtle); line-height: 1.85; margin-bottom: 1.25rem; }
+    .about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .tag {
+      background: rgba(232,0,45,0.08);
+      border: 1px solid rgba(232,0,45,0.18);
+      color: var(--subtle);
+      font-size: 0.78rem; padding: 0.35rem 0.85rem;
+      border-radius: 100px;
+    }
+
+    /* ─── WHY ──────────────────────────────────────────────────────────────── */
+    #why { background: var(--black); }
+
+    .why-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .why-card {
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 2.25rem;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .why-card:hover {
+      border-color: rgba(232,0,45,0.3);
+      transform: translateY(-3px);
+    }
+    .why-icon {
+      width: 48px; height: 48px;
+      background: rgba(232,0,45,0.1);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 1.25rem;
+    }
+    .why-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .why-desc  { font-size: 0.87rem; color: var(--muted); line-height: 1.7; }
+
+    /* ─── TESTIMONIALS ─────────────────────────────────────────────────────── */
+    #testimonials { background: var(--surface-1); }
+
+    .test-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem; margin-top: 3.5rem;
+    }
+    .test-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      display: flex; flex-direction: column;
+    }
+    .test-stars { color: var(--gold); letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 1rem; }
+    .test-text {
+      font-size: 0.9rem; color: var(--subtle);
+      line-height: 1.75; font-style: italic;
+      margin-bottom: 1.5rem; flex: 1;
+    }
+    .test-author { display: flex; align-items: center; gap: 0.875rem; }
+    .test-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: var(--red);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 800; flex-shrink: 0;
+    }
+    .test-name { font-size: 0.9rem; font-weight: 600; }
+    .test-role { font-size: 0.75rem; color: var(--muted); margin-top: 0.1rem; }
+
+    /* ─── STORE BAND ───────────────────────────────────────────────────────── */
+    #store {
+      background: linear-gradient(135deg, var(--red-dark) 0%, var(--red) 60%, #FF3A5C 100%);
+      padding: 5rem 0;
+      position: relative; overflow: hidden;
+    }
+    #store::before {
+      content: '5IVE TOOL  5IVE TOOL  5IVE TOOL  5IVE TOOL  5IVE TOOL  5IVE TOOL';
+      position: absolute; bottom: -0.5rem; left: 0; right: 0;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 7rem; letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.06);
+      white-space: nowrap; pointer-events: none;
+    }
+    .store-inner {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 2rem; flex-wrap: wrap;
+      position: relative; z-index: 1;
+    }
+    .store-eyebrow { color: rgba(255,255,255,0.65); margin-bottom: 0.5rem; }
+    .store-title { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; }
+    .store-sub { color: rgba(255,255,255,0.75); margin-top: 0.4rem; font-size: 1rem; }
+
+    /* ─── PARTNERS ─────────────────────────────────────────────────────────── */
+    #partners { background: var(--black); }
+
+    .partners-row {
+      display: flex; flex-wrap: wrap;
+      justify-content: center; gap: 1rem; margin-top: 3rem;
+    }
+    .partner-pill {
+      background: var(--surface-1);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.875rem 1.75rem;
+      font-size: 0.8rem; color: var(--muted);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      transition: var(--transition);
+    }
+    .partner-pill:hover {
+      border-color: rgba(255,255,255,0.2);
+      color: var(--white);
+    }
+
+    /* ─── CONTACT ──────────────────────────────────────────────────────────── */
+    #contact { background: var(--surface-1); }
+
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.6fr;
+      gap: 5rem; align-items: start;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 2rem; }
+    .contact-row  { display: flex; gap: 1rem; align-items: flex-start; }
+    .contact-icon-box {
+      width: 46px; height: 46px;
+      background: rgba(232,0,45,0.1);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .contact-lbl { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.25rem; }
+    .contact-val { font-size: 0.95rem; color: var(--white); transition: color 0.2s; }
+    a.contact-val:hover { color: var(--red); }
+
+    .contact-social { display: flex; gap: 0.75rem; margin-top: 1rem; }
+    .soc-btn {
+      width: 38px; height: 38px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 700; color: var(--muted);
+      transition: var(--transition);
+    }
+    .soc-btn:hover { background: var(--red); border-color: var(--red); color: var(--white); }
+
+    .contact-form-wrap {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 2.5rem;
+    }
+    .form-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; margin-bottom: 1.5rem; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group {
+      display: flex; flex-direction: column; gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    .form-group.full { grid-column: span 2; }
+    .form-group label {
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.8rem 1rem;
+      color: var(--white);
+      font-family: 'Inter', sans-serif; font-size: 0.9rem;
+      outline: none; transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--muted); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--red); }
+    .form-group select { appearance: none; cursor: pointer; }
+    .form-group select option { background: var(--surface-3); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+    .form-submit { width: 100%; margin-top: 0.5rem; justify-content: center; }
+
+    .form-success {
+      display: none; text-align: center; padding: 2rem;
+      color: #4ade80; font-weight: 600; font-size: 1.1rem;
+    }
+    .form-success.visible { display: block; }
+
+    /* ─── FOOTER ───────────────────────────────────────────────────────────── */
+    footer {
+      background: #040404;
+      border-top: 1px solid var(--border);
+      padding: 4.5rem 0 2rem;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem; margin-bottom: 3rem;
+    }
+    .footer-brand .nav-logo { display: inline-flex; margin-bottom: 1rem; }
+    .footer-tagline { font-size: 0.875rem; color: var(--muted); line-height: 1.75; margin-bottom: 1.5rem; }
+    .footer-social { display: flex; gap: 0.75rem; }
+
+    .footer-col h5 {
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--white); margin-bottom: 1.25rem;
+    }
+    .footer-col ul { display: flex; flex-direction: column; gap: 0.65rem; }
+    .footer-col a { font-size: 0.875rem; color: var(--muted); transition: color 0.2s; }
+    .footer-col a:hover { color: var(--white); }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy { font-size: 0.78rem; color: var(--muted); }
+
+    /* ─── SCROLL REVEAL ────────────────────────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .delay-1 { transition-delay: 0.08s; }
+    .delay-2 { transition-delay: 0.16s; }
+    .delay-3 { transition-delay: 0.24s; }
+    .delay-4 { transition-delay: 0.32s; }
+    .delay-5 { transition-delay: 0.40s; }
+
+    /* ─── REDUCED MOTION ───────────────────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* ─── RESPONSIVE ───────────────────────────────────────────────────────── */
+    @media (max-width: 1100px) {
+      .tools-grid { grid-template-columns: repeat(3, 1fr); }
+      .about-grid { grid-template-columns: 1fr; gap: 4rem; }
+      .about-img   { aspect-ratio: 16/9; font-size: 6rem; }
+      .why-grid    { grid-template-columns: repeat(2, 1fr); }
+      .footer-top  { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+    }
+
+    @media (max-width: 900px) {
+      section { padding: 5rem 0; }
+      .programs-grid { grid-template-columns: 1fr; }
+      .prog-card.wide { flex-direction: column; }
+      .prog-card.wide .prog-thumb { width: 100%; min-height: 200px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .test-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 1.25rem; }
+      section { padding: 4rem 0; }
+
+      /* Nav */
+      #navbar { padding: 1.25rem; }
+      #navbar.scrolled { padding: 0.875rem 1.25rem; }
+      .nav-menu { display: none; }
+      .hamburger { display: flex; }
+
+      /* Hero */
+      .hero-inner { padding-top: 7rem; }
+      .stat-block { padding: 0 1.25rem; }
+
+      /* Tools */
+      .tools-grid { grid-template-columns: repeat(2, 1fr); }
+
+      /* Why */
+      .why-grid { grid-template-columns: 1fr; }
+
+      /* Testimonials */
+      .test-grid { grid-template-columns: 1fr; }
+
+      /* Store */
+      .store-inner { flex-direction: column; text-align: center; }
+
+      /* Footer */
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+
+      /* Section headers */
+      .section-hdr.split { flex-direction: column; align-items: flex-start; }
+
+      /* Form */
+      .form-row { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: span 1; }
+    }
+
+    @media (max-width: 480px) {
+      .tools-grid { grid-template-columns: 1fr 1fr; }
+      .hero-stats { gap: 0; }
+      .stat-block { padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <!-- ── NAVBAR ─────────────────────────────────────────────────────────── -->
+  <header role="banner">
+    <nav id="navbar" role="navigation" aria-label="Main navigation">
+      <a href="#hero" class="nav-logo" aria-label="5ive Tool Baseball Academy home">
+        <span class="accent">5IVE</span>&nbsp;TOOL
+      </a>
+
+      <ul class="nav-menu" role="list">
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#store">Store</a></li>
+        <li><a href="#contact" class="nav-cta btn btn-primary">Book Now</a></li>
+      </ul>
+
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <nav class="nav-drawer" id="navDrawer" role="navigation" aria-label="Mobile navigation" aria-hidden="true">
+      <a href="#programs" class="drawer-link">Programs</a>
+      <a href="#about"    class="drawer-link">About</a>
+      <a href="#testimonials" class="drawer-link">Reviews</a>
+      <a href="#store"    class="drawer-link">Store</a>
+      <a href="#contact"  class="drawer-link">Book Now</a>
+    </nav>
+  </header>
+
+  <!-- ── HERO ───────────────────────────────────────────────────────────── -->
+  <main id="main">
+  <section id="hero" aria-label="Hero">
+    <div class="hero-noise" aria-hidden="true"></div>
+    <div class="hero-glow-1" aria-hidden="true"></div>
+    <div class="hero-glow-2" aria-hidden="true"></div>
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div class="hero-badge" aria-label="Location badge">
+        <span class="hero-badge-dot" aria-hidden="true"></span>
+        San Diego, CA &nbsp;·&nbsp; Est. 2004
+      </div>
+
+      <h1 class="hero-title">
+        <span class="t1">DEVELOP</span>
+        <span class="t2">YOUR GAME.</span>
+        <span class="t3">ELEVATE YOUR FUTURE.</span>
+      </h1>
+
+      <p class="hero-sub">
+        San Diego's premier youth baseball academy. Private lessons, elite camps, and coaches clinics — built around the 5 tools every great player needs.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#contact" class="btn btn-primary btn-lg">Book a Session →</a>
+        <a href="#programs" class="btn btn-secondary btn-lg">View Programs</a>
+      </div>
+
+      <div class="hero-stats" role="list" aria-label="Academy stats">
+        <div class="stat-block" role="listitem">
+          <span class="stat-num" data-target="20">0</span>
+          <span class="stat-lbl">Years Pro Experience</span>
+        </div>
+        <div class="stat-block" role="listitem">
+          <span class="stat-num" data-target="500" data-suffix="+">0</span>
+          <span class="stat-lbl">Players Trained</span>
+        </div>
+        <div class="stat-block" role="listitem">
+          <span class="stat-num" data-target="1" data-suffix=":10">0</span>
+          <span class="stat-lbl">Coach-to-Camper Ratio</span>
+        </div>
+        <div class="stat-block" role="listitem">
+          <span class="stat-num" data-target="5">0</span>
+          <span class="stat-lbl">Tools We Master</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MARQUEE ─────────────────────────────────────────────────────────── -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      <!-- set 1 -->
+      <span class="marquee-item">Hitting <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Throwing <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Fielding <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Base Running <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Catching <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Private Lessons <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Elite Camps <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Online Lessons <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Coaches Clinics <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">San Diego, CA <span class="marquee-sep">◆</span></span>
+      <!-- set 2 (duplicate for seamless loop) -->
+      <span class="marquee-item">Hitting <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Throwing <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Fielding <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Base Running <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Catching <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Private Lessons <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Elite Camps <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Online Lessons <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">Coaches Clinics <span class="marquee-sep">◆</span></span>
+      <span class="marquee-item">San Diego, CA <span class="marquee-sep">◆</span></span>
+    </div>
+  </div>
+
+  <!-- ── THE 5 TOOLS ─────────────────────────────────────────────────────── -->
+  <section id="tools">
+    <div class="container">
+      <div class="section-hdr center reveal">
+        <p class="eyebrow">The Foundation</p>
+        <h2 class="section-title">The 5 Tools of Baseball</h2>
+        <p class="section-body">Every elite player masters these five fundamentals. Our entire curriculum is built around developing all of them — at every age and skill level.</p>
+      </div>
+
+      <div class="tools-grid" role="list">
+        <div class="tool-card reveal delay-1" role="listitem">
+          <div class="tool-num" aria-hidden="true">01</div>
+          <span class="tool-emoji" aria-hidden="true">🏏</span>
+          <div class="tool-name">Hitting</div>
+          <p class="tool-desc">Mechanics, plate discipline, power development &amp; situational hitting.</p>
+        </div>
+        <div class="tool-card reveal delay-2" role="listitem">
+          <div class="tool-num" aria-hidden="true">02</div>
+          <span class="tool-emoji" aria-hidden="true">⚾</span>
+          <div class="tool-name">Throwing</div>
+          <p class="tool-desc">Arm strength, accuracy, footwork &amp; position-specific mechanics.</p>
+        </div>
+        <div class="tool-card reveal delay-3" role="listitem">
+          <div class="tool-num" aria-hidden="true">03</div>
+          <span class="tool-emoji" aria-hidden="true">🧤</span>
+          <div class="tool-name">Fielding</div>
+          <p class="tool-desc">Glove work, footwork, positioning &amp; reaction time at every position.</p>
+        </div>
+        <div class="tool-card reveal delay-4" role="listitem">
+          <div class="tool-num" aria-hidden="true">04</div>
+          <span class="tool-emoji" aria-hidden="true">🏃</span>
+          <div class="tool-name">Base Running</div>
+          <p class="tool-desc">Speed, reads, angles &amp; aggressive situational base running.</p>
+        </div>
+        <div class="tool-card reveal delay-5" role="listitem">
+          <div class="tool-num" aria-hidden="true">05</div>
+          <span class="tool-emoji" aria-hidden="true">🎯</span>
+          <div class="tool-name">Catching</div>
+          <p class="tool-desc">Pop time, framing, blocking &amp; game management behind the plate.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROGRAMS ────────────────────────────────────────────────────────── -->
+  <section id="programs">
+    <div class="container">
+      <div class="section-hdr split">
+        <div>
+          <p class="eyebrow reveal">Training Programs</p>
+          <h2 class="section-title reveal">Choose Your Path</h2>
+        </div>
+        <p class="section-body reveal">From T-ball fundamentals to travel-ball refinement, there's a program built exactly for your player.</p>
+      </div>
+
+      <div class="programs-grid">
+
+        <!-- Private Lessons (featured / wide) -->
+        <article class="prog-card wide reveal" aria-label="Private Lessons program">
+          <div class="prog-thumb" aria-hidden="true">
+            ⚾
+            <span class="prog-badge">Most Popular</span>
+          </div>
+          <div class="prog-body">
+            <p class="prog-label">1-on-1 Training</p>
+            <h3 class="prog-title">Private Lessons</h3>
+            <p class="prog-desc">The single fastest way to accelerate individual skill development and build genuine self-confidence. Work directly with Coach Jared or our coaching staff for a fully personalized session dialed to your specific needs, weaknesses, and long-term goals.</p>
+            <ul class="prog-features">
+              <li>Personalized curriculum for your skill level &amp; position</li>
+              <li>Focused, distraction-free environment — full coach attention</li>
+              <li>In-person at Sabre Springs Community Park, San Diego</li>
+              <li>Online video-lesson option available anywhere nationwide</li>
+              <li>Mental toughness &amp; baseball IQ woven into every session</li>
+            </ul>
+            <a href="#contact" class="prog-link" aria-label="Book a private lesson">Book a Lesson →</a>
+          </div>
+        </article>
+
+        <!-- Camps -->
+        <article class="prog-card reveal delay-1" aria-label="Baseball Camps program">
+          <div class="prog-thumb" aria-hidden="true">🏕️</div>
+          <div class="prog-body">
+            <p class="prog-label">Multi-Day Immersion</p>
+            <h3 class="prog-title">Baseball Camps</h3>
+            <p class="prog-desc">Intense multi-day camps at Sabre Springs Community Park. Small groups mean every player walks away with real reps and real improvement.</p>
+            <ul class="prog-features">
+              <li>Age groups: 5–7 · 8–10 · 11–13</li>
+              <li>Elite 1:10 coach-to-camper ratio</li>
+              <li>Official 5ive Tool performance shirt &amp; hat — Day 1</li>
+              <li>Check-in 8:30–9:00 AM · Full day curriculum</li>
+              <li>Tuition transferable within 48 hrs of start date</li>
+            </ul>
+            <a href="#contact" class="prog-link" aria-label="View camp schedule">View Schedule →</a>
+          </div>
+        </article>
+
+        <!-- Online Lessons -->
+        <article class="prog-card reveal delay-2" aria-label="Online Lessons program">
+          <div class="prog-thumb" aria-hidden="true">💻</div>
+          <div class="prog-body">
+            <p class="prog-label">Train Anywhere</p>
+            <h3 class="prog-title">Online Lessons</h3>
+            <p class="prog-desc">Elite coaching isn't limited by geography. Video analysis and live virtual instruction let players anywhere in the country access pro-level coaching from Coach Jared.</p>
+            <ul class="prog-features">
+              <li>Video swing &amp; mechanics analysis with frame-by-frame breakdowns</li>
+              <li>Live virtual sessions — real-time coaching, real results</li>
+              <li>Personalized drill plans &amp; between-session homework</li>
+              <li>Available to players nationwide</li>
+            </ul>
+            <a href="#contact" class="prog-link" aria-label="Start online lessons">Get Started →</a>
+          </div>
+        </article>
+
+        <!-- Coaches Clinics -->
+        <article class="prog-card reveal delay-3" aria-label="Coaches Clinics program">
+          <div class="prog-thumb" aria-hidden="true">🎓</div>
+          <div class="prog-body">
+            <p class="prog-label">For Coaches &amp; Teams</p>
+            <h3 class="prog-title">Coaches Clinics</h3>
+            <p class="prog-desc">Elevate your entire coaching staff with professional-grade drills, practice structures, and instructional techniques. Includes a free practice plan bundle so your team can hit the ground running immediately.</p>
+            <ul class="prog-features">
+              <li>Free practice plan bundle — instant value, day one</li>
+              <li>Drill libraries covering all 5 tools at every skill level</li>
+              <li>Team, league, and organization packages available</li>
+              <li>In-person &amp; remote clinic formats</li>
+            </ul>
+            <a href="#contact" class="prog-link" aria-label="Schedule a coaches clinic">Schedule a Clinic →</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ───────────────────────────────────────────────────────────── -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="about-img-wrap reveal">
+          <div class="about-img" role="img" aria-label="Coach Jared Eichelberger">⚾</div>
+          <div class="about-callout" aria-label="20 plus years combined professional experience">
+            <span class="big">20+</span>
+            <span class="sml">Years Combined<br>Pro Experience</span>
+          </div>
+        </div>
+
+        <div class="about-content reveal delay-2">
+          <p class="eyebrow">Meet the Coach</p>
+          <h2 class="section-title">Coach Jared<br>Eichelberger</h2>
+          <p class="about-body">
+            Jared Eichelberger is a former professional pitcher who played in both the <strong>Seattle Mariners</strong> and <strong>New York Mets</strong> organizations. Born and raised in Poway, California, he brings firsthand knowledge of what it takes to compete at the highest levels of the game.
+          </p>
+          <p class="about-body">
+            After his playing career, Jared channeled that passion into building San Diego's premier youth development academy. Together with his coaching staff, he has spent over 20 years teaching young athletes the skills, mindset, accountability, and deep love of the game they need to reach their potential.
+          </p>
+          <div class="about-tags" role="list">
+            <span class="tag" role="listitem">Former Pro — Seattle Mariners</span>
+            <span class="tag" role="listitem">Former Pro — New York Mets</span>
+            <span class="tag" role="listitem">Poway, CA Native</span>
+            <span class="tag" role="listitem">20+ Years Coaching</span>
+            <span class="tag" role="listitem">Youth Development Expert</span>
+          </div>
+          <a href="#contact" class="btn btn-primary btn-lg">Train With Coach Jared →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHY 5IVE TOOL ───────────────────────────────────────────────────── -->
+  <section id="why">
+    <div class="container">
+      <div class="section-hdr center">
+        <p class="eyebrow reveal">Why Choose Us</p>
+        <h2 class="section-title reveal">The 5ive Tool Difference</h2>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-card reveal delay-1">
+          <div class="why-icon" aria-hidden="true">⚡</div>
+          <h3 class="why-title">Pro-Level Instruction</h3>
+          <p class="why-desc">Learn from coaches who actually played professionally. The techniques we teach are identical to those used at the highest levels of the game — not textbook theory.</p>
+        </div>
+        <div class="why-card reveal delay-2">
+          <div class="why-icon" aria-hidden="true">🎯</div>
+          <h3 class="why-title">Individualized Approach</h3>
+          <p class="why-desc">No generic cookie-cutter coaching. Every player gets a custom plan that targets their specific strengths, weaknesses, position, and long-term development goals.</p>
+        </div>
+        <div class="why-card reveal delay-3">
+          <div class="why-icon" aria-hidden="true">🧠</div>
+          <h3 class="why-title">Baseball IQ Development</h3>
+          <p class="why-desc">Great players think ahead. We develop situational awareness, game management, and mental toughness alongside the physical skills — building complete, smart players.</p>
+        </div>
+        <div class="why-card reveal delay-1">
+          <div class="why-icon" aria-hidden="true">❤️</div>
+          <h3 class="why-title">Love of the Game</h3>
+          <p class="why-desc">We build players who genuinely love baseball. Coaching that's fun, competitive, and rewarding motivates players to keep improving long after sessions end.</p>
+        </div>
+        <div class="why-card reveal delay-2">
+          <div class="why-icon" aria-hidden="true">📍</div>
+          <h3 class="why-title">Rooted in San Diego</h3>
+          <p class="why-desc">Deeply embedded in the San Diego youth baseball community with active partnerships across local leagues, high schools, and travel organizations throughout the region.</p>
+        </div>
+        <div class="why-card reveal delay-3">
+          <div class="why-icon" aria-hidden="true">🌐</div>
+          <h3 class="why-title">Train Anywhere</h3>
+          <p class="why-desc">Can't make it in person? Our online lesson platform delivers the same elite instruction to your backyard. The same coach. The same results. Anywhere in the country.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TESTIMONIALS ────────────────────────────────────────────────────── -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-hdr center">
+        <p class="eyebrow reveal">What Families Say</p>
+        <h2 class="section-title reveal">Real Players. Real Results.</h2>
+      </div>
+
+      <div class="test-grid">
+        <div class="test-card reveal delay-1">
+          <div class="test-stars" aria-label="5 stars">★★★★★</div>
+          <p class="test-text">"Coach Jared completely transformed my son's swing in just a few sessions. He went from struggling at the plate to being one of the best hitters on his travel team. The attention to detail is incredible."</p>
+          <div class="test-author">
+            <div class="test-avatar" aria-hidden="true">MR</div>
+            <div>
+              <p class="test-name">Mike R.</p>
+              <p class="test-role">Parent — 12U Travel Player</p>
+            </div>
+          </div>
+        </div>
+        <div class="test-card reveal delay-2">
+          <div class="test-stars" aria-label="5 stars">★★★★★</div>
+          <p class="test-text">"The summer camp was worth every penny. My daughter came home every single day excited about what she learned. The coaches are patient, knowledgeable, and genuinely care about each kid."</p>
+          <div class="test-author">
+            <div class="test-avatar" aria-hidden="true">SL</div>
+            <div>
+              <p class="test-name">Sarah L.</p>
+              <p class="test-role">Parent — 10U Camper</p>
+            </div>
+          </div>
+        </div>
+        <div class="test-card reveal delay-3">
+          <div class="test-stars" aria-label="5 stars">★★★★★</div>
+          <p class="test-text">"The coaches clinic gave our entire staff a new toolkit. The practice plans alone saved us hours every week. Our team's fundamentals improved dramatically in a single season."</p>
+          <div class="test-author">
+            <div class="test-avatar" aria-hidden="true">TC</div>
+            <div>
+              <p class="test-name">Tom C.</p>
+              <p class="test-role">Little League Head Coach</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STORE BAND ──────────────────────────────────────────────────────── -->
+  <section id="store" aria-label="Official gear store">
+    <div class="container store-inner">
+      <div>
+        <p class="eyebrow store-eyebrow">Official Gear</p>
+        <h2 class="store-title">5ive Tool Store</h2>
+        <p class="store-sub">Performance apparel, training gear &amp; official academy merch.</p>
+      </div>
+      <a href="https://www.5ivetool.com/store" target="_blank" rel="noopener noreferrer" class="btn btn-white btn-lg" aria-label="Shop the 5ive Tool store (opens in new tab)">
+        Shop the Store →
+      </a>
+    </div>
+  </section>
+
+  <!-- ── PARTNERS ────────────────────────────────────────────────────────── -->
+  <section id="partners">
+    <div class="container">
+      <div class="section-hdr center">
+        <p class="eyebrow reveal">Community</p>
+        <h2 class="section-title reveal">Our Partners</h2>
+        <p class="section-body reveal">Proud to work alongside San Diego's top baseball organizations, leagues, and youth programs.</p>
+      </div>
+
+      <div class="partners-row">
+        <div class="partner-pill reveal delay-1">Peninsula Little League</div>
+        <div class="partner-pill reveal delay-1">La Jolla Youth Baseball</div>
+        <div class="partner-pill reveal delay-2">Sabre Springs Comm. Park</div>
+        <div class="partner-pill reveal delay-2">San Diego Travel Baseball</div>
+        <div class="partner-pill reveal delay-3">Partner — Update Me</div>
+        <div class="partner-pill reveal delay-3">Partner — Update Me</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT ─────────────────────────────────────────────────────────── -->
+  <section id="contact">
+    <div class="container">
+      <p class="eyebrow reveal">Get In Touch</p>
+      <h2 class="section-title reveal" style="font-size:clamp(2.5rem,5vw,4rem); margin-bottom:3rem;">Book a Session</h2>
+
+      <div class="contact-grid">
+
+        <div class="contact-info">
+          <div class="contact-row reveal">
+            <div class="contact-icon-box" aria-hidden="true">📍</div>
+            <div>
+              <p class="contact-lbl">Location</p>
+              <a href="https://maps.google.com/?q=12953+Sabre+Springs+Pkwy+San+Diego+CA+92128"
+                 target="_blank" rel="noopener noreferrer"
+                 class="contact-val"
+                 aria-label="Open location in Google Maps">
+                Sabre Springs Community Park<br>
+                12953 Sabre Springs Pkwy<br>
+                San Diego, CA 92128
+              </a>
+            </div>
+          </div>
+
+          <div class="contact-row reveal delay-1">
+            <div class="contact-icon-box" aria-hidden="true">📞</div>
+            <div>
+              <p class="contact-lbl">Phone</p>
+              <a href="tel:+18582471811" class="contact-val">858-247-1811</a>
+            </div>
+          </div>
+
+          <div class="contact-row reveal delay-2">
+            <div class="contact-icon-box" aria-hidden="true">📧</div>
+            <div>
+              <p class="contact-lbl">Email</p>
+              <a href="mailto:info@5ivetool.com" class="contact-val">info@5ivetool.com</a>
+            </div>
+          </div>
+
+          <div class="contact-row reveal delay-3">
+            <div class="contact-icon-box" aria-hidden="true">📲</div>
+            <div>
+              <p class="contact-lbl">Follow Us</p>
+              <div class="contact-social">
+                <a href="https://www.instagram.com/5ivetool/" target="_blank" rel="noopener noreferrer"
+                   class="soc-btn" aria-label="Follow on Instagram">IG</a>
+                <a href="https://www.facebook.com/5iveTool/" target="_blank" rel="noopener noreferrer"
+                   class="soc-btn" aria-label="Follow on Facebook">FB</a>
+                <a href="https://www.youtube.com/@5iveTool" target="_blank" rel="noopener noreferrer"
+                   class="soc-btn" aria-label="Watch on YouTube">YT</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-wrap reveal delay-2">
+          <h3 class="form-title">Send Us a Message</h3>
+
+          <form id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" placeholder="John" autocomplete="given-name" required />
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" placeholder="Smith" autocomplete="family-name" required />
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="john@example.com" autocomplete="email" required />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="(858) 000-0000" autocomplete="tel" />
+              </div>
+              <div class="form-group full">
+                <label for="program">Program of Interest</label>
+                <select id="program" name="program">
+                  <option value="">Select a program…</option>
+                  <option value="private">Private Lessons</option>
+                  <option value="camps">Baseball Camps</option>
+                  <option value="online">Online Lessons</option>
+                  <option value="clinic">Coaches Clinic</option>
+                  <option value="other">Other / General Inquiry</option>
+                </select>
+              </div>
+              <div class="form-group full">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Tell us about your player — age, position, skill level, and goals…"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg form-submit">Send Message →</button>
+          </form>
+
+          <div class="form-success" id="formSuccess" role="alert" aria-live="polite">
+            ✓ Message sent! We'll be in touch within 24 hours.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <!-- ── FOOTER ──────────────────────────────────────────────────────────── -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-top">
+
+        <div class="footer-brand">
+          <a href="#hero" class="nav-logo" aria-label="5ive Tool Baseball Academy home">
+            <span class="accent">5IVE</span>&nbsp;TOOL
+          </a>
+          <p class="footer-tagline">San Diego's Premier Youth Baseball Training Organization. Building complete 5-tool players through elite instruction, camps, and coaches clinics since 2004.</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/5ivetool/" target="_blank" rel="noopener noreferrer"
+               class="soc-btn" aria-label="Instagram">IG</a>
+            <a href="https://www.facebook.com/5iveTool/" target="_blank" rel="noopener noreferrer"
+               class="soc-btn" aria-label="Facebook">FB</a>
+            <a href="https://www.youtube.com/@5iveTool" target="_blank" rel="noopener noreferrer"
+               class="soc-btn" aria-label="YouTube">YT</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h5>Programs</h5>
+          <ul>
+            <li><a href="#programs">Private Lessons</a></li>
+            <li><a href="#programs">Baseball Camps</a></li>
+            <li><a href="#programs">Online Lessons</a></li>
+            <li><a href="#programs">Coaches Clinics</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Academy</h5>
+          <ul>
+            <li><a href="#about">About Coach Jared</a></li>
+            <li><a href="#tools">The 5 Tools</a></li>
+            <li><a href="#why">Why 5ive Tool</a></li>
+            <li><a href="#partners">Our Partners</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <ul>
+            <li><a href="tel:+18582471811">858-247-1811</a></li>
+            <li><a href="mailto:info@5ivetool.com">info@5ivetool.com</a></li>
+            <li><a href="https://www.5ivetool.com/store" target="_blank" rel="noopener noreferrer">Store</a></li>
+            <li><a href="#contact">Book a Session</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© <span id="year"></span> 5ive Tool Baseball Academy. All rights reserved.</p>
+        <p class="footer-copy">12953 Sabre Springs Pkwy · San Diego, CA 92128</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── SCRIPTS ─────────────────────────────────────────────────────────── -->
+  <script>
+    /* Dynamic year */
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* Navbar scroll */
+    const navbar = document.getElementById('navbar');
+    const onScroll = () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    /* Hamburger / mobile drawer */
+    const hamburger  = document.getElementById('hamburger');
+    const navDrawer  = document.getElementById('navDrawer');
+    const drawerLinks = navDrawer.querySelectorAll('.drawer-link');
+
+    function closeDrawer() {
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      navDrawer.classList.remove('open');
+      navDrawer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    function openDrawer() {
+      hamburger.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      navDrawer.classList.add('open');
+      navDrawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.contains('open') ? closeDrawer() : openDrawer();
+    });
+    drawerLinks.forEach(l => l.addEventListener('click', closeDrawer));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+    /* Scroll reveal */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* Counter animation */
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el     = entry.target;
+        const target = parseInt(el.dataset.target, 10);
+        const suffix = el.dataset.suffix || '';
+        const dur    = 1400;
+        const start  = performance.now();
+
+        function update(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / dur, 1);
+          const ease = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(ease * target) + suffix;
+          if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+        counterObserver.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('[data-target]').forEach(el => counterObserver.observe(el));
+
+    /* Contact form — demo submit (swap for Cloudflare Worker / Formspree in prod) */
+    const form    = document.getElementById('contactForm');
+    const success = document.getElementById('formSuccess');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      /* Basic client-side validation */
+      const required = form.querySelectorAll('[required]');
+      let valid = true;
+      required.forEach(field => {
+        field.style.borderColor = '';
+        if (!field.value.trim()) {
+          field.style.borderColor = 'var(--red)';
+          valid = false;
+        }
+      });
+      if (!valid) return;
+
+      const btn = form.querySelector('button[type="submit"]');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      /* Replace this timeout with your actual fetch() to a Cloudflare Worker or Formspree */
+      setTimeout(() => {
+        form.style.display = 'none';
+        success.classList.add('visible');
+      }, 1200);
+    });
+  </script>
+</body>
+</html>
